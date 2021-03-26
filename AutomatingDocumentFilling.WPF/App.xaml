@@ -1,0 +1,19 @@
+﻿<Application x:Class="AutomatingDocumentFilling.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AutomatingDocumentFilling.WPF"
+             xmlns:vm="clr-namespace:AutomatingDocumentFilling.WPF.ViewModels"
+             xmlns:views="clr-namespace:AutomatingDocumentFilling.WPF.Views"
+             >
+    <Application.Resources>
+         <ResourceDictionary>
+             <ResourceDictionary.MergedDictionaries>
+                 
+             </ResourceDictionary.MergedDictionaries>
+             
+             <DataTemplate DataType="{x:Type vm:FirstPageViewModel}">
+                 <views:FirstPageView/>
+             </DataTemplate>
+         </ResourceDictionary>
+    </Application.Resources>
+</Application>
