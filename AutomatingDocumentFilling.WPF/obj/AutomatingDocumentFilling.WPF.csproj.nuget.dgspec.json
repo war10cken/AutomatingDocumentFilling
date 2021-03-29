@@ -40,9 +40,17 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "dependencies": {
+            "Aspose.Words": {
+              "target": "Package",
+              "version": "[21.3.0, )"
+            },
             "DocX": {
               "target": "Package",
               "version": "[1.7.1, )"
+            },
+            "FreeSpire.Doc": {
+              "target": "Package",
+              "version": "[7.11.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -55,6 +63,14 @@
             "Microsoft.Extensions.Hosting": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Microsoft.Office.Interop.Word": {
+              "target": "Package",
+              "version": "[15.0.4797.1003, )"
+            },
+            "sautinsoft.document": {
+              "target": "Package",
+              "version": "[5.2.2.16, )"
             }
           },
           "imports": [

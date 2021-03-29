@@ -5,9 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using AutomatingDocumentFilling.WPF.Services;
 using AutomatingDocumentFilling.WPF.State.Navigators;
 using AutomatingDocumentFilling.WPF.ViewModels;
 using AutomatingDocumentFilling.WPF.ViewModels.Factories;
+using AutomatingDocumentFilling.WPF.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -31,13 +33,19 @@ namespace AutomatingDocumentFilling.WPF
                        .ConfigureServices(services =>
                         {
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
-
+                            services
+                               .AddSingleton<IDialogWindowService<DocumentView>, DialogWindowService<DocumentView>>();
+                            
                             services.AddSingleton<CreateViewModel<FirstPageViewModel>>(service => () =>
-                                                                                           new FirstPageViewModel());
+                                                                                           new FirstPageViewModel(service.GetRequiredService<IDialogWindowService<DocumentView>>(),
+                                                                                                                  service.GetRequiredService<DocumentViewModel>()));
                             
                             services.AddSingleton<INavigator, Navigator>();
                             services.AddSingleton<MainViewModel>();
+                            services.AddSingleton<DocumentViewModel>();
 
+                            services.AddScoped(service =>
+                                                   new DocumentView(service.GetRequiredService<DocumentViewModel>()));
                             services.AddScoped(service => new MainWindow(service.GetRequiredService<MainViewModel>()));
                         });
         }

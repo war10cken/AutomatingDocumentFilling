@@ -9,11 +9,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         
-        <Button Grid.Row="0"  Width="150" Content="Brows"
-                Click="ButtonBase_OnClick"/>
-        <TextBox Grid.Row="1" Name="TextBoxName" Width="150" Margin="0 10 0 0"/>
+        <Button Grid.Row="0" Content="Open document" Width="150" Command="{Binding OpenDocumentCommand}"/>
+        <Button Grid.Row="3" Command="{Binding ShowWindowCommand}" Width="150" Content="Show"/>
+        <!-- <DocumentViewer Grid.Row="1" Document="{Binding Document}"/> -->
+        <TextBox Grid.Row="2" Text="{Binding Text, Mode=TwoWay}" Width="150" Margin="0 10 0 0"/>
+        <!-- <FlowDocumentScrollViewer Grid.Row="1" Document="{Binding FlowDocument}" /> -->
     </Grid>
 </UserControl>
