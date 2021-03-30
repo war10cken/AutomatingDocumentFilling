@@ -5,20 +5,18 @@ namespace AutomatingDocumentFilling.WPF.ViewModels.Factories
 {
     public class AutomatingDocumentFillingViewModelFactory : IAutomatingDocumentFillingViewModelFactory
     {
-        private readonly CreateViewModel<FirstPageViewModel> _createFirstPageViewModel;
-        private readonly CreateViewModel<DocumentViewModel> _createDocumentViewModel;
+        private readonly CreateViewModel<HomeViewModel> _createHomeViewModel;
 
-        public AutomatingDocumentFillingViewModelFactory(CreateViewModel<FirstPageViewModel> createFirstPageViewModel
-                                                        )
+        public AutomatingDocumentFillingViewModelFactory(CreateViewModel<HomeViewModel> createHomeViewModel)
         {
-            _createFirstPageViewModel = createFirstPageViewModel;
+            _createHomeViewModel = createHomeViewModel;
         }
 
         public ViewModelBase CreateViewModel(ViewType viewType)
         {
             return viewType switch
             {
-                ViewType.FirstPage => _createFirstPageViewModel(),
+                ViewType.Home => _createHomeViewModel(),
                 _ => throw new ArgumentNullException(nameof(viewType))
             };
         }

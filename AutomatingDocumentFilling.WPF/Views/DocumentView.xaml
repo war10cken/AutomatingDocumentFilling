@@ -5,9 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:AutomatingDocumentFilling.WPF.Views"
         mc:Ignorable="d"
-        Topmost="True"
         WindowStartupLocation="CenterScreen"
-        Title="DocumentView" Height="1000" Width="1000">
+        Title="DocumentView" Height="1000" Width="1200">
     <Grid>
         <DocumentViewer Document="{Binding Document}" />
     </Grid>

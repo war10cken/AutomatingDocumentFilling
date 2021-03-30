@@ -32,14 +32,12 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Deb
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Microsoft.Extensions.Primitives.dll
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF.csprojAssemblyReference.cache
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\MainWindow.g.cs
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\FirstPageView.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\App.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\GeneratedInternalTypeHelper.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF_MarkupCompile.cache
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF_MarkupCompile.lref
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\App.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\MainWindow.baml
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\FirstPageView.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF.g.resources
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF.GeneratedMSBuildEditorConfig.editorconfig
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\AutomatingDocumentFilling.WPF.AssemblyInfoInputs.cache
@@ -67,3 +65,6 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Deb
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Spire.Doc.dll
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Spire.License.dll
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Spire.Pdf.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\HomeView.g.cs
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Newtonsoft.Json.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\HomeView.baml

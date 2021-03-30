@@ -24,10 +24,5 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
 
         public ICommand OpenDocumentCommand { get; set; }
 
-        public DocumentViewModel()
-        {
-            // OpenDocumentCommand = new OpenDocumentCommand(this);
-            // OpenDocumentCommand.Execute(null);
-        }
     }
 }

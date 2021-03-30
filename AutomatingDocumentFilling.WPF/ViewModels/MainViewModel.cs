@@ -19,8 +19,7 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             Navigator = navigator;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(navigator, _viewModelFactory);
-            UpdateCurrentViewModelCommand.Execute(ViewType.FirstPage);
+            UpdateCurrentViewModelCommand.Execute(ViewType.Home);
         }
-
     }
 }

@@ -9,47 +9,71 @@ using Xceed.Words.NET;
 
 namespace AutomatingDocumentFilling.WPF.Commands
 {
-    public class ShowWindowCommand<T> : ICommand where T : Window
+    public class ShowWindowCommand : ICommand
     {
-        private readonly IDialogWindowService<T> _dialogWindowService;
-        private readonly FirstPageViewModel _firstPageViewModel;
-        private readonly string _path;
+        private readonly HomeViewModel _homeViewModel;
+        private readonly string _firstPart;
+        private readonly string _secondPart;
+        private readonly string _thirdPart;
+        private readonly string _fourthPart;
         private readonly ICommand _openCommand;
+        private readonly DocumentViewModel _documentViewModel;
 
-        public ShowWindowCommand(IDialogWindowService<T> dialogWindowService,
-                                 FirstPageViewModel firstPageViewModel,
-                                 string path, 
-                                 ICommand openCommand)
+        public ShowWindowCommand(ICommand openCommand,
+                                 HomeViewModel homeViewModel,
+                                 DocumentViewModel documentViewModel,
+                                 string firstPart,
+                                 string secondPart,
+                                 string thirdPart,
+                                 string fourthPart)
         {
-            _dialogWindowService = dialogWindowService;
-            _firstPageViewModel = firstPageViewModel;
-            _path = path;
+            _firstPart = firstPart;
             _openCommand = openCommand;
+            _homeViewModel = homeViewModel;
+            _documentViewModel = documentViewModel;
+            _secondPart = secondPart;
+            _thirdPart = thirdPart;
+            _fourthPart = fourthPart;
         }
 
         public bool CanExecute(object? parameter)
         {
-            //ОП.06 ОХРАНА ТРУДА
             return true;
         }
 
         public void Execute(object? parameter)
         {
-            if (_path.Length > 0)
+            if (_firstPart.Length > 0)
             {
-                using (var document = DocX.Load(_path))
-                {
-                    if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count > 0)
-                    {
-                        document.ReplaceText("<code>", _firstPageViewModel.Text, false, RegexOptions.IgnoreCase);
-                        document.SaveAs(@"D:\Download\50-changed.docx");
-                    }
-                }
+                InsertIntoDocument(_firstPart, "doc-c1c.docx");
+                InsertIntoDocument(_secondPart, "doc-c2c.docx");
+                InsertIntoDocument(_thirdPart, "doc-c3c.docx");
+                InsertIntoDocument(_fourthPart, "doc-c4c.docx");
 
                 _openCommand.Execute(null);
-                _dialogWindowService.Show();                
+                Window documentWindow = new DocumentView(_documentViewModel);
+                documentWindow.Show();
             }
-            
+        }
+
+        private void InsertIntoDocument(string part, string newNameOfDocument)
+        {
+            using (var document = DocX.Load(part))
+            {
+                if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count > 0)
+                {
+                    document.ReplaceText("<code>", _homeViewModel.CodeOfAcademicDiscipline, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<specialty>", _homeViewModel.Specialty, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<formofeducation>", _homeViewModel.FormOfEducation, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<fullnameDDAA>", _homeViewModel.FullNameOfDeputyDirectorAcademicAffairs, false,
+                                         RegexOptions.IgnoreCase);
+                    document.ReplaceText("<fullnameDDAMW>", _homeViewModel.FullNameOfDeputyDirectorAcademicMethodologicalWork,
+                                         false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<fullnameCMCC>", _homeViewModel.FullNameOfChairmanOfMethodologicalCyclicCommission,
+                                         false, RegexOptions.IgnoreCase);
+                    document.SaveAs(newNameOfDocument);
+                }
+            }
         }
 
         public event EventHandler? CanExecuteChanged;

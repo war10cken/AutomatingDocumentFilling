@@ -1,27 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Xps;
 using System.Windows.Xps.Packaging;
 using AutomatingDocumentFilling.WPF.ViewModels;
 using Microsoft.Win32;
 using Spire.Doc;
+using Xceed.Words.NET;
 
 namespace AutomatingDocumentFilling.WPF.Commands
 {
     public class OpenDocumentCommand : ICommand
     {
         private readonly DocumentViewModel _viewModel;
-        private readonly string _changedFilePath = @"D:\Download\50-changed.docx";
+        private readonly string _firstPart;
+        private readonly string _secondPart;
+        private readonly string _thirdPart;
+        private readonly string _fourthPart;
 
-        public OpenDocumentCommand(DocumentViewModel viewModel)
+        public OpenDocumentCommand(DocumentViewModel viewModel, string firstPart,
+                                   string secondPart, string thirdPart, string fourthPart)
         {
             _viewModel = viewModel;
+            _firstPart = firstPart;
+            _secondPart = secondPart;
+            _thirdPart = thirdPart;
+            _fourthPart = fourthPart;
         }
 
         public bool CanExecute(object? parameter)
@@ -38,8 +50,8 @@ namespace AutomatingDocumentFilling.WPF.Commands
 
         private void OpenDocument()
         {
-            string originalPath = @"D:\Download\50.docx";
-            
+            //string originalPath = "50.docx";
+
             // OpenFileDialog dlg = new OpenFileDialog();
             //
             // dlg.DefaultExt = ".docx";
@@ -48,55 +60,110 @@ namespace AutomatingDocumentFilling.WPF.Commands
             //
             // bool? result = dlg.ShowDialog();
 
-
-            // if (result == true)
-            // {
-                if (_changedFilePath.Length > 0)
-                {
-                    string newXPSDocumentName = string.Concat(Path.GetDirectoryName(_changedFilePath), "\\",
-                                                              Path.GetFileNameWithoutExtension(_changedFilePath), ".xps");
-
-                    
-
-                    _viewModel.Document = ConvertWordDocToXPSDoc(_changedFilePath, newXPSDocumentName)
-                       .GetFixedDocumentSequence();
-                }
-            // }
-        }
-
-        private XpsDocument ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
-        {
-            // string docHash = string.Empty;
-            // string xpsHash = string.Empty;
-            //
-            // using (var md5 = MD5.Create())
-            // {
-            //     using (var stream = File.OpenRead(wordDocName))
-            //     {
-            //         byte[] hashBytes = md5.ComputeHash(stream);
-            //         docHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
-            //     }
-            //
-            //     using (var stream = File.OpenRead(xpsDocName))
-            //     {
-            //         byte[] hashBytes = md5.ComputeHash(stream);
-            //         xpsHash = BitConverter.ToString(hashBytes).Replace("-", "".ToLowerInvariant());
-            //     }
-            // }
-            
-            if (!File.Exists(xpsDocName))
+            if (_firstPart.Length > 0 && _secondPart.Length > 0 &&
+                _thirdPart.Length > 0 && _thirdPart.Length > 0)
             {
-                var document = new Document(wordDocName);
-                document.SaveToFile(xpsDocName, FileFormat.XPS);
+                string newXPSFirstPartDocumentName = string.Concat(Path.GetDirectoryName(_firstPart), "\\",
+                                                          Path.GetFileNameWithoutExtension(_firstPart), ".xps");
+                string newXPSSecondPartDocumentName = string.Concat(Path.GetDirectoryName(_secondPart), "\\",
+                                                                   Path.GetFileNameWithoutExtension(_secondPart), ".xps");
+                string newXPSThirdPartDocumentName = string.Concat(Path.GetDirectoryName(_thirdPart), "\\",
+                                                                   Path.GetFileNameWithoutExtension(_thirdPart), ".xps");
+                string newXPSFourthPartDocumentName = string.Concat(Path.GetDirectoryName(_fourthPart), "\\",
+                                                                   Path.GetFileNameWithoutExtension(_fourthPart), ".xps");
+
+                var doc1 = new Document(_firstPart);
+                doc1.SaveToFile(newXPSFirstPartDocumentName, FileFormat.XPS);
+                var doc2 = new Document(_secondPart);
+                doc2.SaveToFile(newXPSSecondPartDocumentName, FileFormat.XPS);
+                var doc3 = new Document(_thirdPart);
+                doc3.SaveToFile(newXPSThirdPartDocumentName, FileFormat.XPS);
+                var doc4 = new Document(_fourthPart);
+                doc4.SaveToFile(newXPSFourthPartDocumentName, FileFormat.XPS);
                 
-                if(File.Exists(_changedFilePath))
-                    File.Delete(_changedFilePath);
+                var xpsDocs = new List<XpsDocument>
+                {
+                    new XpsDocument(newXPSFirstPartDocumentName, FileAccess.Read),
+                    new XpsDocument(newXPSSecondPartDocumentName, FileAccess.Read),
+                    new XpsDocument(newXPSThirdPartDocumentName, FileAccess.Read),
+                    new XpsDocument(newXPSFourthPartDocumentName, FileAccess.Read)
+                };
+
+                var xpsDocument = MergeXpsDocument("doc.xps", xpsDocs);
+
+                _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
+                xpsDocument.Close();
             }
-
-            var xpsDoc = new XpsDocument(xpsDocName, FileAccess.Read);
-            
-            return xpsDoc;
-
         }
+
+        // private XpsDocument ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
+        // {
+        //     // string docHash = string.Empty;
+        //     // string xpsHash = string.Empty;
+        //     //
+        //     // using (var md5 = MD5.Create())
+        //     // {
+        //     //     using (var stream = File.OpenRead(wordDocName))
+        //     //     {
+        //     //         byte[] hashBytes = md5.ComputeHash(stream);
+        //     //         docHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+        //     //     }
+        //     //
+        //     //     using (var stream = File.OpenRead(xpsDocName))
+        //     //     {
+        //     //         byte[] hashBytes = md5.ComputeHash(stream);
+        //     //         xpsHash = BitConverter.ToString(hashBytes).Replace("-", "".ToLowerInvariant());
+        //     //     }
+        //     // }
+        //     File.Delete(xpsDocName);
+        //
+        //     // if (!File.Exists(xpsDocName))
+        //     // {
+        //     //     var document = new Document(wordDocName);
+        //     //     document.SaveToFile(xpsDocName, FileFormat.XPS);
+        //     //
+        //     //     //if (File.Exists(_changedFilePath))
+        //     //     //    File.Delete(_changedFilePath);
+        //     // }
+        //
+        //     
+        //     
+        //     
+        //     
+        //     return xpsDoc;
+        // }
+
+        private XpsDocument MergeXpsDocument(string newFile, List<XpsDocument> sourceDocuments)
+        {
+            if (File.Exists(newFile))
+            {
+                File.Delete(newFile);
+            }
+        
+            XpsDocument xpsDocument = new XpsDocument(newFile, FileAccess.ReadWrite);
+            XpsDocumentWriter xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
+            FixedDocumentSequence fixedDocumentSequence = new FixedDocumentSequence();
+        
+            foreach(XpsDocument doc in sourceDocuments)
+            {
+                FixedDocumentSequence sourceSequence = doc.GetFixedDocumentSequence();
+                
+                foreach (DocumentReference dr in sourceSequence.References)
+                {
+                    DocumentReference newDocumentReference = new DocumentReference
+                    {
+                        Source = dr.Source
+                    };
+                    (newDocumentReference as IUriContext).BaseUri = (dr as IUriContext).BaseUri;
+                    FixedDocument fd = newDocumentReference.GetDocument(true);
+                    newDocumentReference.SetDocument(fd);
+                    fixedDocumentSequence.References.Add(newDocumentReference);
+                }
+            }
+            xpsDocumentWriter.Write(fixedDocumentSequence);
+        
+            return xpsDocument;
+        }
+        
     }
 }

@@ -2,7 +2,6 @@
 {
     public enum ViewType
     {
-        FirstPage,
-        DocumentView
+        Home
     }
 }
