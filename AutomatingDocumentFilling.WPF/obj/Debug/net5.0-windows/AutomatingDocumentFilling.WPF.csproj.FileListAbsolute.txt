@@ -68,3 +68,6 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Deb
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\HomeView.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\Newtonsoft.Json.dll
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Views\HomeView.baml
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Styles\TextBoxHint.baml
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Styles\ComboBox.baml
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Styles\TextBox.baml

@@ -5,6 +5,7 @@ using System.IO.Packaging;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -46,8 +47,6 @@ namespace AutomatingDocumentFilling.WPF.Commands
             OpenDocument();
         }
 
-        public event EventHandler? CanExecuteChanged;
-
         private void OpenDocument()
         {
             //string originalPath = "50.docx";
@@ -72,15 +71,11 @@ namespace AutomatingDocumentFilling.WPF.Commands
                 string newXPSFourthPartDocumentName = string.Concat(Path.GetDirectoryName(_fourthPart), "\\",
                                                                    Path.GetFileNameWithoutExtension(_fourthPart), ".xps");
 
-                var doc1 = new Document(_firstPart);
-                doc1.SaveToFile(newXPSFirstPartDocumentName, FileFormat.XPS);
-                var doc2 = new Document(_secondPart);
-                doc2.SaveToFile(newXPSSecondPartDocumentName, FileFormat.XPS);
-                var doc3 = new Document(_thirdPart);
-                doc3.SaveToFile(newXPSThirdPartDocumentName, FileFormat.XPS);
-                var doc4 = new Document(_fourthPart);
-                doc4.SaveToFile(newXPSFourthPartDocumentName, FileFormat.XPS);
-                
+                CreateXpsDocument("doc-c1c.docx", newXPSFirstPartDocumentName);
+                CreateXpsDocument("doc-c2c.docx", newXPSSecondPartDocumentName);
+                CreateXpsDocument("doc-c3c.docx", newXPSThirdPartDocumentName);
+                CreateXpsDocument("doc-c4c.docx", newXPSFourthPartDocumentName);
+
                 var xpsDocs = new List<XpsDocument>
                 {
                     new XpsDocument(newXPSFirstPartDocumentName, FileAccess.Read),
@@ -93,7 +88,24 @@ namespace AutomatingDocumentFilling.WPF.Commands
 
                 _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
                 xpsDocument.Close();
+
+                // xpsDocs.ForEach(d => d.Close());
+
+                //if (File.Exists(newXPSFirstPartDocumentName) && File.Exists(newXPSSecondPartDocumentName)
+                //    && File.Exists(newXPSThirdPartDocumentName) && File.Exists(newXPSFourthPartDocumentName))
+                //{
+                //    File.Delete(newXPSFirstPartDocumentName);
+                //    File.Delete(newXPSSecondPartDocumentName);
+                //    File.Delete(newXPSThirdPartDocumentName);
+                //    File.Delete(newXPSFourthPartDocumentName);
+                //}
             }
+        }
+
+        private void CreateXpsDocument(string documentName, string xpsDocumentName)
+        {
+            Document document = new Document(documentName);
+            document.SaveToFile(xpsDocumentName, FileFormat.XPS);
         }
 
         // private XpsDocument ConvertWordDocToXPSDoc(string wordDocName, string xpsDocName)
@@ -126,10 +138,10 @@ namespace AutomatingDocumentFilling.WPF.Commands
         //     //     //    File.Delete(_changedFilePath);
         //     // }
         //
-        //     
-        //     
-        //     
-        //     
+        //
+        //
+        //
+        //
         //     return xpsDoc;
         // }
 
@@ -139,15 +151,15 @@ namespace AutomatingDocumentFilling.WPF.Commands
             {
                 File.Delete(newFile);
             }
-        
+
             XpsDocument xpsDocument = new XpsDocument(newFile, FileAccess.ReadWrite);
             XpsDocumentWriter xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(xpsDocument);
             FixedDocumentSequence fixedDocumentSequence = new FixedDocumentSequence();
-        
-            foreach(XpsDocument doc in sourceDocuments)
+
+            foreach (XpsDocument doc in sourceDocuments)
             {
                 FixedDocumentSequence sourceSequence = doc.GetFixedDocumentSequence();
-                
+
                 foreach (DocumentReference dr in sourceSequence.References)
                 {
                     DocumentReference newDocumentReference = new DocumentReference
@@ -161,9 +173,10 @@ namespace AutomatingDocumentFilling.WPF.Commands
                 }
             }
             xpsDocumentWriter.Write(fixedDocumentSequence);
-        
+
             return xpsDocument;
         }
-        
+
+        public event EventHandler? CanExecuteChanged;
     }
 }

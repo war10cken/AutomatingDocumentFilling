@@ -8,29 +8,33 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AutomatingDocumentFilling.WPF.Commands
 {
-    public class GetSpecialtiesCommand : AsyncCommandBase
+    public class GetPlacesOfDisciplineInStructureCommand : AsyncCommandBase
     {
         private readonly HomeViewModel _homeViewModel;
 
-        public GetSpecialtiesCommand(HomeViewModel homeViewModel)
+        public GetPlacesOfDisciplineInStructureCommand(HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
         }
 
-        public override async Task ExecuteAsync(object parameter)
+        public async override Task ExecuteAsync(object parameter)
         {
-            await Task.WhenAll(GetSpecialties());
-        }
-
-        private async Task GetSpecialties()
-        {
+            // Attributes attributes = new Attributes();
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
             Database database = await JsonSerializer.DeserializeAsync<Database>(stream);
 
-            _homeViewModel.Specialties = database.Specialties;
+            //var p = attributes.GetType().GetProperty("CodesOfAcademicDiscipline");
+            //var ps = attributes.GetType().GetProperties();
+
+            //object obj;
+
+            //obj = await attributes.GetValue("Skills");
+
+            _homeViewModel.PlacesOfDisciplineInStructure = database.PlacesOfDisciplineInStructure;
         }
     }
 }

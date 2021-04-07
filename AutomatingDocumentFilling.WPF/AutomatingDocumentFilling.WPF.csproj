@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="Controls" />
       <Folder Include="HostBuilder" />
-      <Folder Include="Styles" />
     </ItemGroup>
 
     <ItemGroup>

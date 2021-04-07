@@ -12,58 +12,68 @@ using System.Windows.Input;
 
 namespace AutomatingDocumentFilling.WPF.Commands
 {
-    public class GetArrayFromJsonCommand : ICommand
-    {
-        private readonly string _propertyName;
-        private List<string> _values;
+    // public class GetArrayFromJsonCommand : ICommand
+    // {
+    //     private readonly string _propertyName;
+    //     private IEnumerable<string> _values;
+    //     private Database _database;
+    //
+    //     public GetArrayFromJsonCommand(string propertyName, ref List<string> values)
+    //     {
+    //         _propertyName = propertyName;
+    //         _values = values;
+    //         _database = new Database(ref _database);
+    //     }
+    //
+    //     public event EventHandler CanExecuteChanged;
+    //
+    //     public bool CanExecute(object parameter)
+    //     {
+    //         return true;
+    //     }
+    //
+    //     public void Execute(object parameter)
+    //     {
+    //         _values = JsonSerializer.Deserialize<List<string>>(_propertyName);
+    //     }
+    //
+    //     private async Task GetArray(string propertyName)
+    //     {
+    //         using FileStream stream = File.Open("values.json", FileMode.OpenOrCreate);
+    //         var property = await _database.GetValue(propertyName);
+    //
+    //         _values = property;
+    //     }
+    // }
 
-        public GetArrayFromJsonCommand(string propertyName, ref List<string> values)
+    public class GetArrayFromJsonCommand : AsyncCommandBase
+    {
+        private Database _database;
+
+        private readonly HomeViewModel _homeViewModel;
+        private readonly string _propertyName;
+
+        public GetArrayFromJsonCommand(string propertyName, HomeViewModel homeViewModel)
         {
             _propertyName = propertyName;
-            _values = values;
+            _homeViewModel = homeViewModel;
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            return true;
+            await Task.WhenAll(GetArray(_propertyName));
         }
 
-        public void Execute(object parameter)
+        private async Task GetArray(string propertyName)
         {
-            _values = JsonSerializer.Deserialize<List<string>>(_propertyName);
+            _database = await Database.GetDatabase();
+
+            var homeViewModelProperty = _homeViewModel.GetType().GetProperty(propertyName);
+
+            using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
+            var property = await _database.GetValue(propertyName);
+
+            homeViewModelProperty.SetValue(_homeViewModel, property.ToList());
         }
     }
-
-    //public class GetArrayFromJsonCommand : AsyncCommandBase
-    //{
-    //    private readonly HomeViewModel _homeViewModel;
-    //    private readonly string _propertyName;
-
-    //    public GetArrayFromJsonCommand(HomeViewModel homeViewModel, string propertyName)
-    //    {
-    //        _homeViewModel = homeViewModel;
-    //        _propertyName = propertyName;
-    //    }
-
-    //    public override Task ExecuteAsync(object parameter)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    private async Task GetArray()
-    //    {
-    //        PropertyInfo[] propertyInfos = typeof(Attributes).GetProperties(BindingFlags.Public);
-
-    //        using FileStream stream = File.Open("values.json", FileMode.OpenOrCreate);
-    //        Attributes attributes = await JsonSerializer.DeserializeAsync<Attributes>(stream);
-
-    //        for (int i = 0; i < propertyInfos.Length; i++)
-    //        {
-    //            if(propertyInfos[i].Name == _propertyName)
-    //                propertyInfos[i].set
-    //        }
-    //    }
-    //}
 }

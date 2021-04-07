@@ -1,5 +1,4 @@
-﻿using AutomatingDocumentFilling.WPF.Models;
-using AutomatingDocumentFilling.WPF.ViewModels;
+﻿using AutomatingDocumentFilling.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,29 +6,30 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AutomatingDocumentFilling.WPF.Models;
 
 namespace AutomatingDocumentFilling.WPF.Commands
 {
-    public class GetFormsOfEducationCommand : AsyncCommandBase
+    public class GetSkillsCommand : AsyncCommandBase
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly SkillViewModel _skillViewModel;
 
-        public GetFormsOfEducationCommand(HomeViewModel homeViewModel)
+        public GetSkillsCommand(SkillViewModel skillViewModel)
         {
-            _homeViewModel = homeViewModel;
+            _skillViewModel = skillViewModel;
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
-            await Task.WhenAll(GetFormsOfEducation());
+            await Task.WhenAll(GetArray());
         }
 
-        private async Task GetFormsOfEducation()
+        private async Task GetArray()
         {
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
             Database database = await JsonSerializer.DeserializeAsync<Database>(stream);
 
-            _homeViewModel.FormsOfEducation = database.FormsOfEducation;
+            _skillViewModel.Skills = database.Skills;
         }
     }
 }

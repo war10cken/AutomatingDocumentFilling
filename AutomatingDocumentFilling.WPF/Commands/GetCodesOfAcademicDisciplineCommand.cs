@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -27,8 +28,21 @@ namespace AutomatingDocumentFilling.WPF.Commands
         private async Task GetArray()
         {
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
-            Attributes attributes = await JsonSerializer.DeserializeAsync<Attributes>(stream);
-            _homeViewModel.CodesOfAcademicDiscipline = attributes.CodesOfAcademicDiscipline;
+            Database database = await JsonSerializer.DeserializeAsync<Database>(stream);
+
+            // var p = attributes.GetType().GetProperty("CodesOfAcademicDiscipline");
+            // var ps = attributes.GetType().GetProperties();
+            //
+            // object obj;
+            //
+            // foreach (PropertyInfo propertyInfo in ps)
+            // {
+            //     obj = propertyInfo.GetValue(attributes);
+            // }
+
+            //var f = p.GetValue(p);
+
+            _homeViewModel.CodesOfAcademicDiscipline = database.CodesOfAcademicDiscipline;
         }
     }
 }

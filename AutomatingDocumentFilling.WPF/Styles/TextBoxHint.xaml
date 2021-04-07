@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        x:Key="TextBoxHint"
+        TargetType="TextBox">
+        <Style.Resources>
+            <VisualBrush
+                x:Key="CueBannerBrush"
+                AlignmentX="Left"
+                AlignmentY="Center"
+                Stretch="None">
+                <VisualBrush.Visual>
+                    <Label Content="ФИО методиста,
+                           члена методического совета ГБПОУ МО «Люберецкий техникум имени
+                           Героя Советского Союза, лётчика–космонавта Ю.А. Гагарина»"
+                           Foreground="Black" />
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+            </Trigger>
+            <Trigger Property="Text" Value="{x:Null}">
+                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+            </Trigger>
+            <Trigger Property="IsMouseCaptured" Value="True">
+                <Setter Property="Background" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

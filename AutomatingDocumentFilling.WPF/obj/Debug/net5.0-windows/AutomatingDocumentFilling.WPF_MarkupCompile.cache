@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\App.xaml
-3-728590482
+6-533852976
 
-271534648077
+292058504677
 231-1631617902
-MainWindow.xaml;Views\DocumentView.xaml;Views\HomeView.xaml;
+MainWindow.xaml;Styles\ComboBox.xaml;Styles\TextBox.xaml;Styles\TextBoxHint.xaml;Views\DocumentView.xaml;Views\HomeView.xaml;
 
 True
 

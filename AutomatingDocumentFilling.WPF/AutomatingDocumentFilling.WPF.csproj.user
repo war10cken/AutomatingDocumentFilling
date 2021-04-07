@@ -7,6 +7,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\TextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\TextBoxHint.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
