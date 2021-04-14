@@ -1,0 +1,12 @@
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\bin\Debug\net5.0\AutomatingDocumentFilling.Domain.deps.json
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\bin\Debug\net5.0\AutomatingDocumentFilling.Domain.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\bin\Debug\net5.0\ref\AutomatingDocumentFilling.Domain.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\bin\Debug\net5.0\AutomatingDocumentFilling.Domain.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.csprojAssemblyReference.cache
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.AssemblyInfoInputs.cache
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.AssemblyInfo.cs
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.csproj.CoreCompileInputs.cache
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\ref\AutomatingDocumentFilling.Domain.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Domain\obj\Debug\net5.0\AutomatingDocumentFilling.Domain.pdb

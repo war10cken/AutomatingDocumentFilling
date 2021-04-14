@@ -73,7 +73,7 @@ namespace AutomatingDocumentFilling.WPF.Commands
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
             var property = await _database.GetValue(propertyName);
 
-            homeViewModelProperty.SetValue(_homeViewModel, property.ToList());
+            homeViewModelProperty?.SetValue(_homeViewModel, property.ToList());
         }
     }
 }

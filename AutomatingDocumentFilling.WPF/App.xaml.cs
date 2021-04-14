@@ -42,7 +42,8 @@ namespace AutomatingDocumentFilling.WPF
                             string secondPart = context.Configuration.GetValue<string>("SecondPartOfDoc");
                             string thirdPart = context.Configuration.GetValue<string>("ThirdPartOfDoc");
                             string fourthPart = context.Configuration.GetValue<string>("FourthPartOfDoc");
-                            
+                            string documentName = context.Configuration.GetValue<string>("Document");
+
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
                             services
                                .AddSingleton<IDialogWindowService<DocumentView>, DialogWindowService<DocumentView>>();
@@ -51,7 +52,7 @@ namespace AutomatingDocumentFilling.WPF
                             {
                                 return () => new HomeViewModel(service.GetRequiredService<DocumentViewModel>(),
                                                                firstPart, secondPart,
-                                                               thirdPart, fourthPart);
+                                                               thirdPart, fourthPart, documentName);
                             });
 
                             services.AddSingleton<INavigator, Navigator>();

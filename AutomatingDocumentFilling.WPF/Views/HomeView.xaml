@@ -165,7 +165,7 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="{Binding TechExpertFIO, Mode=TwoWay}" />
+                Text="{Binding TechExpertFio, Mode=TwoWay}" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="1"
@@ -192,7 +192,7 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="{Binding ContentExpertFIO, Mode=TwoWay}" />
+                Text="{Binding ContentExpertFio, Mode=TwoWay}" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="1"
@@ -210,7 +210,7 @@
                 Grid.Column="0"
                 Text="Введите ФИО и должность внешнего эксперта через запятую:"
                 TextWrapping="Wrap" />
-            <TextBox Grid.Column="1" Text="{Binding OutsideExpertFIO, Mode=TwoWay}" />
+            <TextBox Grid.Column="1" Text="{Binding OutsideExpertFio, Mode=TwoWay}" />
         </Grid>
 
         <Grid Grid.Row="8">

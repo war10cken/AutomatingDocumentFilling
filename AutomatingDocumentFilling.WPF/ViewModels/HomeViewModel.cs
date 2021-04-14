@@ -49,8 +49,9 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
         private readonly string _secondPart;
         private readonly string _thirdPart;
         private readonly string _fourthPart;
+        private readonly string _documentName;
 
-        #region Properties
+    #region Properties
 
         public ObservableCollection<SkillViewModel> SkillItems { get; set; }
 
@@ -99,48 +100,48 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             }
         }
 
-        private string _outsideExpertFIO;
+        private string _outsideExpertFio;
 
-        public string OutsideExpertFIO
+        public string OutsideExpertFio
         {
             get
             {
-                return _outsideExpertFIO;
+                return _outsideExpertFio;
             }
             set
             {
-                _outsideExpertFIO = value;
-                OnPropertyChanged(nameof(OutsideExpertFIO));
+                _outsideExpertFio = value;
+                OnPropertyChanged(nameof(OutsideExpertFio));
             }
         }
 
-        private string _contentExpertFIO;
+        private string _contentExpertFio;
 
-        public string ContentExpertFIO
+        public string ContentExpertFio
         {
             get
             {
-                return _contentExpertFIO;
+                return _contentExpertFio;
             }
             set
             {
-                _contentExpertFIO = value;
-                OnPropertyChanged(nameof(ContentExpertFIO));
+                _contentExpertFio = value;
+                OnPropertyChanged(nameof(ContentExpertFio));
             }
         }
 
-        private string _techExpertFIO;
+        private string _techExpertFio;
 
-        public string TechExpertFIO
+        public string TechExpertFio
         {
             get
             {
-                return _techExpertFIO;
+                return _techExpertFio;
             }
             set
             {
-                _techExpertFIO = value;
-                OnPropertyChanged(nameof(TechExpertFIO));
+                _techExpertFio = value;
+                OnPropertyChanged(nameof(TechExpertFio));
             }
         }
 
@@ -310,8 +311,6 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
 
         public ICommand GetSkillsCommand { get; }
 
-        public ICommand GetArrayFromJsonCommand { get; }
-
         private List<Skill> _skills = new List<Skill>
         {
             new Skill("13"),
@@ -331,29 +330,28 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             }
         }
 
-        public HomeViewModel(DocumentViewModel documentViewModel, string firsPart, string secondPart, string thirdPart, string fourthPart)
+        public HomeViewModel(DocumentViewModel documentViewModel,
+                             string firsPart, string secondPart,
+                             string thirdPart, string fourthPart, string documentName)
         {
+            
+            
             _firsPart = firsPart;
             _secondPart = secondPart;
             _thirdPart = thirdPart;
             _fourthPart = fourthPart;
-
-            GetArrayFromJsonCommand =
-                new GetArrayFromJsonCommand(nameof(CodesOfAcademicDiscipline), this);
-            GetArrayFromJsonCommand.Execute(null);
+            _documentName = documentName;
 
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand(nameof(FormsOfEducation), this);
+            GetSpecialtiesCommand = new GetArrayFromJsonCommand(nameof(Specialties), this);
+            GetCodesOfAcademicDisciplineCommand = new GetArrayFromJsonCommand(nameof(CodesOfAcademicDiscipline), this);
+            GetPlacesOfDisciplineInStructureCommand =
+                new GetArrayFromJsonCommand(nameof(PlacesOfDisciplineInStructure), this);
+            
+            GetCodesOfAcademicDisciplineCommand.Execute(null);
+            GetSpecialtiesCommand.Execute(null);
             GetFormsOfEducationCommand.Execute(null);
-            // GetSpecialtiesCommand = new GetSpecialtiesCommand(this);
-            // GetCodesOfAcademicDisciplineCommand = new GetCodesOfAcademicDisciplineCommand(this);
-            // GetPlacesOfDisciplineInStructureCommand = new GetPlacesOfDisciplineInStructureCommand(this);
-            GetSkillsCommand = new GetSkillsCommand(new SkillViewModel());
-
-            // GetSkillsCommand.Execute(null);
-            // GetCodesOfAcademicDisciplineCommand.Execute(null);
-            // GetSpecialtiesCommand.Execute(null);
-            // GetFormsOfEducationCommand.Execute(null);
-            // GetPlacesOfDisciplineInStructureCommand.Execute(null);
+            GetPlacesOfDisciplineInStructureCommand.Execute(null);
 
             documentViewModel.OpenDocumentCommand = new OpenDocumentCommand(documentViewModel, _firsPart,
                                                                             _secondPart, _thirdPart, _fourthPart);
@@ -361,7 +359,7 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             ShowWindowCommand = new ShowWindowCommand(documentViewModel.OpenDocumentCommand,
                                                       this, documentViewModel,
                                                       _firsPart, _secondPart,
-                                                      _thirdPart, _fourthPart);
+                                                      _thirdPart, _fourthPart, _documentName);
         }
     }
 }

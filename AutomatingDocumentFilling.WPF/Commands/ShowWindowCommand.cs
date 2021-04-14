@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +21,7 @@ namespace AutomatingDocumentFilling.WPF.Commands
         private readonly string _secondPart;
         private readonly string _thirdPart;
         private readonly string _fourthPart;
+        private readonly string _documentName;
         private readonly ICommand _openCommand;
         private readonly DocumentViewModel _documentViewModel;
 
@@ -29,7 +31,7 @@ namespace AutomatingDocumentFilling.WPF.Commands
                                  string firstPart,
                                  string secondPart,
                                  string thirdPart,
-                                 string fourthPart)
+                                 string fourthPart, string documentName)
         {
             _firstPart = firstPart;
             _openCommand = openCommand;
@@ -38,6 +40,7 @@ namespace AutomatingDocumentFilling.WPF.Commands
             _secondPart = secondPart;
             _thirdPart = thirdPart;
             _fourthPart = fourthPart;
+            _documentName = documentName;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -51,6 +54,7 @@ namespace AutomatingDocumentFilling.WPF.Commands
         {
             if (_firstPart.Length > 0)
             {
+                //InsertIntoDocument(_documentName, "s.docx");
                 InsertIntoDocument(_firstPart, "doc-c1c.docx");
                 InsertIntoDocument(_secondPart, "doc-c2c.docx");
                 InsertIntoDocument(_thirdPart, "doc-c3c.docx");
@@ -83,9 +87,14 @@ namespace AutomatingDocumentFilling.WPF.Commands
                         {"Знание", "Наименование занания"};
                     string[] knowledgeData = {"Основные понятия, функции, состав и принципы работы операционных систем.", "q" };
 
+                    string[] generalCompetenceHeaders = {"Код", "Наименование общих компетенций"};
+                    string[] generalCompetenceData = {"Берутся в соответствии с ФГОС по профессии (специальности)", "q"};
+
                     var skillsTable = CreateTable(document, skillsHeaders, skillsData, 'У');
                     var knowledgeTable = CreateTable(document, knowledgeHeaders, knowledgeData, 'З');
-
+                    var generalCompetenceTable =
+                        CreateTable(document, generalCompetenceHeaders, generalCompetenceData, "ОК");
+                    
                     document.ReplaceText("<code>", _homeViewModel.CodeOfAcademicDiscipline, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<specialty>", _homeViewModel.Specialty, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<formofeducation>", _homeViewModel.FormOfEducation, false, RegexOptions.IgnoreCase);
@@ -96,13 +105,14 @@ namespace AutomatingDocumentFilling.WPF.Commands
                     document.ReplaceText("<fullnameCMCC>", _homeViewModel.FullNameOfChairmanOfMethodologicalCyclicCommission,
                                          false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<completedby>", _homeViewModel.CompletedBy, false, RegexOptions.IgnoreCase);
-                    document.ReplaceText("<techfio>", _homeViewModel.TechExpertFIO, false, RegexOptions.IgnoreCase);
-                    document.ReplaceText("<contentfio>", _homeViewModel.ContentExpertFIO, false, RegexOptions.IgnoreCase);
-                    document.ReplaceText("<outsidefio>", _homeViewModel.OutsideExpertFIO, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<techfio>", _homeViewModel.TechExpertFio, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<contentfio>", _homeViewModel.ContentExpertFio, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<outsidefio>", _homeViewModel.OutsideExpertFio, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<order>", _homeViewModel.Order, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<placeofdisciplineinstructure>", _homeViewModel.PlaceOfDisciplineInStructure, false, RegexOptions.IgnoreCase);
                     document.ReplaceTextWithObject("<skillstable>", skillsTable, false, RegexOptions.IgnoreCase);
                     document.ReplaceTextWithObject("<knowledgetable>", knowledgeTable, false, RegexOptions.IgnoreCase);
+                    document.ReplaceTextWithObject("<generalcompetencetable>", generalCompetenceTable, false, RegexOptions.IgnoreCase);
                     //document.SaveAs(newNameOfDocument);
                 }
 
@@ -118,7 +128,6 @@ namespace AutomatingDocumentFilling.WPF.Commands
             table.AutoFit = AutoFit.Contents;
 
             int rows = data.GetUpperBound(0) + 2;
-            int columns = data.Length + 1 / rows;
 
             table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
             table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
@@ -126,6 +135,27 @@ namespace AutomatingDocumentFilling.WPF.Commands
             for (int i = 1; i < rows; i++)
             {
                 table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbol}.{i}");
+                table.Rows[i].Cells[1].Paragraphs[0].Append(data[i - 1]);
+            }
+
+            return table;
+        }
+
+        private Table CreateTable(DocX document, IReadOnlyList<string> headers, string[] data, string symbol)
+        {
+            var table = document.AddTable(data.GetUpperBound(0) + 2, headers.Count);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
+
+            int rows = data.GetUpperBound(0) + 2;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
+            table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
+
+            for (int i = 1; i < rows; i++)
+            {
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbol} {i}.");
                 table.Rows[i].Cells[1].Paragraphs[0].Append(data[i - 1]);
             }
 
