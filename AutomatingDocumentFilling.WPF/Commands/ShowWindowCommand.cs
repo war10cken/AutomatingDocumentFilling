@@ -17,10 +17,6 @@ namespace AutomatingDocumentFilling.WPF.Commands
     public class ShowWindowCommand : ICommand
     {
         private readonly HomeViewModel _homeViewModel;
-        private readonly string _firstPart;
-        private readonly string _secondPart;
-        private readonly string _thirdPart;
-        private readonly string _fourthPart;
         private readonly string _documentName;
         private readonly ICommand _openCommand;
         private readonly DocumentViewModel _documentViewModel;
@@ -28,18 +24,11 @@ namespace AutomatingDocumentFilling.WPF.Commands
         public ShowWindowCommand(ICommand openCommand,
                                  HomeViewModel homeViewModel,
                                  DocumentViewModel documentViewModel,
-                                 string firstPart,
-                                 string secondPart,
-                                 string thirdPart,
-                                 string fourthPart, string documentName)
+                                 string documentName)
         {
-            _firstPart = firstPart;
             _openCommand = openCommand;
             _homeViewModel = homeViewModel;
             _documentViewModel = documentViewModel;
-            _secondPart = secondPart;
-            _thirdPart = thirdPart;
-            _fourthPart = fourthPart;
             _documentName = documentName;
         }
 
@@ -52,13 +41,9 @@ namespace AutomatingDocumentFilling.WPF.Commands
 
         public void Execute(object parameter)
         {
-            if (_firstPart.Length > 0)
+            if (_documentName.Length > 0)
             {
-                //InsertIntoDocument(_documentName, "s.docx");
-                InsertIntoDocument(_firstPart, "doc-c1c.docx");
-                InsertIntoDocument(_secondPart, "doc-c2c.docx");
-                InsertIntoDocument(_thirdPart, "doc-c3c.docx");
-                InsertIntoDocument(_fourthPart, "doc-c4c.docx");
+                InsertIntoDocument(_documentName, "output.docx");
 
                 _openCommand.Execute(null);
                 Window documentWindow = new DocumentView(_documentViewModel);

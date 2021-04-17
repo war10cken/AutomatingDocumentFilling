@@ -12,17 +12,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aspose.Words" Version="21.3.0" />
       <PackageReference Include="DocX" Version="1.7.1" />
-      <PackageReference Include="FreeSpire.Doc" Version="7.11.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-      <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003">
-        <EmbedInteropTypes>True</EmbedInteropTypes>
-      </PackageReference>
+      <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1003" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-      <PackageReference Include="sautinsoft.document" Version="5.2.2.16" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AutomatingDocumentFilling.Converter\AutomatingDocumentFilling.Converter.csproj" />
     </ItemGroup>
 
 </Project>

@@ -4,6 +4,16 @@
     "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPF\\AutomatingDocumentFilling.WPF.csproj": {}
   },
   "projects": {
+    "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj",
+        "projectName": "AutomatingDocumentFilling.Converter",
+        "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj"
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPF\\AutomatingDocumentFilling.WPF.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -27,7 +37,11 @@
         "frameworks": {
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj": {
+                "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -40,17 +54,9 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "dependencies": {
-            "Aspose.Words": {
-              "target": "Package",
-              "version": "[21.3.0, )"
-            },
             "DocX": {
               "target": "Package",
               "version": "[1.7.1, )"
-            },
-            "FreeSpire.Doc": {
-              "target": "Package",
-              "version": "[7.11.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -71,10 +77,6 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
-            },
-            "sautinsoft.document": {
-              "target": "Package",
-              "version": "[5.2.2.16, )"
             }
           },
           "imports": [

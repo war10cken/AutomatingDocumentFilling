@@ -45,10 +45,6 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
 
     public class HomeViewModel : ViewModelBase
     {
-        private readonly string _firsPart;
-        private readonly string _secondPart;
-        private readonly string _thirdPart;
-        private readonly string _fourthPart;
         private readonly string _documentName;
 
     #region Properties
@@ -330,16 +326,10 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             }
         }
 
-        public HomeViewModel(DocumentViewModel documentViewModel,
-                             string firsPart, string secondPart,
-                             string thirdPart, string fourthPart, string documentName)
+        public HomeViewModel(DocumentViewModel documentViewModel, string documentName)
         {
             
             
-            _firsPart = firsPart;
-            _secondPart = secondPart;
-            _thirdPart = thirdPart;
-            _fourthPart = fourthPart;
             _documentName = documentName;
 
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand(nameof(FormsOfEducation), this);
@@ -353,13 +343,10 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
             GetFormsOfEducationCommand.Execute(null);
             GetPlacesOfDisciplineInStructureCommand.Execute(null);
 
-            documentViewModel.OpenDocumentCommand = new OpenDocumentCommand(documentViewModel, _firsPart,
-                                                                            _secondPart, _thirdPart, _fourthPart);
+            documentViewModel.OpenDocumentCommand = new OpenDocumentCommand(documentViewModel, _documentName);
 
             ShowWindowCommand = new ShowWindowCommand(documentViewModel.OpenDocumentCommand,
-                                                      this, documentViewModel,
-                                                      _firsPart, _secondPart,
-                                                      _thirdPart, _fourthPart, _documentName);
+                                                      this, documentViewModel, _documentName);
         }
     }
 }

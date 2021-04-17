@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +14,6 @@ using AutomatingDocumentFilling.WPF.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Spire.License;
 
 namespace AutomatingDocumentFilling.WPF
 {
@@ -38,10 +38,6 @@ namespace AutomatingDocumentFilling.WPF
                         })
                        .ConfigureServices((context, services) =>
                         {
-                            string firstPart = context.Configuration.GetValue<string>("FirstPartOfDoc");
-                            string secondPart = context.Configuration.GetValue<string>("SecondPartOfDoc");
-                            string thirdPart = context.Configuration.GetValue<string>("ThirdPartOfDoc");
-                            string fourthPart = context.Configuration.GetValue<string>("FourthPartOfDoc");
                             string documentName = context.Configuration.GetValue<string>("Document");
 
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
@@ -50,9 +46,7 @@ namespace AutomatingDocumentFilling.WPF
 
                             services.AddSingleton<CreateViewModel<HomeViewModel>>(service =>
                             {
-                                return () => new HomeViewModel(service.GetRequiredService<DocumentViewModel>(),
-                                                               firstPart, secondPart,
-                                                               thirdPart, fourthPart, documentName);
+                                return () => new HomeViewModel(service.GetRequiredService<DocumentViewModel>(), documentName);
                             });
 
                             services.AddSingleton<INavigator, Navigator>();
