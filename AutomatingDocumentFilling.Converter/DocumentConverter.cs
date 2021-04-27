@@ -7,6 +7,8 @@ namespace AutomatingDocumentFilling.Converter
 {
     public static class DocumentConverter
     {
+        private static _Document _document;
+        
         public static void Convert(string inputFilename, string outputFilename, WdSaveFormat wdSaveFormat)
         {
             _Application application = new Application
@@ -44,8 +46,11 @@ namespace AutomatingDocumentFilling.Converter
             application.Quit(ref oMissing, ref oMissing, ref oMissing);
         }
         
-        public static XpsDocument ConvertToXps(string inputFilename, string outputFilename, WdSaveFormat wdSaveFormat = WdSaveFormat.wdFormatXPS)
+        public static void ConvertToXps(string inputFilename, string outputFilename, WdSaveFormat wdSaveFormat = WdSaveFormat.wdFormatXPS)
         {
+            if(File.Exists(outputFilename))
+                File.Delete(outputFilename);
+            
             _Application application = new Application
             {
                 Visible = false
@@ -58,7 +63,7 @@ namespace AutomatingDocumentFilling.Converter
             object oOutput = outputFilename;
             object oFormat = wdSaveFormat;
 
-            _Document document = application.Documents.Open(ref oInput, ref oMissing,
+            _document = application.Documents.Open(ref oInput, ref oMissing,
                                                             ref readOnly, ref oMissing,
                                                             ref oMissing, ref oMissing,
                                                             ref oMissing, ref oMissing,
@@ -67,9 +72,9 @@ namespace AutomatingDocumentFilling.Converter
                                                             ref oMissing, ref oMissing,
                                                             ref oMissing, ref oMissing);
 
-            document.Activate();
+            _document.Activate();
 
-            document.SaveAs(ref oOutput, ref oFormat,
+            _document.SaveAs(ref oOutput, ref oFormat,
                             ref oMissing, ref oMissing,
                             ref oMissing, ref oMissing,
                             ref oMissing, ref oMissing,
@@ -79,8 +84,6 @@ namespace AutomatingDocumentFilling.Converter
                             ref oMissing, ref oMissing);
 
             application.Quit(ref oMissing, ref oMissing, ref oMissing);
-
-            return new XpsDocument(outputFilename, FileAccess.Read);
         }
 
         public static void ConvertToPdf(string inputFilename, string outputFilename, WdSaveFormat wdSaveFormat = WdSaveFormat.wdFormatPDF)

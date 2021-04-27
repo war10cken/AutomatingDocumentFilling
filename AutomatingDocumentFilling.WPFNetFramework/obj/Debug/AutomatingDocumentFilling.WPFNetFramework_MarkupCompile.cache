@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\App.xaml
-6-1217406820
+4407689443
 
-28-158444047
+31916194240
 1561375411652
-MainWindow.xaml;Styles\ComboBox.xaml;Styles\TextBox.xaml;Views\DocumentView.xaml;Views\HomeView.xaml;Views\Test.xaml;
+MainWindow.xaml;Styles\Common.xaml;Views\DocumentView.xaml;Views\HomeView.xaml;
 
-True
+False
 

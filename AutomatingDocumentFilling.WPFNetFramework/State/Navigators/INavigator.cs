@@ -1,9 +1,11 @@
-﻿using WpfApplication1.ViewModels;
+﻿using System;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
-namespace WpfApplication1.State.Navigators
+namespace AutomatingDocumentFilling.WPFNetFramework.State.Navigators
 {
     public interface INavigator
     {
         ViewModelBase CurrentViewModel { get; set; }
+        event Action StateChanged;
     }
 }

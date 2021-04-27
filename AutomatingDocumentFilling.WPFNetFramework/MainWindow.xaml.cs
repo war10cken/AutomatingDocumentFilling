@@ -1,4 +1,4 @@
-﻿namespace WpfApplication1
+﻿namespace AutomatingDocumentFilling.WPFNetFramework
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

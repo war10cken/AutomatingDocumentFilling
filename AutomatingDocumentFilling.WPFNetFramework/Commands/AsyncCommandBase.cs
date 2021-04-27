@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WpfApplication1.Commands
+namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
     public abstract class AsyncCommandBase : ICommand
     {

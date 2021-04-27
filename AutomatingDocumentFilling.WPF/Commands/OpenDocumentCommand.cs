@@ -30,12 +30,12 @@ namespace AutomatingDocumentFilling.WPF.Commands
             _documentName = documentName;
         }
 
-        public bool CanExecute(object? parameter)
+        public bool CanExecute(object parameter)
         {
             return true;
         }
 
-        public void Execute(object? parameter)
+        public void Execute(object parameter)
         {
             OpenDocument();
         }
@@ -56,15 +56,15 @@ namespace AutomatingDocumentFilling.WPF.Commands
             {
                 string path = Path.GetFullPath(_documentName ?? string.Empty);
                 string newXpsDocumentName = Path.GetFullPath(_documentName ?? string.Empty).Remove(path.Length - 4) + "xps";
-                
-                XpsDocument xpsDocument = DocumentConverter.ConvertToXps(path, newXpsDocumentName);
+
+                //XpsDocument xpsDocument = DocumentConverter.ConvertToXps(path, newXpsDocumentName);
 
                 //XpsDocument xpsDocument = new XpsDocument(newXpsDocumentName, FileAccess.Read);
 
-                _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
+                //_viewModel.Document = xpsDocument.GetFixedDocumentSequence();
             }
         }
-        
-        public event EventHandler? CanExecuteChanged;
+
+        public event EventHandler CanExecuteChanged;
     }
 }

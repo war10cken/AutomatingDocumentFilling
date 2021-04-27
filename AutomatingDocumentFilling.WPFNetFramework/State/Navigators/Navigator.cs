@@ -1,7 +1,8 @@
-﻿using WpfApplication1.Models;
-using WpfApplication1.ViewModels;
+﻿using System;
+using AutomatingDocumentFilling.WPFNetFramework.Models;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
-namespace WpfApplication1.State.Navigators
+namespace AutomatingDocumentFilling.WPFNetFramework.State.Navigators
 {
     public class Navigator : ObservableObject, INavigator
     {
@@ -13,8 +14,10 @@ namespace WpfApplication1.State.Navigators
             set
             {
                 _currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
+                StateChanged?.Invoke();
             }
         }
+
+        public event Action StateChanged;
     }
 }

@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatingDocumentFilling.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatingDocumentFilling.Converter", "AutomatingDocumentFilling.Converter\AutomatingDocumentFilling.Converter.csproj", "{F9CED58F-B482-4D84-B313-7923C5B7220B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{3F2D2158-B7BF-410D-8999-024941C03933}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatingDocumentFilling.WPFNetFramework", "AutomatingDocumentFilling.WPFNetFramework\AutomatingDocumentFilling.WPFNetFramework.csproj", "{3F2D2158-B7BF-410D-8999-024941C03933}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

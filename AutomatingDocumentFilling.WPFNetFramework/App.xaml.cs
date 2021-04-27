@@ -1,13 +1,13 @@
 ﻿using System.Windows;
+using AutomatingDocumentFilling.WPFNetFramework.State.Navigators;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels.Factories;
+using AutomatingDocumentFilling.WPFNetFramework.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WpfApplication1.State.Navigators;
-using WpfApplication1.ViewModels;
-using WpfApplication1.ViewModels.Factories;
-using WpfApplication1.Views;
 
-namespace WpfApplication1
+namespace AutomatingDocumentFilling.WPFNetFramework
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WpfApplication1.Models
+namespace AutomatingDocumentFilling.WPFNetFramework.Models
 {
     public class Database
     {
@@ -11,8 +11,9 @@ namespace WpfApplication1.Models
         public List<string> Specialties { get; set; }
         public List<string> FormsOfEducation { get; set; }
         public List<string> PlacesOfDisciplineInStructure { get; set; }
-        public List<string> Skills { get; set; }
-        public List<string> Knowledges { get; set; }
+        public List<string> SkillNames { get; set; }
+        public List<string> KnowledgeNames { get; set; }
+        public List<string> GeneralCompetenceNames { get; set; }
 
         public async Task<IEnumerable<string>> GetValue(string propertyName)
         {

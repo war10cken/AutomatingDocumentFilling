@@ -1,4 +1,4 @@
-﻿namespace WpfApplication1.Models
+﻿namespace AutomatingDocumentFilling.WPFNetFramework.Models
 {
     public class PracticalTrainingTopics 
     {

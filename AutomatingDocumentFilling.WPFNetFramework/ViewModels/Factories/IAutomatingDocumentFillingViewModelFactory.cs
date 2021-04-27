@@ -1,6 +1,6 @@
-﻿using WpfApplication1.State.Navigators;
+﻿using AutomatingDocumentFilling.WPFNetFramework.State.Navigators;
 
-namespace WpfApplication1.ViewModels.Factories
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels.Factories
 {
     public interface IAutomatingDocumentFillingViewModelFactory
     {

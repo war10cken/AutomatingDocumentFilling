@@ -83,12 +83,9 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFrame
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\bin\Debug\System.ValueTuple.xml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.csprojAssemblyReference.cache
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.exe.config
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Styles\ComboBox.baml
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Styles\TextBox.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\MainWindow.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\DocumentView.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\HomeView.g.cs
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\Test.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\App.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework_MarkupCompile.cache
@@ -97,7 +94,6 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFrame
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\MainWindow.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\DocumentView.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\HomeView.baml
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\Test.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.g.resources
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\WpfApplication1.Properties.Resources.resources
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.csproj.GenerateResource.cache
@@ -105,3 +101,4 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFrame
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.csproj.CopyComplete
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.exe
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Styles\Common.baml

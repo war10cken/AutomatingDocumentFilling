@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
-using WpfApplication1.State.Navigators;
-using WpfApplication1.ViewModels.Factories;
+using AutomatingDocumentFilling.WPFNetFramework.State.Navigators;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels.Factories;
 
-namespace WpfApplication1.Commands
+namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
     public class UpdateCurrentViewModelCommand : ICommand
     {

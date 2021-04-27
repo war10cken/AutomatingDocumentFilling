@@ -1,6 +1,6 @@
-﻿using WpfApplication1.Models;
+﻿using AutomatingDocumentFilling.WPFNetFramework.Models;
 
-namespace WpfApplication1.ViewModels
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
     public class ViewModelBase : ObservableObject
     {

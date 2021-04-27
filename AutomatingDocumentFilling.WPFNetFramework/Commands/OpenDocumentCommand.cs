@@ -3,9 +3,9 @@ using System.IO;
 using System.Windows.Input;
 using System.Windows.Xps.Packaging;
 using AutomatingDocumentFilling.Converter;
-using WpfApplication1.ViewModels;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
-namespace WpfApplication1.Commands
+namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
     public class OpenDocumentCommand : ICommand
     {

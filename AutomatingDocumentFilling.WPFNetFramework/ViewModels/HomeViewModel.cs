@@ -1,66 +1,93 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using WpfApplication1.Commands;
+using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
-namespace WpfApplication1.ViewModels
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
-    public class SkillViewModel : ViewModelBase
-    {
-        private List<string> _skillNames = new List<string>(){ "123", "345", "645"};
-
-        public List<string> SkillNames
-        {
-            get
-            {
-                return _skillNames;
-            }
-            set
-            {
-                _skillNames = value;
-                OnPropertyChanged(nameof(SkillNames));
-            }
-        }
-
-        private string _text;
-
-        public string Text
-        {
-            get => _text;
-            set
-            {
-                _text = value;
-                OnPropertyChanged(nameof(Text));
-            }
-        }
-    }
-
-    public class Skill
-    {
-        public string Name { get; set; }
-
-        public Skill(string name)
-        {
-            Name = name;
-        }
-    }
-
     public class HomeViewModel : ViewModelBase
     {
         private readonly string _documentName;
 
-    #region Properties
+        #region Properties
 
-        public ObservableCollection<SkillViewModel> SkillItems { get; set; }
+            private List<GeneralCompetenceViewModel> _generalCompetences;
+
+            public List<GeneralCompetenceViewModel> GeneralCompetences
+            {
+                get => _generalCompetences;
+                set
+                {
+                    _generalCompetences = value;
+                    OnPropertyChanged(nameof(GeneralCompetences));
+                }
+            }
+            
+            private List<SkillViewModel> _skills = new();
+
+            public List<SkillViewModel> Skills
+            {
+                get => _skills;
+                set
+                {
+                    _skills = value;
+                    OnPropertyChanged(nameof(Skills));
+                }
+            }
+
+            private List<KnowledgeViewModel> _knowledge = new();
+
+            public List<KnowledgeViewModel> Knowledge
+            {
+                get => _knowledge;
+                set
+                {
+                    _knowledge = value;
+                    OnPropertyChanged(nameof(Knowledge));
+                }
+            }
+
+            private string _countOfSkills;
+
+            public string CountOfSkills
+            {
+                get => _countOfSkills;
+                set
+                {
+                    _countOfSkills = value;
+                    OnPropertyChanged(nameof(CountOfSkills));
+                }
+            }
+
+            private string _countOfKnowledge;
+
+            public string CountOfKnowledge
+            {
+                get => _countOfKnowledge;
+                set
+                {
+                    _countOfKnowledge = value;
+                    OnPropertyChanged(nameof(CountOfKnowledge));
+                }
+            }
+
+            private string _countOfGeneralCompetences;
+
+            public string CountOfGeneralCompetences
+            {
+                get => _countOfGeneralCompetences;
+                set
+                {
+                    _countOfGeneralCompetences = value;
+                    OnPropertyChanged(nameof(CountOfGeneralCompetences));
+                }
+            }
 
         private string _placeOfDisciplineInStructure;
 
         public string PlaceOfDisciplineInStructure
         {
-            get
-            {
-                return _placeOfDisciplineInStructure;
-            }
+            get => _placeOfDisciplineInStructure;
             set
             {
                 _placeOfDisciplineInStructure = value;
@@ -72,10 +99,7 @@ namespace WpfApplication1.ViewModels
 
         public List<string> PlacesOfDisciplineInStructure
         {
-            get
-            {
-                return _placesOfDisciplineInStructure;
-            }
+            get => _placesOfDisciplineInStructure;
             set
             {
                 _placesOfDisciplineInStructure = value;
@@ -87,10 +111,7 @@ namespace WpfApplication1.ViewModels
 
         public string Order
         {
-            get
-            {
-                return _order;
-            }
+            get => _order;
             set
             {
                 _order = value;
@@ -102,10 +123,7 @@ namespace WpfApplication1.ViewModels
 
         public string OutsideExpertFio
         {
-            get
-            {
-                return _outsideExpertFio;
-            }
+            get => _outsideExpertFio;
             set
             {
                 _outsideExpertFio = value;
@@ -117,10 +135,7 @@ namespace WpfApplication1.ViewModels
 
         public string ContentExpertFio
         {
-            get
-            {
-                return _contentExpertFio;
-            }
+            get => _contentExpertFio;
             set
             {
                 _contentExpertFio = value;
@@ -132,10 +147,7 @@ namespace WpfApplication1.ViewModels
 
         public string TechExpertFio
         {
-            get
-            {
-                return _techExpertFio;
-            }
+            get => _techExpertFio;
             set
             {
                 _techExpertFio = value;
@@ -147,10 +159,7 @@ namespace WpfApplication1.ViewModels
 
         public string CompletedBy
         {
-            get
-            {
-                return _completedBy;
-            }
+            get => _completedBy;
             set
             {
                 _completedBy = value;
@@ -162,10 +171,7 @@ namespace WpfApplication1.ViewModels
 
         public List<string> CodesOfAcademicDiscipline
         {
-            get
-            {
-                return _codesOfAcademicDiscipline;
-            }
+            get => _codesOfAcademicDiscipline;
             set
             {
                 _codesOfAcademicDiscipline = value;
@@ -177,10 +183,7 @@ namespace WpfApplication1.ViewModels
 
         public string CodeOfAcademicDiscipline
         {
-            get
-            {
-                return _codeOfAcademicDiscipline;
-            }
+            get => _codeOfAcademicDiscipline;
             set
             {
                 _codeOfAcademicDiscipline = value;
@@ -192,10 +195,7 @@ namespace WpfApplication1.ViewModels
 
         public List<string> Specialties
         {
-            get
-            {
-                return _specialties;
-            }
+            get => _specialties;
             set
             {
                 _specialties = value;
@@ -207,10 +207,7 @@ namespace WpfApplication1.ViewModels
 
         public string Specialty
         {
-            get
-            {
-                return _specialty;
-            }
+            get => _specialty;
             set
             {
                 _specialty = value;
@@ -222,10 +219,7 @@ namespace WpfApplication1.ViewModels
 
         public List<string> FormsOfEducation
         {
-            get
-            {
-                return _formsOfEducation;
-            }
+            get => _formsOfEducation;
             set
             {
                 _formsOfEducation = value;
@@ -237,10 +231,7 @@ namespace WpfApplication1.ViewModels
 
         public string FormOfEducation
         {
-            get
-            {
-                return _formOfEducation;
-            }
+            get => _formOfEducation;
             set
             {
                 _formOfEducation = value;
@@ -252,10 +243,7 @@ namespace WpfApplication1.ViewModels
 
         public string FullNameOfDeputyDirectorAcademicAffairs
         {
-            get
-            {
-                return _fullNameOfDeputyDirectorAcademicAffairs;
-            }
+            get => _fullNameOfDeputyDirectorAcademicAffairs;
             set
             {
                 _fullNameOfDeputyDirectorAcademicAffairs = value;
@@ -267,10 +255,7 @@ namespace WpfApplication1.ViewModels
 
         public string FullNameOfDeputyDirectorAcademicMethodologicalWork
         {
-            get
-            {
-                return _fullNameOfDeputyDirectorAcademicMethodologicalWork;
-            }
+            get => _fullNameOfDeputyDirectorAcademicMethodologicalWork;
             set
             {
                 _fullNameOfDeputyDirectorAcademicMethodologicalWork = value;
@@ -282,10 +267,7 @@ namespace WpfApplication1.ViewModels
 
         public string FullNameOfChairmanOfMethodologicalCyclicCommission
         {
-            get
-            {
-                return _fullNameOfChairmanOfMethodologicalCyclicCommission;
-            }
+            get => _fullNameOfChairmanOfMethodologicalCyclicCommission;
             set
             {
                 _fullNameOfChairmanOfMethodologicalCyclicCommission = value;
@@ -307,36 +289,31 @@ namespace WpfApplication1.ViewModels
 
         public ICommand GetPlacesOfDisciplineInStructureCommand { get; }
 
-        public ICommand GetSkillsCommand { get; }
+        public ICommand AddNewSkillCommand { get; }
 
-        private List<SkillViewModel> _skills = new List<SkillViewModel>()
-        {
-            new SkillViewModel(),
-            new SkillViewModel(),
-            new SkillViewModel(),
-            new SkillViewModel()
-        };
+        public ICommand AddNewKnowledgeCommand { get; }
 
-        public List<SkillViewModel> Skills
-        {
-            get => _skills;
-            set
-            {
-                _skills = value;
-                OnPropertyChanged(nameof(Skills));
-            }
-        }
-
+        public ICommand AddNewGeneralCompetenceCommand { get; }
+        
+        
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
 
-            GetFormsOfEducationCommand = new GetArrayFromJsonCommand(nameof(FormsOfEducation), this);
-            GetSpecialtiesCommand = new GetArrayFromJsonCommand(nameof(Specialties), this);
-            GetCodesOfAcademicDisciplineCommand = new GetArrayFromJsonCommand(nameof(CodesOfAcademicDiscipline), this);
+            AddNewGeneralCompetenceCommand =
+                new AddNewItemCommand<GeneralCompetenceViewModel>(this, nameof(GeneralCompetences),
+                                                                  nameof(CountOfGeneralCompetences));
+            AddNewKnowledgeCommand =
+                new AddNewItemCommand<KnowledgeViewModel>(this, nameof(Knowledge),
+                                                          nameof(CountOfKnowledge));
+            AddNewSkillCommand = new AddNewItemCommand<SkillViewModel>(this, nameof(Skills),
+                                                                       nameof(CountOfSkills));
+            GetFormsOfEducationCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(FormsOfEducation), this);
+            GetSpecialtiesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Specialties), this);
+            GetCodesOfAcademicDisciplineCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(CodesOfAcademicDiscipline), this);
             GetPlacesOfDisciplineInStructureCommand =
-                new GetArrayFromJsonCommand(nameof(PlacesOfDisciplineInStructure), this);
-            
+                new GetArrayFromJsonCommand<HomeViewModel>(nameof(PlacesOfDisciplineInStructure), this);
+
             GetCodesOfAcademicDisciplineCommand.Execute(null);
             GetSpecialtiesCommand.Execute(null);
             GetFormsOfEducationCommand.Execute(null);

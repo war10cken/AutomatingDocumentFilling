@@ -1,22 +1,22 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using WpfApplication1.Models;
-using WpfApplication1.ViewModels;
+using AutomatingDocumentFilling.WPFNetFramework.Models;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
-namespace WpfApplication1.Commands
+namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
-    public class GetArrayFromJsonCommand : AsyncCommandBase
+    public class GetArrayFromJsonCommand<TViewModel> : AsyncCommandBase where TViewModel : ViewModelBase
     {
         private Database _database;
 
-        private readonly HomeViewModel _homeViewModel;
+        private readonly TViewModel _viewModel;
         private readonly string _propertyName;
 
-        public GetArrayFromJsonCommand(string propertyName, HomeViewModel homeViewModel)
+        public GetArrayFromJsonCommand(string propertyName, TViewModel viewModel)
         {
             _propertyName = propertyName;
-            _homeViewModel = homeViewModel;
+            _viewModel = viewModel;
         }
 
         public override async Task ExecuteAsync(object parameter)
@@ -28,12 +28,12 @@ namespace WpfApplication1.Commands
         {
             _database = await Database.GetDatabase();
 
-            var homeViewModelProperty = _homeViewModel.GetType().GetProperty(propertyName);
+            var viewModelProperty = _viewModel.GetType().GetProperty(propertyName);
 
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
             var property = await _database.GetValue(propertyName);
 
-            homeViewModelProperty?.SetValue(_homeViewModel, property.ToList());
+            viewModelProperty?.SetValue(_viewModel, property.ToList());
         }
     }
 }

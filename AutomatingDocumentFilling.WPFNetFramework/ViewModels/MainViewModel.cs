@@ -1,25 +1,32 @@
 ﻿using System.Windows.Input;
-using WpfApplication1.Commands;
-using WpfApplication1.State.Navigators;
-using WpfApplication1.ViewModels.Factories;
+using AutomatingDocumentFilling.WPFNetFramework.Commands;
+using AutomatingDocumentFilling.WPFNetFramework.State.Navigators;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels.Factories;
 
-namespace WpfApplication1.ViewModels
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
         private readonly IAutomatingDocumentFillingViewModelFactory _viewModelFactory;
+        private readonly INavigator _navigator;
 
-        public INavigator Navigator { get; }
-
-        public ICommand UpdateCurrentViewModelCommand { get; set; }
+        public ViewModelBase CurrentViewModel => _navigator.CurrentViewModel;
+        public ICommand UpdateCurrentViewModelCommand { get; }
 
         public MainViewModel(IAutomatingDocumentFillingViewModelFactory viewModelFactory, INavigator navigator)
         {
             _viewModelFactory = viewModelFactory;
-            Navigator = navigator;
+            _navigator = navigator;
+            
+            _navigator.StateChanged += NavigatorOnStateChanged;
 
             UpdateCurrentViewModelCommand = new UpdateCurrentViewModelCommand(navigator, _viewModelFactory);
             UpdateCurrentViewModelCommand.Execute(ViewType.Home);
+        }
+
+        private void NavigatorOnStateChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

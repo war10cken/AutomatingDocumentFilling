@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfApplication1.Views
+namespace AutomatingDocumentFilling.WPFNetFramework.Views
 {
     public partial class DocumentView : Window
     {

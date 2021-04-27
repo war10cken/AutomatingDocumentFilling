@@ -1,7 +1,7 @@
 ﻿using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace WpfApplication1.ViewModels
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
     public class DocumentViewModel : ViewModelBase
     {

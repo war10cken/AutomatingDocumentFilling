@@ -330,6 +330,7 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
         {
             
             
+            
             _documentName = documentName;
 
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand(nameof(FormsOfEducation), this);

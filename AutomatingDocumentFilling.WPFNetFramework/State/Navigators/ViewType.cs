@@ -1,4 +1,4 @@
-﻿namespace WpfApplication1.State.Navigators
+﻿namespace AutomatingDocumentFilling.WPFNetFramework.State.Navigators
 {
     public enum ViewType
     {
