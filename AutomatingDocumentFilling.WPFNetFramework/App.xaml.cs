@@ -35,6 +35,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework
 
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
 
+                           
                             services.AddSingleton<CreateViewModel<HomeViewModel>>(service =>
                             {
                                 return () =>
@@ -42,6 +43,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework
                                                       outputName);
                             });
 
+                            services.AddSingleton(service => new ResourceViewModelBase(service.GetRequiredService<HomeViewModel>()));
                             services.AddSingleton<INavigator, Navigator>();
                             services.AddSingleton<MainViewModel>();
                             services.AddSingleton<DocumentViewModel>();

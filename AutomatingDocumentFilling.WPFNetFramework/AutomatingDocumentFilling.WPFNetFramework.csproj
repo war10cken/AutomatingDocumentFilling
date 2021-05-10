@@ -235,6 +235,26 @@
       <HintPath>..\packages\DocX.1.7.1\lib\net40\Xceed.Words.NET.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.0.2\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -242,12 +262,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\AddNewItemCommand.cs" />
+    <Compile Include="Commands\DeleteResourceCommand.cs" />
     <Compile Include="Commands\GetArrayFromJsonCommand.cs" />
     <Compile Include="Commands\OpenDocumentCommand.cs" />
     <Compile Include="Commands\ShowWindowCommand.cs" />
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
+    <Compile Include="Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\EducationMaterial.cs" />
+    <Compile Include="Models\ListCreator.cs" />
     <Compile Include="Models\ObservableObject.cs" />
     <Compile Include="Models\PracticalTrainingTopics.cs" />
     <Compile Include="Models\TableCreator.cs" />
@@ -255,15 +278,25 @@
     <Compile Include="State\Navigators\INavigator.cs" />
     <Compile Include="State\Navigators\Navigator.cs" />
     <Compile Include="State\Navigators\ViewType.cs" />
+    <Compile Include="ViewModels\AcademicSubjectViewModel.cs" />
+    <Compile Include="ViewModels\AdditionalResourcesViewModel.cs" />
+    <Compile Include="ViewModels\CourseWorkViewModel.cs" />
     <Compile Include="ViewModels\CreateViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\EducationMaterialViewModel.cs" />
     <Compile Include="ViewModels\Factories\AutomatingDocumentFillingViewModelFactory.cs" />
     <Compile Include="ViewModels\Factories\IAutomatingDocumentFillingViewModelFactory.cs" />
     <Compile Include="ViewModels\GeneralCompetenceViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\InternetResourcesViewModel.cs" />
     <Compile Include="ViewModels\KnowledgeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PracticalTrainingTopicsViewModel.cs" />
+    <Compile Include="ViewModels\ProfessionalCompetenceViewModel.cs" />
+    <Compile Include="ViewModels\MainResourcesViewModel.cs" />
+    <Compile Include="ViewModels\ResourceViewModelBase.cs" />
     <Compile Include="ViewModels\SkillViewModel.cs" />
+    <Compile Include="ViewModels\ThemeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
@@ -314,6 +347,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\croess16x16.png" />
+    <Resource Include="Images\cross128x128.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

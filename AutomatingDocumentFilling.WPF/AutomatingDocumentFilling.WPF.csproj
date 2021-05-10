@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AutomatingDocumentFilling.Converter\AutomatingDocumentFilling.Converter.csproj" />
+      <ProjectReference Include="..\AutomatingDocumentFilling.WPFNetFramework\AutomatingDocumentFilling.WPFNetFramework.csproj" />
     </ItemGroup>
 
 </Project>

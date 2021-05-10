@@ -485,6 +485,18 @@
         "runtime": {
           "bin/placeholder/AutomatingDocumentFilling.Converter.dll": {}
         }
+      },
+      "AutomatingDocumentFilling.WPFNetFramework/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "AutomatingDocumentFilling.Converter": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/AutomatingDocumentFilling.WPFNetFramework.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutomatingDocumentFilling.WPFNetFramework.dll": {}
+        }
       }
     }
   },
@@ -1261,11 +1273,17 @@
       "type": "project",
       "path": "../AutomatingDocumentFilling.Converter/AutomatingDocumentFilling.Converter.csproj",
       "msbuildProject": "../AutomatingDocumentFilling.Converter/AutomatingDocumentFilling.Converter.csproj"
+    },
+    "AutomatingDocumentFilling.WPFNetFramework/1.0.0": {
+      "type": "project",
+      "path": "../AutomatingDocumentFilling.WPFNetFramework/AutomatingDocumentFilling.WPFNetFramework.csproj",
+      "msbuildProject": "../AutomatingDocumentFilling.WPFNetFramework/AutomatingDocumentFilling.WPFNetFramework.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0-windows7.0": [
       "AutomatingDocumentFilling.Converter >= 1.0.0",
+      "AutomatingDocumentFilling.WPFNetFramework >= 1.0.0",
       "DocX >= 1.7.1",
       "Microsoft.Extensions.Configuration >= 5.0.0",
       "Microsoft.Extensions.DependencyInjection >= 5.0.1",
@@ -1303,6 +1321,9 @@
           "projectReferences": {
             "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj": {
               "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj"
+            },
+            "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj": {
+              "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj"
             }
           }
         }

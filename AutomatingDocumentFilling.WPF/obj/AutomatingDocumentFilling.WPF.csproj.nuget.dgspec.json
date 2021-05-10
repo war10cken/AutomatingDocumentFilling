@@ -14,6 +14,25 @@
         "net48": {}
       }
     },
+    "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj",
+        "projectName": "AutomatingDocumentFilling.WPFNetFramework",
+        "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj": {
+                "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPF\\AutomatingDocumentFilling.WPF.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -40,6 +59,9 @@
             "projectReferences": {
               "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj": {
                 "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.Converter\\AutomatingDocumentFilling.Converter.csproj"
+              },
+              "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj": {
+                "projectPath": "D:\\RiderProjects\\AutomatingDocumentFilling\\AutomatingDocumentFilling.WPFNetFramework\\AutomatingDocumentFilling.WPFNetFramework.csproj"
               }
             }
           }

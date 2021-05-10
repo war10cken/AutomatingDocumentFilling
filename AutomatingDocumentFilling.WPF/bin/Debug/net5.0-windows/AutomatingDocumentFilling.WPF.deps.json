@@ -9,6 +9,7 @@
       "AutomatingDocumentFilling.WPF/1.0.0": {
         "dependencies": {
           "AutomatingDocumentFilling.Converter": "1.0.0",
+          "AutomatingDocumentFilling.WPFNetFramework": "1.0.0",
           "DocX": "1.7.1",
           "Microsoft.Extensions.Configuration": "5.0.0",
           "Microsoft.Extensions.DependencyInjection": "5.0.1",
@@ -404,6 +405,14 @@
         "runtime": {
           "AutomatingDocumentFilling.Converter.dll": {}
         }
+      },
+      "AutomatingDocumentFilling.WPFNetFramework/1.0.0": {
+        "dependencies": {
+          "AutomatingDocumentFilling.Converter": "1.0.0"
+        },
+        "runtime": {
+          "AutomatingDocumentFilling.WPFNetFramework.exe": {}
+        }
       }
     }
   },
@@ -645,6 +654,11 @@
       "hashPath": "system.security.principal.windows.5.0.0.nupkg.sha512"
     },
     "AutomatingDocumentFilling.Converter/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AutomatingDocumentFilling.WPFNetFramework/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

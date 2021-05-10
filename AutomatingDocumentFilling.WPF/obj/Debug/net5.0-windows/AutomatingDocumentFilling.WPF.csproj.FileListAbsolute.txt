@@ -61,3 +61,6 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Deb
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\obj\Debug\net5.0-windows\Styles\TextBox.baml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\AutomatingDocumentFilling.Converter.dll
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\AutomatingDocumentFilling.Converter.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\AutomatingDocumentFilling.WPFNetFramework.exe
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\AutomatingDocumentFilling.WPFNetFramework.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPF\bin\Debug\net5.0-windows\AutomatingDocumentFilling.WPFNetFramework.exe.config

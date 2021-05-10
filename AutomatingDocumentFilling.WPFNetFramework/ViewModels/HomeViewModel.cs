@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
+using AutomatingDocumentFilling.WPFNetFramework.Models;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
@@ -11,77 +12,317 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region Properties
 
-            private List<GeneralCompetenceViewModel> _generalCompetences;
+        #region BoolProperties
 
-            public List<GeneralCompetenceViewModel> GeneralCompetences
+        private bool _isHasConsultation;
+
+        public bool IsHasConsultation
+        {
+            get => _isHasConsultation;
+            set
             {
-                get => _generalCompetences;
-                set
-                {
-                    _generalCompetences = value;
-                    OnPropertyChanged(nameof(GeneralCompetences));
-                }
+                _isHasConsultation = value;
+                OnPropertyChanged(nameof(IsHasConsultation));
             }
-            
-            private List<SkillViewModel> _skills = new();
+        }
 
-            public List<SkillViewModel> Skills
+        private bool _isButtonEnable;
+
+        public bool IsButtonEnable
+        {
+            get => _isButtonEnable;
+            set
             {
-                get => _skills;
-                set
-                {
-                    _skills = value;
-                    OnPropertyChanged(nameof(Skills));
-                }
+                _isButtonEnable = value;
+                OnPropertyChanged(nameof(IsButtonEnable));
             }
+        }
 
-            private List<KnowledgeViewModel> _knowledge = new();
+        private bool _isLaboratory;
 
-            public List<KnowledgeViewModel> Knowledge
+        public bool IsLaboratory
+        {
+            get => _isLaboratory;
+            set
             {
-                get => _knowledge;
-                set
-                {
-                    _knowledge = value;
-                    OnPropertyChanged(nameof(Knowledge));
-                }
+                _isLaboratory = value;
+                OnPropertyChanged(nameof(IsLaboratory));
             }
+        }
 
-            private string _countOfSkills;
+        private bool _isWorkshop;
 
-            public string CountOfSkills
+        public bool IsWorkshop
+        {
+            get => _isWorkshop;
+            set
             {
-                get => _countOfSkills;
-                set
-                {
-                    _countOfSkills = value;
-                    OnPropertyChanged(nameof(CountOfSkills));
-                }
+                _isWorkshop = value;
+                OnPropertyChanged(nameof(IsWorkshop));
             }
+        }
 
-            private string _countOfKnowledge;
+        private bool _isEducationRoom;
 
-            public string CountOfKnowledge
+        public bool IsEducationRoom
+        {
+            get => _isEducationRoom;
+            set
             {
-                get => _countOfKnowledge;
-                set
-                {
-                    _countOfKnowledge = value;
-                    OnPropertyChanged(nameof(CountOfKnowledge));
-                }
+                _isEducationRoom = value;
+                OnPropertyChanged(nameof(IsEducationRoom));
             }
+        }
 
-            private string _countOfGeneralCompetences;
+        #endregion BoolProperties
 
-            public string CountOfGeneralCompetences
+        #region ListProperties
+
+        private string _consultationHours;
+
+        public string ConsultationHours
+        {
+            get => _consultationHours;
+            set
             {
-                get => _countOfGeneralCompetences;
-                set
-                {
-                    _countOfGeneralCompetences = value;
-                    OnPropertyChanged(nameof(CountOfGeneralCompetences));
-                }
+                _consultationHours = value;
+                OnPropertyChanged(nameof(ConsultationHours));
             }
+        }
+
+        private string _certificationForm;
+
+        public string CertificationForm
+        {
+            get => _certificationForm;
+            set
+            {
+                _certificationForm = value;
+                OnPropertyChanged(nameof(CertificationForm));
+            }
+        }
+
+        private List<string> _certificationForms;
+
+        public List<string> CertificationForms
+        {
+            get => _certificationForms;
+            set
+            {
+                _certificationForms = value;
+                OnPropertyChanged(nameof(CertificationForms));
+            }
+        }
+
+        private List<ThemeViewModel> _themes;
+
+        public List<ThemeViewModel> Themes
+        {
+            get => _themes;
+            set
+            {
+                _themes = value;
+                OnPropertyChanged(nameof(Themes));
+            }
+        }
+
+        private List<CourseWorkViewModel> _topicsOfCourseWork;
+
+        public List<CourseWorkViewModel> TopicsOfCourseWork
+        {
+            get => _topicsOfCourseWork;
+            set
+            {
+                _topicsOfCourseWork = value;
+                OnPropertyChanged(nameof(TopicsOfCourseWork));
+            }
+        }
+
+        private List<InternetResourcesViewModel> _internetResources;
+
+        public List<InternetResourcesViewModel> InternetResources
+        {
+            get => _internetResources;
+            set
+            {
+                _internetResources = value;
+                OnPropertyChanged(nameof(InternetResources));
+            }
+        }
+
+        private List<AdditionalResourcesViewModel> _additionalResources;
+
+        public List<AdditionalResourcesViewModel> AdditionalResources
+        {
+            get => _additionalResources;
+            set
+            {
+                _additionalResources = value;
+                OnPropertyChanged(nameof(AdditionalResources));
+            }
+        }
+
+        private List<MainResourcesViewModel> _mainResources;
+
+        public List<MainResourcesViewModel> MainResources
+        {
+            get => _mainResources;
+            set
+            {
+                _mainResources = value;
+                OnPropertyChanged(nameof(MainResources));
+            }
+        }
+
+        private List<ProfessionalCompetenceViewModel> _professionalCompetence;
+
+        public List<ProfessionalCompetenceViewModel> ProfessionalCompetence
+        {
+            get => _professionalCompetence;
+            set
+            {
+                _professionalCompetence = value;
+                OnPropertyChanged(nameof(ProfessionalCompetence));
+            }
+        }
+
+        private List<GeneralCompetenceViewModel> _generalCompetences;
+
+        public List<GeneralCompetenceViewModel> GeneralCompetences
+        {
+            get => _generalCompetences;
+            set
+            {
+                _generalCompetences = value;
+                OnPropertyChanged(nameof(GeneralCompetences));
+            }
+        }
+
+        private List<SkillViewModel> _skills;
+
+        public List<SkillViewModel> Skills
+        {
+            get => _skills;
+            set
+            {
+                _skills = value;
+                OnPropertyChanged(nameof(Skills));
+            }
+        }
+
+        private List<KnowledgeViewModel> _knowledge;
+
+        public List<KnowledgeViewModel> Knowledge
+        {
+            get => _knowledge;
+            set
+            {
+                _knowledge = value;
+                OnPropertyChanged(nameof(Knowledge));
+            }
+        }
+
+        #endregion ListProperties
+
+        #region CountProperties
+
+        private string _countOfProfessionalCompetence;
+
+        public string CountOfProfessionalCompetence
+        {
+            get => _countOfProfessionalCompetence;
+            set
+            {
+                _countOfProfessionalCompetence = value;
+                OnPropertyChanged(nameof(CountOfProfessionalCompetence));
+            }
+        }
+
+        private string _countOfSkills;
+
+        public string CountOfSkills
+        {
+            get => _countOfSkills;
+            set
+            {
+                _countOfSkills = value;
+                OnPropertyChanged(nameof(CountOfSkills));
+            }
+        }
+
+        private string _countOfKnowledge;
+
+        public string CountOfKnowledge
+        {
+            get => _countOfKnowledge;
+            set
+            {
+                _countOfKnowledge = value;
+                OnPropertyChanged(nameof(CountOfKnowledge));
+            }
+        }
+
+        private string _countOfGeneralCompetences;
+
+        public string CountOfGeneralCompetences
+        {
+            get => _countOfGeneralCompetences;
+            set
+            {
+                _countOfGeneralCompetences = value;
+                OnPropertyChanged(nameof(CountOfGeneralCompetences));
+            }
+        }
+
+        #endregion CountProperties
+
+        private string _courseWorkHours;
+
+        public string CourseWorkHours
+        {
+            get => _courseWorkHours;
+            set
+            {
+                _courseWorkHours = value;
+                OnPropertyChanged(nameof(CourseWorkHours));
+            }
+        }
+
+        private string _laboratoryRoomNumber;
+
+        public string LaboratoryRoomNumber
+        {
+            get => _laboratoryRoomNumber;
+            set
+            {
+                _laboratoryRoomNumber = value;
+                OnPropertyChanged(nameof(LaboratoryRoomNumber));
+            }
+        }
+
+        private string _workshopRoomNumber;
+
+        public string WorkshopRoomNumber
+        {
+            get => _workshopRoomNumber;
+            set
+            {
+                _workshopRoomNumber = value;
+                OnPropertyChanged(nameof(WorkshopRoomNumber));
+            }
+        }
+
+        private string _educationRoomNumber;
+
+        public string EducationRoomNumber
+        {
+            get => _educationRoomNumber;
+            set
+            {
+                _educationRoomNumber = value;
+                OnPropertyChanged(nameof(EducationRoomNumber));
+            }
+        }
 
         private string _placeOfDisciplineInStructure;
 
@@ -277,7 +518,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion Properties
 
-        public ICommand OpenDocumentCommand { get; }
+        #region GetCommands
 
         public ICommand ShowWindowCommand { get; }
 
@@ -289,31 +530,70 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand GetPlacesOfDisciplineInStructureCommand { get; }
 
+        public ICommand GetCertificationFormsCommand { get; }
+
+        #endregion GetCommands
+
+        #region AddCommands
+
         public ICommand AddNewSkillCommand { get; }
 
         public ICommand AddNewKnowledgeCommand { get; }
 
         public ICommand AddNewGeneralCompetenceCommand { get; }
-        
-        
+
+        public ICommand AddNewProfessionalCompetenceCommand { get; }
+
+        public ICommand AddNewResource { get; }
+
+        public ICommand AddNewAdditionalResource { get; }
+
+        public ICommand AddNewInternetResource { get; }
+
+        public ICommand AddNewThemeCommand { get; }
+
+        public ICommand AddNewCourseWorkCommand { get; }
+
+        #endregion AddCommands
+
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
 
+            AddNewCourseWorkCommand = new AddNewItemCommand<HomeViewModel, CourseWorkViewModel>(this, nameof(TopicsOfCourseWork));
+            AddNewThemeCommand =
+                new AddNewItemCommand<HomeViewModel, ThemeViewModel>(this, nameof(Themes));
+            AddNewInternetResource =
+                new AddNewItemCommand<HomeViewModel, InternetResourcesViewModel>(this, nameof(InternetResources));
+            AddNewInternetResource.Execute(null);
+            AddNewAdditionalResource =
+                new AddNewItemCommand<HomeViewModel, AdditionalResourcesViewModel>(this, nameof(AdditionalResources));
+            AddNewAdditionalResource.Execute(null);
+            AddNewResource = new AddNewItemCommand<HomeViewModel, MainResourcesViewModel>(this, nameof(MainResources));
+            AddNewResource.Execute(null);
+            AddNewProfessionalCompetenceCommand =
+                new AddNewItemCommand<HomeViewModel, ProfessionalCompetenceViewModel>(this,
+                                                                                      nameof(ProfessionalCompetence),
+                                                                                      nameof(
+                                                                                          CountOfProfessionalCompetence));
             AddNewGeneralCompetenceCommand =
-                new AddNewItemCommand<GeneralCompetenceViewModel>(this, nameof(GeneralCompetences),
-                                                                  nameof(CountOfGeneralCompetences));
+                new AddNewItemCommand<HomeViewModel, GeneralCompetenceViewModel>(this, nameof(GeneralCompetences),
+                                                                                 nameof(CountOfGeneralCompetences));
             AddNewKnowledgeCommand =
-                new AddNewItemCommand<KnowledgeViewModel>(this, nameof(Knowledge),
-                                                          nameof(CountOfKnowledge));
-            AddNewSkillCommand = new AddNewItemCommand<SkillViewModel>(this, nameof(Skills),
-                                                                       nameof(CountOfSkills));
+                new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledge),
+                                                                         nameof(CountOfKnowledge));
+            AddNewSkillCommand = new AddNewItemCommand<HomeViewModel, SkillViewModel>(this, nameof(Skills),
+                                                                                      nameof(CountOfSkills));
+
+            GetCertificationFormsCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(CertificationForms), this);
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(FormsOfEducation), this);
             GetSpecialtiesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Specialties), this);
-            GetCodesOfAcademicDisciplineCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(CodesOfAcademicDiscipline), this);
+            GetCodesOfAcademicDisciplineCommand =
+                new GetArrayFromJsonCommand<HomeViewModel>(nameof(CodesOfAcademicDiscipline), this);
             GetPlacesOfDisciplineInStructureCommand =
                 new GetArrayFromJsonCommand<HomeViewModel>(nameof(PlacesOfDisciplineInStructure), this);
 
+            GetCertificationFormsCommand.Execute(null);
             GetCodesOfAcademicDisciplineCommand.Execute(null);
             GetSpecialtiesCommand.Execute(null);
             GetFormsOfEducationCommand.Execute(null);

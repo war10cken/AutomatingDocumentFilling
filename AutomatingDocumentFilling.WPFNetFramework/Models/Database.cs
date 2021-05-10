@@ -14,6 +14,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
         public List<string> SkillNames { get; set; }
         public List<string> KnowledgeNames { get; set; }
         public List<string> GeneralCompetenceNames { get; set; }
+        public List<string> ProfessionalCompetenceNames { get; set; }
+        public List<string> CertificationForms { get; set; }
 
         public async Task<IEnumerable<string>> GetValue(string propertyName)
         {

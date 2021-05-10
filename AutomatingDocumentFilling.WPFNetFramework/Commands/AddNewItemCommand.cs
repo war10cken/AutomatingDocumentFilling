@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
-    public class AddNewItemCommand<TViewModel> : ICommand where TViewModel : ViewModelBase, new()
+    public class AddNewItemCommand<TMainViewModel, TViewModel> : ICommand
+        where TViewModel : ViewModelBase
+        where TMainViewModel : ViewModelBase
     {
-        private readonly HomeViewModel _homeViewModel;
-        private static readonly List<TViewModel> _list = new();
+        private readonly TMainViewModel _mainViewModel;
+        private readonly List<TViewModel> _list;
         private readonly string _propertyName;
         private readonly string _propertyNameOfCount;
 
-        public AddNewItemCommand(HomeViewModel homeViewModel, string propertyName, string propertyNameOfCount)
+        public AddNewItemCommand(TMainViewModel mainViewModel, string propertyName, string propertyNameOfCount = null)
         {
-            _homeViewModel = homeViewModel;
+            _mainViewModel = mainViewModel;
             _propertyName = propertyName;
             _propertyNameOfCount = propertyNameOfCount;
+            _list = new List<TViewModel>();
         }
 
         public bool CanExecute(object parameter)
@@ -26,18 +30,47 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
         public void Execute(object parameter)
         {
-            var homeViewModelProperty = _homeViewModel.GetType().GetProperty(_propertyName);
-            var homeViewModelCountProperty = _homeViewModel.GetType().GetProperty(_propertyNameOfCount);
-            
-            homeViewModelProperty?.SetValue(_homeViewModel, null);
-            _list.Clear();
+            if (_propertyNameOfCount != null)
+            {
+                int count = 0;
 
-            int count = int.Parse((string) homeViewModelCountProperty.GetValue(_homeViewModel));
-            
-            for(int i = 0; i < count; i++)
-                _list.Add(new TViewModel());
-            
-            homeViewModelProperty?.SetValue(_homeViewModel, _list);
+                var collectionWithSpecificCount = _mainViewModel.GetType().GetProperty(_propertyName);
+                var homeViewModelCountProperty = _mainViewModel.GetType().GetProperty(_propertyNameOfCount);
+
+                collectionWithSpecificCount?.SetValue(_mainViewModel, null);
+                _list.Clear();
+
+                try
+                {
+                    count = int.Parse((string)homeViewModelCountProperty?.GetValue(_mainViewModel) ?? string.Empty);
+                }
+                catch (ArgumentNullException)
+                {
+                    MessageBox.Show("Вы не ввели количество");
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Вы не ввели количество");
+                }
+
+                for (int i = 0; i < count; i++)
+                    _list.Add((TViewModel)Activator.CreateInstance(typeof(TViewModel)));
+
+                collectionWithSpecificCount?.SetValue(_mainViewModel, _list);
+                return;
+            }
+
+            var constructorInfo = typeof(TViewModel).GetConstructor(new[] { typeof(HomeViewModel) });
+
+            var collectionWithoutSpecificCount = _mainViewModel.GetType().GetProperty(_propertyName);
+
+            collectionWithoutSpecificCount?.SetValue(_mainViewModel, null);
+
+            _list.Add(constructorInfo != null
+                          ? (TViewModel)Activator.CreateInstance(typeof(TViewModel), _mainViewModel)
+                          : (TViewModel)Activator.CreateInstance(typeof(TViewModel)));
+
+            collectionWithoutSpecificCount?.SetValue(_mainViewModel, _list);
         }
 
         public event EventHandler CanExecuteChanged;

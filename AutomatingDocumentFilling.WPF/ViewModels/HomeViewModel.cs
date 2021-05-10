@@ -12,6 +12,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AutomatingDocumentFilling.WPFNetFramework.Models;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
 namespace AutomatingDocumentFilling.WPF.ViewModels
 {
@@ -304,33 +306,12 @@ namespace AutomatingDocumentFilling.WPF.ViewModels
         public ICommand GetFormsOfEducationCommand { get; }
 
         public ICommand GetPlacesOfDisciplineInStructureCommand { get; }
+        
 
-        public ICommand GetSkillsCommand { get; }
-
-        private List<Skill> _skills = new List<Skill>
-        {
-            new Skill("13"),
-            new Skill("234")
-        };
-
-        public List<Skill> Skills
-        {
-            get
-            {
-                return _skills;
-            }
-            set
-            {
-                _skills = value;
-                OnPropertyChanged(nameof(Skills));
-            }
-        }
+        
 
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName)
         {
-            
-            
-            
             _documentName = documentName;
 
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand(nameof(FormsOfEducation), this);

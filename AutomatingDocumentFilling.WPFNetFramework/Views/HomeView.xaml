@@ -2,19 +2,37 @@
     x:Class="AutomatingDocumentFilling.WPFNetFramework.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:AutomatingDocumentFilling.WPFNetFramework.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AutomatingDocumentFilling.WPFNetFramework.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="2550"
-    d:DesignWidth="800"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+    d:DesignHeight="3550"
+    d:DesignWidth="900"
     mc:Ignorable="d">
     <Grid Background="White" Grid.IsSharedSizeScope="True">
-        
         <Grid.Resources>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}"/> 
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <Style BasedOn="{StaticResource TextBlockStyle}" TargetType="TextBlock" />
+            <Style TargetType="CheckBox">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
         </Grid.Resources>
-        
+
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -38,12 +56,11 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0"
-                       Text="Выберите код учебной дисциплины: " />
+            <TextBlock Grid.Column="0" Text="Выберите код учебной дисциплины: " />
             <ComboBox
                 Grid.Column="1"
-                SelectedItem="{Binding CodesOfAcademicDiscipline[0]}"
                 ItemsSource="{Binding CodesOfAcademicDiscipline, Mode=TwoWay}"
+                SelectedItem="{Binding CodesOfAcademicDiscipline[0]}"
                 SelectedValue="{Binding CodeOfAcademicDiscipline}" />
         </Grid>
 
@@ -56,10 +73,11 @@
             <TextBlock Grid.Column="0" Text="Выберите специальность: " />
             <ComboBox
                 Grid.Column="1"
-                SelectedItem="{Binding Specialties[0]}"
                 ItemsSource="{Binding Specialties, Mode=TwoWay}"
+                SelectedItem="{Binding Specialties[0]}"
                 SelectedValue="{Binding Specialty}" />
         </Grid>
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
@@ -69,10 +87,11 @@
             <TextBlock Grid.Column="0" Text="Выберите форму обучения: " />
             <ComboBox
                 Grid.Column="1"
-                SelectedItem="{Binding FormsOfEducation[0]}"
                 ItemsSource="{Binding FormsOfEducation, Mode=TwoWay}"
+                SelectedItem="{Binding FormsOfEducation[0]}"
                 SelectedValue="{Binding FormOfEducation}" />
         </Grid>
+
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -123,7 +142,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <TextBlock
@@ -134,11 +153,14 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
                 Text="{Binding CompletedBy, Mode=TwoWay}" />
             <TextBlock
-                Style="{StaticResource HintTextBlock}"
                 Grid.Row="1"
                 Grid.Column="1"
+                Width="400"
+                Style="{StaticResource HintTextBlock}"
                 Text="ФИО преподавателя ГБПОУ МО «Люберецкий техникум имени  Героя Советского Союза, лётчика–космонавта Ю.А. Гагарина»"
                 TextWrapping="Wrap" />
         </Grid>
@@ -151,7 +173,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <TextBlock
@@ -162,11 +184,14 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
                 Text="{Binding TechExpertFio, Mode=TwoWay}" />
             <TextBlock
-                Style="{StaticResource HintTextBlock}"
                 Grid.Row="1"
+                Width="400"
                 Grid.Column="1"
+                Style="{StaticResource HintTextBlock}"
                 Text="ФИО методиста, члена методического совета ГБПОУ МО «Люберецкий техникум имени  Героя Советского Союза, лётчика–космонавта Ю.А. Гагарина»"
                 TextWrapping="Wrap" />
         </Grid>
@@ -179,7 +204,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <TextBlock
@@ -190,11 +215,14 @@
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Left"
                 Text="{Binding ContentExpertFio, Mode=TwoWay}" />
             <TextBlock
-                Style="{StaticResource HintTextBlock}"
                 Grid.Row="1"
                 Grid.Column="1"
+                Width="400"
+                Style="{StaticResource HintTextBlock}"
                 Text="ФИО преподавателя высшей квалификационной  категории ГБПОУ МО «Люберецкий техникум имени Героя Советского Союза, лётчика-космонавта Ю.А. Гагарина»"
                 TextWrapping="Wrap" />
         </Grid>
@@ -239,8 +267,8 @@
 
             <ComboBox
                 Grid.Column="1"
-                SelectedItem="{Binding PlacesOfDisciplineInStructure[0]}"
                 ItemsSource="{Binding PlacesOfDisciplineInStructure}"
+                SelectedItem="{Binding PlacesOfDisciplineInStructure[0]}"
                 SelectedValue="{Binding PlaceOfDisciplineInStructure, Mode=TwoWay}" />
         </Grid>
 
@@ -270,8 +298,8 @@
                     <DataTemplate>
                         <ComboBox
                             Margin="0,5,0,0"
-                            SelectedItem="{Binding SkillNames[0]}"
                             ItemsSource="{Binding SkillNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectedItem="{Binding SkillNames[0]}"
                             SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -301,7 +329,7 @@
                 Command="{Binding AddNewSkillCommand}"
                 Content="Добавить новое уменье" />
         </Grid>
-        
+
         <Grid Grid.Row="11">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
@@ -328,8 +356,8 @@
                     <DataTemplate>
                         <ComboBox
                             Margin="0,5,0,0"
-                            SelectedItem="{Binding KnowledgeNames[0]}"
                             ItemsSource="{Binding KnowledgeNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectedItem="{Binding KnowledgeNames[0]}"
                             SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -359,7 +387,7 @@
                 Command="{Binding AddNewKnowledgeCommand}"
                 Content="Добавить новое знанье" />
         </Grid>
-        
+
         <Grid Grid.Row="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
@@ -374,10 +402,10 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                TextWrapping="Wrap"
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="Выберите общие компетенции: " />
+                Text="Выберите общие компетенции: "
+                TextWrapping="Wrap" />
 
             <ItemsControl
                 Grid.Row="0"
@@ -387,8 +415,8 @@
                     <DataTemplate>
                         <ComboBox
                             Margin="0,5,0,0"
-                            SelectedItem="{Binding GeneralCompetenceNames[0]}"
                             ItemsSource="{Binding GeneralCompetenceNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectedItem="{Binding GeneralCompetenceNames[0]}"
                             SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -416,11 +444,692 @@
                 Margin="10,10,0,0"
                 HorizontalAlignment="Left"
                 Command="{Binding AddNewGeneralCompetenceCommand}"
-                Content="Добавить новую обущую компетенцию" />
+                Content="Добавить новые обущую компетенцию" />
+        </Grid>
+
+        <Separator Grid.Row="13" Margin="10" />
+
+        <Grid Grid.Row="14">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Height="40"
+                VerticalAlignment="Bottom"
+                Command="{Binding AddNewThemeCommand}"
+                Content="Добавить новую тему" />
+            <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding Themes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0,10"
+                            Padding="10"
+                            BorderBrush="Black"
+                            BorderThickness="0.5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Right"
+                                    FontSize="14"
+                                    Text="Название темы: " />
+                                <toolkit:RichTextBox
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Width="150"
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Left"
+                                    FontSize="15"
+                                    Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter />
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,10"
+                                    FontSize="14"
+                                    Text="Коды компетенций (через запятую): "
+                                    TextWrapping="Wrap" />
+                                <toolkit:RichTextBox
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Width="150"
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Left"
+                                    FontSize="15"
+                                    Text="{Binding Codes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter />
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+
+                                <Button
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Width="180"
+                                    Height="95"
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding AddNewEducationMaterialCommand}"
+                                    Content="Добавить наименование темы в учебном плане" />
+
+                                <!--  Начинается генерация учебного плана  -->
+                                <Grid
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="0,10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Margin="0,0,0,10"
+                                        FontSize="14"
+                                        Text="Общий объём часов в учебном плане: " />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Width="50"
+                                        Margin="140,0,0,10"
+                                        Padding="3,0,0,0"
+                                        Text="{Binding EducationHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                    <Grid Grid.Row="1" Grid.Column="0">
+
+                                        <ItemsControl ItemsSource="{Binding EducationMaterials, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+                                                        Margin="0,5"
+                                                        Padding="5"
+                                                        BorderBrush="Black"
+                                                        BorderThickness="1">
+                                                        <Grid Margin="10">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Margin="10,0,0,10"
+                                                                HorizontalAlignment="Right"
+                                                                FontSize="14"
+                                                                Text="Наименование темы в учебном плане: " />
+                                                            <toolkit:RichTextBox
+                                                                Grid.Row="0"
+                                                                Grid.Column="1"
+                                                                Width="150"
+                                                                Margin="0,0,0,10"
+                                                                FontSize="16"
+                                                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                                <toolkit:RichTextBox.TextFormatter>
+                                                                    <toolkit:PlainTextFormatter />
+                                                                </toolkit:RichTextBox.TextFormatter>
+                                                            </toolkit:RichTextBox>
+
+                                                            <TextBlock
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                HorizontalAlignment="Right"
+                                                                FontSize="14"
+                                                                Text="Уровень освоения: " />
+                                                            <TextBox
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                Width="50"
+                                                                Margin="0,0,10,0"
+                                                                Padding="3,0,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                Text="{Binding EducationLevel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Grid>
+                                <!--  Конец генерации учебного плана  -->
+
+                                <!--  Начало генерации тематикпрактических занятий  -->
+                                <Button
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Width="180"
+                                    Height="110"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding AddNewPracticalTrainingTopicCommand}"
+                                    Content="Добавить тематику практических занятий и лабораторных работ" />
+                                <ItemsControl
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    ItemsSource="{Binding PracticalTrainingTopics, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border
+                                                Margin="0,5"
+                                                Padding="0,15,10,5"
+                                                BorderBrush="Black"
+                                                BorderThickness="1">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                                        <ColumnDefinition Width="150" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Margin="0,0,0,10"
+                                                        HorizontalAlignment="Right"
+                                                        FontSize="14"
+                                                        Text="Наименование тематики: " />
+                                                    <toolkit:RichTextBox
+                                                        Grid.Row="0"
+                                                        Grid.Column="1"
+                                                        Margin="0,0,0,10"
+                                                        FontSize="16"
+                                                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                        <toolkit:RichTextBox.TextFormatter>
+                                                            <toolkit:PlainTextFormatter />
+                                                        </toolkit:RichTextBox.TextFormatter>
+                                                    </toolkit:RichTextBox>
+
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Margin="0,0,0,10"
+                                                        HorizontalAlignment="Right"
+                                                        FontSize="14"
+                                                        Text="Объём часов: " />
+                                                    <TextBox
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        Margin="0,0,0,10"
+                                                        Padding="3,0,0,0"
+                                                        VerticalContentAlignment="Center"
+                                                        FontSize="15"
+                                                        Text="{Binding Hours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <!--  Конец генерации тематикпрактических занятий  -->
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <Grid Grid.Row="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--<CheckBox Grid.Row="0"
+                      Grid.Column="0"
+                      Content="Предусмотрен ли курсовой проект?"
+                      VerticalContentAlignment="Center" />-->
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Введите тематики курсовых работ:" />
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Height="45"
+                Command="{Binding AddNewCourseWorkCommand}"
+                Content="Добавить тематику" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Введите количество часов: " />
+            <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="60"
+                Margin="240,0,0,10"
+                Text="{Binding CourseWorkHours}" />
+
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding TopicsOfCourseWork, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <toolkit:RichTextBox
+                            Width="250"
+                            Margin="0,0,0,10"
+                            FontSize="16"
+                            Text="{Binding Name}">
+                            <toolkit:RichTextBox.TextFormatter>
+                                <toolkit:PlainTextFormatter />
+                            </toolkit:RichTextBox.TextFormatter>
+                        </toolkit:RichTextBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <Grid Grid.Row="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Выберите форму аттестации: " />
+            <ComboBox
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding CertificationForms}"
+                SelectedItem="{Binding CertificationForm}"
+                SelectedValue="{Binding CertificationForms[0]}" />
+            <CheckBox
+                x:Name="IsConsultation"
+                Grid.Row="1"
+                Grid.Column="0"
+                IsChecked="{Binding IsHasConsultation}"
+                Margin="10,10,0,0"
+                VerticalContentAlignment="Center"
+                Content="Была ли консультации?" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="Введите количество часов: "
+                Visibility="{Binding ElementName=IsConsultation, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="50"
+                Margin="240,10,0,0"
+                Text="{Binding ConsultationHours}"
+                Visibility="{Binding ElementName=IsConsultation, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
+
+        <Separator Grid.Row="17" Margin="10" />
+
+        <Grid Grid.Row="18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Выберите профессиональные компетенции: "
+                TextWrapping="Wrap" />
+
+            <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding ProfessionalCompetence, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ComboBox
+                            Margin="0,5,0,0"
+                            ItemsSource="{Binding ProfessionalCompetenceNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectedItem="{Binding ProfessionalCompetenceNames[0]}"
+                            SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="150"
+                Margin="20,10,0,0"
+                Text="Введите количество профессиональных компетенций:"
+                TextWrapping="Wrap" />
+
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="30"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                Text="{Binding CountOfProfessionalCompetence}" />
+
+            <Button
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="10,10,0,0"
+                HorizontalAlignment="Left"
+                Command="{Binding AddNewProfessionalCompetenceCommand}"
+                Content="Добавить новые профессиональные компетенцию" />
+        </Grid>
+
+        <Grid Grid.Row="19" Margin="0,10,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Реализация программы предполагает наличие:" />
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox
+                        Name="IsEducationRoom"
+                        Grid.Row="0"
+                        Content="учебный кабинет"
+                        IsChecked="{Binding IsEducationRoom}" />
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="5"
+                        Text="{Binding EducationRoomNumber}"
+                        Visibility="{Binding ElementName=IsEducationRoom, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox
+                        Name="IsWorkshop"
+                        Grid.Row="0"
+                        Content="мастерская"
+                        IsChecked="{Binding IsWorkshop}" />
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="5"
+                        Text="{Binding WorkshopRoomNumber}"
+                        Visibility="{Binding ElementName=IsWorkshop, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox
+                        Name="IsLaboratory"
+                        Grid.Row="0"
+                        Content="лаборатория"
+                        IsChecked="{Binding IsLaboratory}" />
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="5"
+                        Text="{Binding LaboratoryRoomNumber}"
+                        Visibility="{Binding ElementName=IsLaboratory, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <CheckBox
+            Name="IsAdditionalResources"
+            Grid.Row="20"
+            Margin="15"
+            Content="Использовались дополнительные источники?" />
+        <CheckBox
+            Name="IsInternetResources"
+            Grid.Row="21"
+            Margin="15"
+            Content="Использовались интернет-источники?" />
+
+        <Grid Grid.Row="22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Введите основные источники, которые вы использовали" />
+            <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding MainResources, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="45" />
+                            </Grid.ColumnDefinitions>
+
+                            <toolkit:RichTextBox
+                                Name="Box"
+                                Grid.Column="0"
+                                Margin="10"
+                                FontSize="16"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <toolkit:RichTextBox.TextFormatter>
+                                    <toolkit:PlainTextFormatter />
+                                </toolkit:RichTextBox.TextFormatter>
+                            </toolkit:RichTextBox>
+                            <Button
+                                Grid.Column="1"
+                                Width="25"
+                                Height="25"
+                                Command="{Binding DeleteResourceCommand}"
+                                Style="{StaticResource ButtonWithCross}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,10,0,0"
+                Command="{Binding AddNewResource}"
+                Content="Добавить новый источник" />
+        </Grid>
+
+        <Grid Grid.Row="23" Visibility="{Binding ElementName=IsAdditionalResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Введите дополнительные источники, которые вы использовали" />
+            <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding AdditionalResources, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="45" />
+                            </Grid.ColumnDefinitions>
+
+                            <toolkit:RichTextBox
+                                Name="Box"
+                                Grid.Column="0"
+                                Margin="10"
+                                FontSize="16"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <toolkit:RichTextBox.TextFormatter>
+                                    <toolkit:PlainTextFormatter />
+                                </toolkit:RichTextBox.TextFormatter>
+                            </toolkit:RichTextBox>
+                            <Button
+                                Grid.Column="1"
+                                Width="25"
+                                Height="25"
+                                Command="{Binding DeleteResourceCommand}"
+                                Style="{StaticResource ButtonWithCross}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,10,0,0"
+                Command="{Binding AddNewAdditionalResource}"
+                Content="Добавить новый источник" />
+        </Grid>
+
+        <Grid Grid.Row="24" Visibility="{Binding ElementName=IsInternetResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Введите интернет-источники, которые вы использовали" />
+            <ItemsControl
+                Grid.Row="0"
+                Grid.Column="1"
+                ItemsSource="{Binding InternetResources, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="45" />
+                            </Grid.ColumnDefinitions>
+
+                            <toolkit:RichTextBox
+                                Name="Box"
+                                Grid.Column="0"
+                                Margin="10"
+                                FontSize="16"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <toolkit:RichTextBox.TextFormatter>
+                                    <toolkit:PlainTextFormatter />
+                                </toolkit:RichTextBox.TextFormatter>
+                            </toolkit:RichTextBox>
+                            <Button
+                                Grid.Column="1"
+                                Width="25"
+                                Height="25"
+                                Command="{Binding DeleteResourceCommand}"
+                                Style="{StaticResource ButtonWithCross}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,10,0,0"
+                Command="{Binding AddNewInternetResource}"
+                Content="Добавить новый источник" />
         </Grid>
 
         <Button
-            Grid.Row="14"
+            Grid.Row="25"
             Margin="0,10,0,0"
             Command="{Binding ShowWindowCommand}"
             Content="Предпросмотр" />

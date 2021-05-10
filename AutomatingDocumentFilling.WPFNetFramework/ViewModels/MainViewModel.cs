@@ -28,5 +28,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
+
+        public override void Dispose()
+        {
+            _navigator.StateChanged -= NavigatorOnStateChanged;
+            base.Dispose();
+        }
     }
 }

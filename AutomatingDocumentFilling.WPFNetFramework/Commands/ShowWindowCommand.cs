@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Models;
@@ -28,6 +30,36 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             _documentViewModel = documentViewModel;
             _documentName = documentName;
         }
+
+        // public override async Task ExecuteAsync(object parameter)
+        // {
+        //     if (_documentName.Length > 0)
+        //     {
+        //         try
+        //         {
+        //             [STAThread]
+        //             async Task InsertToDoc()
+        //             {
+        //                 await Task.Run(() =>
+        //                 {
+        //                     InsertIntoDocument(_documentName, "output.docx");
+        //                     _openCommand.Execute(null);
+        //                 }).ConfigureAwait(true);
+        //             }
+        //
+        //             await InsertToDoc().ConfigureAwait(true);
+        //
+        //             InsertIntoDocument(_documentName, "output.docx");
+        //             _openCommand.Execute(null);
+        //             Window documentWindow = new DocumentView(_documentViewModel);
+        //             documentWindow.Show();
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             throw new Exception(e.Message);
+        //         }
+        //     }
+        // }
 
         public event EventHandler CanExecuteChanged;
 
@@ -67,78 +99,55 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
                     string[] generalCompetenceHeaders = { "Код", "Наименование общих компетенций" };
 
+                    string[] professionalCompetenceHeaders =
+                        {"Код", "Наименование видов деятельности и профессиональных компетенций"};
+
                     var skillsTable =
                         TableCreator.CreateTable(document, skillsHeaders, _homeViewModel.Skills, 'У');
                     var knowledgeTable =
                         TableCreator.CreateTable(document, knowledgeHeaders,
                                                                      _homeViewModel.Knowledge, 'З');
 
-                    _homeViewModel.GeneralCompetences = new List<GeneralCompetenceViewModel>()
-                    {
-                        new GeneralCompetenceViewModel()
-                        {
-                            SelectedText = "123"
-                        }
-                    };
-
                     var generalCompetenceTable =
                         TableCreator.CreateTable(document, generalCompetenceHeaders,
                                                                              _homeViewModel.GeneralCompetences, "ОК");
+                    var professionalCompetenceTable =
+                        TableCreator.CreateTable(document, professionalCompetenceHeaders,
+                                                 _homeViewModel.ProfessionalCompetence, "ВД", "ПК");
 
-                    List<string> codes = new List<string> { "qwe", "asd", "zxc" };
+                    List<Table> centerTables = new();
 
-                    List<EducationMaterial> educationMaterials = new List<EducationMaterial>()
+                    foreach (var theme in _homeViewModel.Themes)
                     {
-                        new EducationMaterial()
-                        {
-                            Name = "qwe",
-                            EducationLevel = "1",
-                            Hours = 44.3f
-                        },
-                        new EducationMaterial()
-                        {
-                            Name = "asd",
-                            EducationLevel = "3",
-                            Hours = 24.3f
-                        },
-                        new EducationMaterial()
-                        {
-                            Name = "gtr",
-                            EducationLevel = "2",
-                            Hours = 41.3f
-                        }
-                    };
+                        centerTables.Add(TableCreator.CreateCenterOfBigTable(document, theme));
+                    }
 
-                    List<PracticalTrainingTopics> practicalTrainingTopicsList = new List<PracticalTrainingTopics>
-                    {
-                        new PracticalTrainingTopics
-                        {
-                            Hours = 234.1f,
-                            Name = "qwe"
-                        },
-                        new PracticalTrainingTopics
-                        {
-                            Hours = 24.1f,
-                            Name = "gh"
-                        },
-                        new PracticalTrainingTopics
-                        {
-                            Hours = 34.1f,
-                            Name = "tywe"
-                        }
-                    };
+                    Table headOfBigTable = TableCreator.CreateHeadOfBigTable(document, _homeViewModel.Themes[0]);
 
-                    Theme theme = new Theme
-                    {
-                        EducationMaterials = educationMaterials,
-                        Name = "Theme 1. qwe",
-                        PracticalTrainingTopicsList = practicalTrainingTopicsList,
-                        Codes = codes
-                    };
+                    Table endOfBigTable = TableCreator.CreateEndOfBigTable(document, _homeViewModel.Themes.LastOrDefault(), _homeViewModel);
 
-                    Table endOfBigTable = TableCreator.CreateEndOfBigTable(document, theme);
-                    Table centerOfBigTable = TableCreator.CreateCenterOfBigTable(document, theme);
-                    Table bigTable = TableCreator.CreateHeadOfBigTable(document, theme);
+                    var courseWorksList = ListCreator.AddNewList<CourseWorkViewModel>(document,
+                                                                         nameof(_homeViewModel.TopicsOfCourseWork),
+                                                                         _homeViewModel);
+                    var mainList =
+                        ListCreator.AddNewList<MainResourcesViewModel>(document, nameof(_homeViewModel.MainResources),
+                                                                   _homeViewModel);
+                    var additionalList =
+                        ListCreator.AddNewList<AdditionalResourcesViewModel>(document,
+                                                                             nameof(_homeViewModel.AdditionalResources),
+                                                                             _homeViewModel);
+                    var internetList =
+                        ListCreator.AddNewList<InternetResourcesViewModel>(document,
+                                                                           nameof(_homeViewModel.InternetResources),
+                                                                           _homeViewModel);
+
+                    string nameOfChoice = _homeViewModel.IsLaboratory ? "лаборатория"
+                                          : _homeViewModel.IsEducationRoom ? "учебный кабинет"
+                                          : _homeViewModel.IsWorkshop ? "мастерская" : "";
+
+                    string choice = _homeViewModel.IsEducationRoom ? _homeViewModel.EducationRoomNumber
+                             : _homeViewModel.IsLaboratory ? _homeViewModel.LaboratoryRoomNumber
+                             : _homeViewModel.WorkshopRoomNumber;
 
                     document.ReplaceText("<code>", _homeViewModel.CodeOfAcademicDiscipline, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<specialty>", _homeViewModel.Specialty, false, RegexOptions.IgnoreCase);
@@ -155,12 +164,73 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     document.ReplaceText("<outsidefio>", _homeViewModel.OutsideExpertFio, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<order>", _homeViewModel.Order, false, RegexOptions.IgnoreCase);
                     document.ReplaceText("<placeofdisciplineinstructure>", _homeViewModel.PlaceOfDisciplineInStructure, false, RegexOptions.IgnoreCase);
+                    document.ReplaceText("<thechoice>", $"{nameOfChoice} {choice}", false, RegexOptions.IgnoreCase);
+
+                    foreach (var documentParagraph in document.Paragraphs)
+                    {
+                        if (documentParagraph.Text.Contains("<mainlist>"))
+                        {
+                            foreach (var mainListItem in mainList.Items.Where(mainListItem => !string.IsNullOrWhiteSpace(mainListItem.Text)))
+                            {
+                                documentParagraph.InsertParagraphAfterSelf(mainListItem);
+                            }
+
+                            document.RemoveParagraph(documentParagraph);
+                        }
+                    }
+
+                    foreach (var documentParagraph in document.Paragraphs)
+                    {
+                        if (documentParagraph.Text.Contains("<additionallist>"))
+                        {
+                            foreach (var additionalListItem in additionalList.Items.Where(mainListItem => !string.IsNullOrWhiteSpace(mainListItem.Text)))
+                            {
+                                documentParagraph.InsertParagraphAfterSelf(additionalListItem);
+                            }
+
+                            document.RemoveParagraph(documentParagraph);
+                        }
+                    }
+
+                    foreach (var documentParagraph in document.Paragraphs)
+                    {
+                        if (documentParagraph.Text.Contains("<internetlist>"))
+                        {
+                            foreach (var internetListItem in internetList.Items.Where(mainListItem => !string.IsNullOrWhiteSpace(mainListItem.Text)))
+                            {
+                                documentParagraph.InsertParagraphAfterSelf(internetListItem);
+                            }
+
+                            document.RemoveParagraph(documentParagraph);
+                        }
+                    }
+
+                    foreach (var paragraph in endOfBigTable.Paragraphs)
+                    {
+                        if (paragraph.Text.Contains("<courseworks>"))
+                        {
+                            foreach (var item in courseWorksList.Items.Where(mainListItem => !string.IsNullOrWhiteSpace(mainListItem.Text)))
+                            {
+                                paragraph.InsertParagraphAfterSelf(item);
+                            }
+
+                            paragraph.Remove(false);
+                        }
+                    }
+
                     document.ReplaceTextWithObject("<skillstable>", skillsTable, false, RegexOptions.IgnoreCase);
                     document.ReplaceTextWithObject("<knowledgetable>", knowledgeTable, false, RegexOptions.IgnoreCase);
                     document.ReplaceTextWithObject("<generalcompetencetable>", generalCompetenceTable, false, RegexOptions.IgnoreCase);
-                    document.ReplaceTextWithObject("<bigtable>", bigTable, false, RegexOptions.IgnoreCase);
-                    bigTable.InsertTableAfterSelf(endOfBigTable);
-                    bigTable.InsertTableAfterSelf(centerOfBigTable);
+                    document.ReplaceTextWithObject("<professionalcompetencetable>", professionalCompetenceTable, false, RegexOptions.IgnoreCase);
+                    document.ReplaceTextWithObject("<bigtable>", headOfBigTable, false, RegexOptions.IgnoreCase);
+                    headOfBigTable.InsertTableAfterSelf(endOfBigTable);
+
+                    centerTables.RemoveAt(0);
+                    centerTables.RemoveAt(centerTables.Count - 1);
+                    foreach (var table in centerTables)
+                    {
+                        headOfBigTable.InsertTableAfterSelf(table);
+                    }
 
                     //document.SaveAs(newNameOfDocument);
                 }

@@ -23,7 +23,12 @@
 	"GeneralCompetenceNames": [
 		"Берутся в соответствии с ФГОС по профессии (специальности)"
 	],
-	"ActivitiesAndProfessionalCompetencies": [
+	"ProfessionalCompetenceNames": [
 		"Берется из ФГОС по профессии (специальности)"
+	],
+	"CertificationForms": [
+		"Дифференцированный зачет",
+		"Зачет",
+		"Экзамен"
 	]
 }
