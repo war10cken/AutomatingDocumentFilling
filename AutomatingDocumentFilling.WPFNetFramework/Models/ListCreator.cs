@@ -16,13 +16,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
             var resourceList = homeViewModel.GetType().GetProperty(listPropertyName);
 
-            if (resourceList is null)
+            if (resourceList == null)
             {
-                return list;
+                return null;
             }
-
+            
             if (resourceList.GetValue(homeViewModel) is List<TViewModel> resourceProperty)
             {
+                if (resourceProperty[0].GetType().GetProperty("Name").GetValue(resourceProperty[0]) == null)
+                {
+                    return null;
+                }
+                
                 resourceNames.AddRange(resourceProperty.Select(item => item.GetType().GetProperty("Name")
                                                                           ?.GetValue(item).ToString() ?? string.Empty));
             }

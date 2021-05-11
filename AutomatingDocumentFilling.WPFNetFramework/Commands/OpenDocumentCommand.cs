@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Windows.Xps.Packaging;
 using AutomatingDocumentFilling.Converter;
 using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
@@ -18,6 +21,28 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             _outputName = outputName;
         }
 
+        
+        private void OpenDocument()
+        {
+            if (_outputName.Length > 0)
+            {
+                string path = Path.GetFullPath(_outputName ?? string.Empty);
+                string newXpsDocumentName = Path.GetFullPath(_outputName ?? string.Empty).Remove(path.Length - 4) + "xps";
+
+                DocumentConverter.ConvertToXps(path, newXpsDocumentName);
+                    
+                XpsDocument xpsDocument = new XpsDocument(newXpsDocumentName, FileAccess.Read);
+
+                _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
+                xpsDocument.Close();
+            }
+        }
+
+        // public override async Task ExecuteAsync(object parameter)
+        // {
+        //     await Task.WhenAll(OpenDocument());
+        // }
+
         public bool CanExecute(object parameter)
         {
             return true;
@@ -28,31 +53,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             OpenDocument();
         }
 
-        private void OpenDocument()
-        {
-            //string originalPath = "50.docx";
-
-            // OpenFileDialog dlg = new OpenFileDialog();
-            //
-            // dlg.DefaultExt = ".docx";
-            //
-            // dlg.Filter = "Word documents (.docx)|*.docx";
-            //
-            // bool? result = dlg.ShowDialog();
-
-            if (_outputName.Length > 0)
-            {
-                string path = Path.GetFullPath(_outputName ?? string.Empty);
-                string newXpsDocumentName = Path.GetFullPath(_outputName ?? string.Empty).Remove(path.Length - 4) + "xps";
-
-                DocumentConverter.ConvertToXps(path, newXpsDocumentName);
-                XpsDocument xpsDocument = new XpsDocument(newXpsDocumentName, FileAccess.Read);
-
-                _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
-                xpsDocument.Close();
-            }
-        }
-        
         public event EventHandler CanExecuteChanged;
     }
 }

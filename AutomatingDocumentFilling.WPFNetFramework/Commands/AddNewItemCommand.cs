@@ -36,6 +36,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
                 var collectionWithSpecificCount = _mainViewModel.GetType().GetProperty(_propertyName);
                 var homeViewModelCountProperty = _mainViewModel.GetType().GetProperty(_propertyNameOfCount);
+                var constructorInfoWithSpecificCount = typeof(TViewModel).GetConstructor(new[] { typeof(HomeViewModel) });
 
                 collectionWithSpecificCount?.SetValue(_mainViewModel, null);
                 _list.Clear();
@@ -54,7 +55,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 }
 
                 for (int i = 0; i < count; i++)
-                    _list.Add((TViewModel)Activator.CreateInstance(typeof(TViewModel)));
+                {
+                    _list.Add(constructorInfoWithSpecificCount != null 
+                                  ? (TViewModel)Activator.CreateInstance(typeof(TViewModel), _mainViewModel)
+                                  : (TViewModel)Activator.CreateInstance(typeof(TViewModel)));
+                }
 
                 collectionWithSpecificCount?.SetValue(_mainViewModel, _list);
                 return;

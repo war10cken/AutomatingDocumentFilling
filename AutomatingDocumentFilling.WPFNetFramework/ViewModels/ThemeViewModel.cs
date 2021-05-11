@@ -70,9 +70,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         public ICommand AddNewEducationMaterialCommand { get; }
         public ICommand AddNewPracticalTrainingTopicCommand { get; }
 
+        public ICommand DeleteCommand { get; }
         
-        public ThemeViewModel()
+        public ThemeViewModel(HomeViewModel homeViewModel)
         {
+            DeleteCommand = new DeleteItemCommand<ThemeViewModel>(this, homeViewModel);
             AddNewEducationMaterialCommand =
                 new AddNewItemCommand<ThemeViewModel, EducationMaterialViewModel>(this, nameof(EducationMaterials));
             AddNewEducationMaterialCommand.Execute(null);

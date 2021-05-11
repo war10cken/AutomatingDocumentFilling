@@ -29,11 +29,38 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
                 OnPropertyChanged(nameof(SelectedText));
             }
         }
+        
+        private string _appraisal;
+
+        public string Appraisal
+        {
+            get => _appraisal;
+            set
+            {
+                _appraisal = value;
+                OnPropertyChanged(nameof(Appraisal));
+            }
+        }
+
+        private string _assessmentForm;
+
+        public string AssessmentForm
+        {
+            get => _assessmentForm;
+            set
+            {
+                _assessmentForm = value;
+                OnPropertyChanged(nameof(AssessmentForm));
+            }
+        }
 
         public ICommand GetKnowledgeNamesCommand { get; }
 
-        public KnowledgeViewModel()
+        public ICommand DeleteCommand { get; }
+
+        public KnowledgeViewModel(HomeViewModel homeViewModel)
         {
+            DeleteCommand = new DeleteItemCommand<KnowledgeViewModel>(this, homeViewModel);
             GetKnowledgeNamesCommand = new GetArrayFromJsonCommand<KnowledgeViewModel>(nameof(KnowledgeNames), this);
             GetKnowledgeNamesCommand.Execute(null);
         }

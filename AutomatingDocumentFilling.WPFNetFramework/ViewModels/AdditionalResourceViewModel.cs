@@ -3,7 +3,7 @@ using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
-    public class InternetResourcesViewModel : ResourceViewModelBase
+    public class AdditionalResourceViewModel : ResourceViewModelBase
     {
         private string _name;
 
@@ -18,10 +18,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         }
 
         public ICommand DeleteResourceCommand { get; }
-        
-        public InternetResourcesViewModel(HomeViewModel homeViewModel) : base(homeViewModel)
+
+        public AdditionalResourceViewModel(HomeViewModel homeViewModel) : base(homeViewModel)
         {
-            DeleteResourceCommand = new DeleteResourceCommand<InternetResourcesViewModel>(this, homeViewModel);
+            DeleteResourceCommand = new DeleteItemCommand<AdditionalResourceViewModel>(this, homeViewModel);
         }
     }
 }

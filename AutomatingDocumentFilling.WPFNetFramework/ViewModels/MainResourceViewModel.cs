@@ -6,7 +6,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
     /// <summary>
     /// Учебные издания, интернет-ресурсы, дополнительная литература
     /// </summary>
-    public class MainResourcesViewModel : ResourceViewModelBase
+    public class MainResourceViewModel : ResourceViewModelBase
     {
         private string _name;
 
@@ -22,9 +22,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand DeleteResourceCommand { get; }
 
-        public MainResourcesViewModel(HomeViewModel homeViewModel) : base(homeViewModel)
+        public MainResourceViewModel(HomeViewModel homeViewModel) : base(homeViewModel)
         {
-            DeleteResourceCommand = new DeleteResourceCommand<MainResourcesViewModel>(this, homeViewModel);
+            DeleteResourceCommand = new DeleteItemCommand<MainResourceViewModel>(this, homeViewModel);
         }
 
     }

@@ -14,6 +14,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region BoolProperties
 
+            private bool _isSaved;
+
+            public bool IsSaved
+            {
+                get => _isSaved;
+                set
+                {
+                    _isSaved = value;
+                    OnPropertyChanged(nameof(IsSaved));
+                }
+            }
+            
         private bool _isHasConsultation;
 
         public bool IsHasConsultation
@@ -126,21 +138,21 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<CourseWorkViewModel> _topicsOfCourseWork;
+        private List<CourseWorkViewModel> _courseWorks;
 
-        public List<CourseWorkViewModel> TopicsOfCourseWork
+        public List<CourseWorkViewModel> CourseWorks
         {
-            get => _topicsOfCourseWork;
+            get => _courseWorks;
             set
             {
-                _topicsOfCourseWork = value;
-                OnPropertyChanged(nameof(TopicsOfCourseWork));
+                _courseWorks = value;
+                OnPropertyChanged(nameof(CourseWorks));
             }
         }
 
-        private List<InternetResourcesViewModel> _internetResources;
+        private List<InternetResourceViewModel> _internetResources;
 
-        public List<InternetResourcesViewModel> InternetResources
+        public List<InternetResourceViewModel> InternetResources
         {
             get => _internetResources;
             set
@@ -150,9 +162,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<AdditionalResourcesViewModel> _additionalResources;
+        private List<AdditionalResourceViewModel> _additionalResources;
 
-        public List<AdditionalResourcesViewModel> AdditionalResources
+        public List<AdditionalResourceViewModel> AdditionalResources
         {
             get => _additionalResources;
             set
@@ -162,9 +174,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<MainResourcesViewModel> _mainResources;
+        private List<MainResourceViewModel> _mainResources;
 
-        public List<MainResourcesViewModel> MainResources
+        public List<MainResourceViewModel> MainResources
         {
             get => _mainResources;
             set
@@ -174,15 +186,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<ProfessionalCompetenceViewModel> _professionalCompetence;
+        private List<ProfessionalCompetenceViewModel> _professionalCompetences;
 
-        public List<ProfessionalCompetenceViewModel> ProfessionalCompetence
+        public List<ProfessionalCompetenceViewModel> ProfessionalCompetences
         {
-            get => _professionalCompetence;
+            get => _professionalCompetences;
             set
             {
-                _professionalCompetence = value;
-                OnPropertyChanged(nameof(ProfessionalCompetence));
+                _professionalCompetences = value;
+                OnPropertyChanged(nameof(ProfessionalCompetences));
             }
         }
 
@@ -556,24 +568,29 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion AddCommands
 
+            public ICommand SaveCommand { get; }
+            
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
 
-            AddNewCourseWorkCommand = new AddNewItemCommand<HomeViewModel, CourseWorkViewModel>(this, nameof(TopicsOfCourseWork));
+            SaveCommand = new SaveCommand(this, documentName);
+            AddNewCourseWorkCommand = new AddNewItemCommand<HomeViewModel, CourseWorkViewModel>(this, nameof(CourseWorks));
+            AddNewCourseWorkCommand.Execute(null);
             AddNewThemeCommand =
                 new AddNewItemCommand<HomeViewModel, ThemeViewModel>(this, nameof(Themes));
+            AddNewThemeCommand.Execute(null);
             AddNewInternetResource =
-                new AddNewItemCommand<HomeViewModel, InternetResourcesViewModel>(this, nameof(InternetResources));
+                new AddNewItemCommand<HomeViewModel, InternetResourceViewModel>(this, nameof(InternetResources));
             AddNewInternetResource.Execute(null);
             AddNewAdditionalResource =
-                new AddNewItemCommand<HomeViewModel, AdditionalResourcesViewModel>(this, nameof(AdditionalResources));
+                new AddNewItemCommand<HomeViewModel, AdditionalResourceViewModel>(this, nameof(AdditionalResources));
             AddNewAdditionalResource.Execute(null);
-            AddNewResource = new AddNewItemCommand<HomeViewModel, MainResourcesViewModel>(this, nameof(MainResources));
+            AddNewResource = new AddNewItemCommand<HomeViewModel, MainResourceViewModel>(this, nameof(MainResources));
             AddNewResource.Execute(null);
             AddNewProfessionalCompetenceCommand =
                 new AddNewItemCommand<HomeViewModel, ProfessionalCompetenceViewModel>(this,
-                                                                                      nameof(ProfessionalCompetence),
+                                                                                      nameof(ProfessionalCompetences),
                                                                                       nameof(
                                                                                           CountOfProfessionalCompetence));
             AddNewGeneralCompetenceCommand =
@@ -601,8 +618,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
             documentViewModel.OpenDocumentCommand = new OpenDocumentCommand(documentViewModel, outputName);
 
-            ShowWindowCommand = new ShowWindowCommand(documentViewModel.OpenDocumentCommand,
-                                                      this, documentViewModel, _documentName);
+            ShowWindowCommand = new ShowWindowCommand(documentViewModel.OpenDocumentCommand, documentViewModel, _documentName);
         }
     }
 }

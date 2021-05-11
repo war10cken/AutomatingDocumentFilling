@@ -48,6 +48,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -296,11 +300,76 @@
                 ItemsSource="{Binding Skills, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ComboBox
-                            Margin="0,5,0,0"
-                            ItemsSource="{Binding SkillNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            SelectedItem="{Binding SkillNames[0]}"
-                            SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0"
+                                  Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <ComboBox
+                                Grid.Row="0"
+                                Margin="0,5,0,0"
+                                ItemsSource="{Binding SkillNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                SelectedItem="{Binding SkillNames[0]}"
+                                SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Row="0"
+                                           FontSize="14"
+                                           Grid.Column="0"
+                                           Text="Оценка: "/>
+                                <toolkit:RichTextBox Grid.Row="0"
+                                                     FontSize="14"
+                                                     Grid.Column="1"
+                                                     Text="{Binding Appraisal}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter/>
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Row="0"
+                                           FontSize="14"
+                                           Grid.Column="0"
+                                           Text="Форма и метод оценки: "/>
+                                <toolkit:RichTextBox Grid.Row="0"
+                                                     FontSize="14"
+                                                     Grid.Column="1"
+                                                     Text="{Binding AssessmentForm}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter/>
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+                            </Grid>
+                        </Grid>
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource ButtonWithCross}"
+                                    Command="{Binding DeleteCommand}"
+                                    Margin="10 0 0 0"/>
+                        </Grid>
+                        
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -354,11 +423,74 @@
                 ItemsSource="{Binding Knowledge, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ComboBox
-                            Margin="0,5,0,0"
-                            ItemsSource="{Binding KnowledgeNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            SelectedItem="{Binding KnowledgeNames[0]}"
-                            SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="5"
+                                  Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <ComboBox
+                                Margin="0,5,0,0"
+                                ItemsSource="{Binding KnowledgeNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                SelectedItem="{Binding KnowledgeNames[0]}"
+                                SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Row="0"
+                                           FontSize="14"
+                                           Grid.Column="0"
+                                           Text="Оценка: "/>
+                                <toolkit:RichTextBox Grid.Row="0"
+                                                     FontSize="14"
+                                                     Grid.Column="1"
+                                                     Text="{Binding Appraisal}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter/>
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Grid.Row="0"
+                                           FontSize="14"
+                                           Grid.Column="0"
+                                           Text="Форма и метод оценки: "/>
+                                <toolkit:RichTextBox Grid.Row="0"
+                                                     FontSize="14"
+                                                     Grid.Column="1"
+                                                     Text="{Binding AssessmentForm}">
+                                    <toolkit:RichTextBox.TextFormatter>
+                                        <toolkit:PlainTextFormatter/>
+                                    </toolkit:RichTextBox.TextFormatter>
+                                </toolkit:RichTextBox>
+                            </Grid>
+                        </Grid>
+                            <Button Grid.Column="1"
+                                    Margin="10 0 0 0"
+                                    Style="{StaticResource ButtonWithCross}"
+                                    Command="{Binding DeleteCommand}"/>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -413,11 +545,23 @@
                 ItemsSource="{Binding GeneralCompetences, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ComboBox
-                            Margin="0,5,0,0"
-                            ItemsSource="{Binding GeneralCompetenceNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            SelectedItem="{Binding GeneralCompetenceNames[0]}"
-                            SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox
+                                Grid.Column="0"
+                                Margin="0,5,0,0"
+                                ItemsSource="{Binding GeneralCompetenceNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                SelectedItem="{Binding GeneralCompetenceNames[0]}"
+                                SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource ButtonWithCross}"
+                                    Command="{Binding DeleteCommand}"
+                                    Margin="10 0 0 0"/>
+                        </Grid>
+                        
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -474,7 +618,14 @@
                 ItemsSource="{Binding Themes, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Border
+                                Grid.Column="0"
                             Margin="0,10"
                             Padding="10"
                             BorderBrush="Black"
@@ -708,6 +859,12 @@
                                 <!--  Конец генерации тематикпрактических занятий  -->
                             </Grid>
                         </Border>
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource ButtonWithCross}"
+                                    Command="{Binding DeleteCommand}"
+                                    Margin="15 0 0 0"/>
+                        </Grid>
+                        
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -736,6 +893,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Height="45"
+                VerticalAlignment="Bottom"
                 Command="{Binding AddNewCourseWorkCommand}"
                 Content="Добавить тематику" />
 
@@ -753,18 +911,39 @@
             <ItemsControl
                 Grid.Row="1"
                 Grid.Column="1"
-                ItemsSource="{Binding TopicsOfCourseWork, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                ItemsSource="{Binding CourseWorks, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <toolkit:RichTextBox
-                            Width="250"
-                            Margin="0,0,0,10"
-                            FontSize="16"
-                            Text="{Binding Name}">
-                            <toolkit:RichTextBox.TextFormatter>
-                                <toolkit:PlainTextFormatter />
-                            </toolkit:RichTextBox.TextFormatter>
-                        </toolkit:RichTextBox>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <toolkit:RichTextBox
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                FontSize="16"
+                                Text="{Binding Name}">
+                                <toolkit:RichTextBox.TextFormatter>
+                                    <toolkit:PlainTextFormatter />
+                                </toolkit:RichTextBox.TextFormatter>
+                            </toolkit:RichTextBox>
+                            
+                            <Button
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Width="25"
+                                Margin="5 0 0 0"
+                                Height="25"
+                                Command="{Binding DeleteCommand}"
+                                Style="{StaticResource ButtonWithCross}" />
+                        </Grid>
+                        
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -776,7 +955,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
@@ -794,6 +973,7 @@
                 x:Name="IsConsultation"
                 Grid.Row="1"
                 Grid.Column="0"
+                FontSize="16"
                 IsChecked="{Binding IsHasConsultation}"
                 Margin="10,10,0,0"
                 VerticalContentAlignment="Center"
@@ -836,14 +1016,26 @@
             <ItemsControl
                 Grid.Row="0"
                 Grid.Column="1"
-                ItemsSource="{Binding ProfessionalCompetence, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                ItemsSource="{Binding ProfessionalCompetences, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+                        <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="45" />
+                        </Grid.ColumnDefinitions>
+
                         <ComboBox
+                            Grid.Column="0"
                             Margin="0,5,0,0"
                             ItemsSource="{Binding ProfessionalCompetenceNames, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             SelectedItem="{Binding ProfessionalCompetenceNames[0]}"
                             SelectedValue="{Binding SelectedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding DeleteCommand}"
+                            Style="{StaticResource ButtonWithCross}" />
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -873,7 +1065,9 @@
                 Content="Добавить новые профессиональные компетенцию" />
         </Grid>
 
-        <Grid Grid.Row="19" Margin="0,10,0,10">
+        <Separator Grid.Row="19" Margin="10" />
+        
+        <Grid Grid.Row="20" Margin="0,10,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -949,18 +1143,19 @@
             </Grid>
         </Grid>
 
+        <Separator Grid.Row="21" Margin="10" />
         <CheckBox
             Name="IsAdditionalResources"
-            Grid.Row="20"
+            Grid.Row="22"
             Margin="15"
             Content="Использовались дополнительные источники?" />
         <CheckBox
             Name="IsInternetResources"
-            Grid.Row="21"
+            Grid.Row="23"
             Margin="15"
             Content="Использовались интернет-источники?" />
 
-        <Grid Grid.Row="22">
+        <Grid Grid.Row="24">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1016,7 +1211,7 @@
                 Content="Добавить новый источник" />
         </Grid>
 
-        <Grid Grid.Row="23" Visibility="{Binding ElementName=IsAdditionalResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="25" Visibility="{Binding ElementName=IsAdditionalResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1072,7 +1267,7 @@
                 Content="Добавить новый источник" />
         </Grid>
 
-        <Grid Grid.Row="24" Visibility="{Binding ElementName=IsInternetResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="26" Visibility="{Binding ElementName=IsInternetResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1111,8 +1306,6 @@
                             </toolkit:RichTextBox>
                             <Button
                                 Grid.Column="1"
-                                Width="25"
-                                Height="25"
                                 Command="{Binding DeleteResourceCommand}"
                                 Style="{StaticResource ButtonWithCross}" />
                         </Grid>
@@ -1129,9 +1322,15 @@
         </Grid>
 
         <Button
-            Grid.Row="25"
+            Grid.Row="28"
+            Visibility="{Binding IsSaved, Converter={StaticResource BooleanToVisibilityConverter}}"
             Margin="0,10,0,0"
             Command="{Binding ShowWindowCommand}"
             Content="Предпросмотр" />
+
+        <Button Grid.Row="29"
+                Margin="0 10 0 0"
+                Command="{Binding SaveCommand}"
+                Content="Сохранить"/>
     </Grid>
 </UserControl>

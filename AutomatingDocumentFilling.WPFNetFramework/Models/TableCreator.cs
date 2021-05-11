@@ -35,7 +35,68 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
             return table;
         }
+        public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
+                                                    char symbol, string[] dataForSecondRow) where TViewModel : ViewModelBase
+        {
+            var table = document.AddTable(data.Count + 2, headers.Count);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
 
+            table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
+            table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
+            table.Rows[0].Cells[2].Paragraphs[0].Append(headers[2]).Bold().Alignment = Alignment.center;
+
+            for (int i = 1; i < dataForSecondRow.Length + 1; i++)
+            {
+                table.Rows[1].Cells[i].Paragraphs[0].Append(dataForSecondRow[i - 1]);
+            }
+
+            List<string> text = data.Select(item => item.GetType().GetProperty(_textPropertyName)?.GetValue(item)
+                                                        .ToString()).ToList();
+            List<string> appraisals = data.Select(item => item.GetType().GetProperty("Appraisal")?.GetValue(item)
+                                                              .ToString()).ToList();
+            List<string> assessmentForms = data.Select(item => item
+                                                              .GetType().GetProperty("AssessmentForm")?.GetValue(item)
+                                                              .ToString()).ToList();
+
+            for (int i = 2; i < data.Count + 2; i++)
+            {
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbol}.{i - 1} {text[i - 2]}");
+                table.Rows[i].Cells[1].Paragraphs[0].Append(appraisals[i - 2]);
+                table.Rows[i].Cells[2].Paragraphs[0].Append(assessmentForms[i - 2]);
+            }
+
+            return table;
+        }
+
+        public static Table CreateLastTable<TViewModel>(DocX document, IReadOnlyList<string> headers,
+                                                        List<TViewModel> data,
+                                                        char symbol) where TViewModel : ViewModelBase
+        {
+            var table = document.AddTable(data.Count, headers.Count);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
+
+            List<string> text = data.Select(item => item.GetType().GetProperty(_textPropertyName)?.GetValue(item)
+                                                        .ToString()).ToList();
+            List<string> appraisals = data.Select(item => item.GetType().GetProperty("Appraisal")?.GetValue(item)
+                                                              .ToString()).ToList();
+            List<string> assessmentForms = data.Select(item => item
+                                                              .GetType().GetProperty("AssessmentForm")?.GetValue(item)
+                                                              .ToString()).ToList();
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbol}.{i + 1} {text[i]}");
+                table.Rows[i].Cells[1].Paragraphs[0].Append(appraisals[i]);
+                table.Rows[i].Cells[2].Paragraphs[0].Append(assessmentForms[i]);
+            }
+
+            return table;
+        } 
+        
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
                                         string symbol) where TViewModel : ViewModelBase
         {
@@ -86,28 +147,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
                 table.Rows[i + j].Cells[0].Paragraphs[0].Append($"{symbolOne} {i}");
                 table.Rows[i + u].Cells[0].Paragraphs[0].Append($"{symbolTwo} {i}.1");
                 table.Rows[i + j].Cells[1].Paragraphs[0].Append(text[i - 1]);
-            }
-
-            return table;
-        }
-
-        public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
-                                                    string[] typesOfEducationWork) where TViewModel : ViewModelBase
-        {
-            var table = document.AddTable(data.Count + 1, headers.Count);
-            table.Alignment = Alignment.center;
-            table.Design = TableDesign.TableGrid;
-            table.AutoFit = AutoFit.Contents;
-
-            table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
-            table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
-
-            List<string> text = data.Select(item => item.GetType().GetProperty(_textPropertyName)?.GetValue(item)
-                                                        .ToString()).ToList();
-
-            for (int i = 1; i < data.Count + 1; i++)
-            {
-                table.Rows[i].Cells[1].Paragraphs[0].Append(text[i - 1]);
             }
 
             return table;

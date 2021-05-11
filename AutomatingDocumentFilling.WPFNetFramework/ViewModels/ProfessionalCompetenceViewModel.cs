@@ -32,8 +32,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand GetProfessionalCompetence { get; }
 
-        public ProfessionalCompetenceViewModel()
+        public ICommand DeleteCommand { get; }
+
+        public ProfessionalCompetenceViewModel(HomeViewModel homeViewModel)
         {
+            DeleteCommand = new DeleteItemCommand<ProfessionalCompetenceViewModel>(this, homeViewModel);
             GetProfessionalCompetence =
                 new GetArrayFromJsonCommand<ProfessionalCompetenceViewModel>(nameof(ProfessionalCompetenceNames), this);
             GetProfessionalCompetence.Execute(null);

@@ -262,9 +262,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\AddNewItemCommand.cs" />
-    <Compile Include="Commands\DeleteResourceCommand.cs" />
+    <Compile Include="Commands\DeleteItemCommand.cs" />
     <Compile Include="Commands\GetArrayFromJsonCommand.cs" />
     <Compile Include="Commands\OpenDocumentCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\ShowWindowCommand.cs" />
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
     <Compile Include="Converters\TextToVisibilityConverter.cs" />
@@ -279,7 +280,7 @@
     <Compile Include="State\Navigators\Navigator.cs" />
     <Compile Include="State\Navigators\ViewType.cs" />
     <Compile Include="ViewModels\AcademicSubjectViewModel.cs" />
-    <Compile Include="ViewModels\AdditionalResourcesViewModel.cs" />
+    <Compile Include="ViewModels\AdditionalResourceViewModel.cs" />
     <Compile Include="ViewModels\CourseWorkViewModel.cs" />
     <Compile Include="ViewModels\CreateViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
@@ -288,12 +289,12 @@
     <Compile Include="ViewModels\Factories\IAutomatingDocumentFillingViewModelFactory.cs" />
     <Compile Include="ViewModels\GeneralCompetenceViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\InternetResourcesViewModel.cs" />
+    <Compile Include="ViewModels\InternetResourceViewModel.cs" />
     <Compile Include="ViewModels\KnowledgeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PracticalTrainingTopicsViewModel.cs" />
     <Compile Include="ViewModels\ProfessionalCompetenceViewModel.cs" />
-    <Compile Include="ViewModels\MainResourcesViewModel.cs" />
+    <Compile Include="ViewModels\MainResourceViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModelBase.cs" />
     <Compile Include="ViewModels\SkillViewModel.cs" />
     <Compile Include="ViewModels\ThemeViewModel.cs" />

@@ -30,10 +30,37 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
+        private string _appraisal;
+
+        public string Appraisal
+        {
+            get => _appraisal;
+            set
+            {
+                _appraisal = value;
+                OnPropertyChanged(nameof(Appraisal));
+            }
+        }
+
+        private string _assessmentForm;
+
+        public string AssessmentForm
+        {
+            get => _assessmentForm;
+            set
+            {
+                _assessmentForm = value;
+                OnPropertyChanged(nameof(AssessmentForm));
+            }
+        }
+
         public ICommand GetSkills { get; }
 
-        public SkillViewModel()
+        public ICommand DeleteCommand { get; }
+
+        public SkillViewModel(HomeViewModel homeViewModel)
         {
+            DeleteCommand = new DeleteItemCommand<SkillViewModel>(this, homeViewModel);
             GetSkills = new GetArrayFromJsonCommand<SkillViewModel>(nameof(SkillNames), this);
             GetSkills.Execute(null);
         }
