@@ -16,8 +16,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
         public List<string> GeneralCompetenceNames { get; set; }
         public List<string> ProfessionalCompetenceNames { get; set; }
         public List<string> CertificationForms { get; set; }
+        public List<string> Cycles { get; set; }
 
-        public async Task<IEnumerable<string>> GetValue(string propertyName)
+        public async ValueTask<IEnumerable<string>> GetValue(string propertyName)
         {
             Database database = await GetDatabase();
 
@@ -26,7 +27,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             return property?.GetValue(database) as List<string>;
         }
 
-        public static async Task<Database> GetDatabase()
+        public static async ValueTask<Database> GetDatabase()
         {
             using FileStream stream = File.Open("values.json", FileMode.Open, FileAccess.Read, FileShare.Read);
             Database database = await JsonSerializer.DeserializeAsync<Database>(stream);

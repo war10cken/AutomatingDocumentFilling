@@ -21,10 +21,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
-            await Task.WhenAll(GetArray(_propertyName));
+            await GetArray(_propertyName);
         }
 
-        private async Task GetArray(string propertyName)
+        private async ValueTask GetArray(string propertyName)
         {
             _database = await Database.GetDatabase();
 

@@ -60,7 +60,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public SkillViewModel(HomeViewModel homeViewModel)
         {
-            DeleteCommand = new DeleteItemCommand<SkillViewModel>(this, homeViewModel);
+            DeleteCommand = new DeleteItemCommand<HomeViewModel, SkillViewModel>(this, homeViewModel);
             GetSkills = new GetArrayFromJsonCommand<SkillViewModel>(nameof(SkillNames), this);
             GetSkills.Execute(null);
         }

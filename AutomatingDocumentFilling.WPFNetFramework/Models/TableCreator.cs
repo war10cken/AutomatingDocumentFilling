@@ -35,6 +35,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
             return table;
         }
+
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
                                                     char symbol, string[] dataForSecondRow) where TViewModel : ViewModelBase
         {
@@ -72,7 +73,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
         public static Table CreateLastTable<TViewModel>(DocX document, IReadOnlyList<string> headers,
                                                         List<TViewModel> data,
-                                                        char symbol) where TViewModel : ViewModelBase
+                                                        char symbol)
+            where TViewModel : ViewModelBase
         {
             var table = document.AddTable(data.Count, headers.Count);
             table.Alignment = Alignment.center;
@@ -95,8 +97,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             }
 
             return table;
-        } 
-        
+        }
+
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
                                         string symbol) where TViewModel : ViewModelBase
         {
@@ -152,9 +154,13 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             return table;
         }
 
-        public static Table CreateHeadOfBigTable(DocX document, ThemeViewModel theme)
+        private static float _sectionNumber = 1.0f;
+        private static string _sectionName;
+
+        public static Table CreateHeadOfBigTable(DocX document, ThemeViewModel theme, SectionViewModel section)
         {
-            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count;
+            _sectionName = section.SectionName;
+            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
             const int columns = 5;
 
             var table = document.AddTable(totalLength + 5, columns);
@@ -236,9 +242,48 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             return table;
         }
 
-        public static Table CreateCenterOfBigTable(DocX document, ThemeViewModel theme)
+        public static Table CreateHeadOfBigTable(DocX document, SectionViewModel section)
         {
+            int totalLength = 3;
+            const int columns = 5;
+
+            var table = document.AddTable(totalLength, columns);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append("Наименование разделов и тем").Bold().Italic();
+            table.Rows[0].Cells[1].Paragraphs[0]
+                 .Append("Содержание учебного материала и формы организации деятельности обучающихся").Bold()
+                 .Italic();
+            table.Rows[0].Cells[3].Paragraphs[0].Append("Объем часов").Bold().Italic();
+            table.Rows[0].Cells[4].Width = 143;
+            table.Rows[0].Cells[4].Paragraphs[0]
+                 .Append("Коды компетенций, формированию которых способствует элемент программы, знания, умения")
+                 .Bold().Italic();
+
+            table.Rows[1].MergeCells(1, 2);
+            table.Rows[1].Cells[0].Paragraphs[0].Append("1");
+            table.Rows[1].Cells[2].Paragraphs[0].Append("3");
+            table.Rows[1].Cells[3].Paragraphs[0].Append("4");
+            table.Rows[1].Cells[1].Paragraphs[0].Append("2");
+
+            table.Rows[2].MergeCells(0, 2);
+            table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел 1.0 {section.SectionName}");
+            _sectionName = section.SectionName;
+
+            return table;
+        }
+
+        public static Table CreateCenterOfBigTable(DocX document, ThemeViewModel theme, SectionViewModel section)
+        {
+            _sectionName = section.SectionName;
+            if (_sectionName != section.SectionName)
+            {
+                int totalLengthPlusOne = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
+            }
             int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count;
+
             const int columns = 5;
 
             int practicalCount = theme.PracticalTrainingTopics.Count;
@@ -252,6 +297,14 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.MergeCellsInColumn(0, 0, totalLength + 2);
             table.MergeCellsInColumn(3, 0, theme.EducationMaterials.Count);
             table.MergeCellsInColumn(4, 0, totalLength + 2);
+
+            if (_sectionName != section.SectionName)
+            {
+                table.Rows[2].MergeCells(0, 2);
+                table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {_sectionNumber} {section.SectionName}");
+                _sectionNumber += 0.1f;
+                _sectionName = section.SectionName;
+            }
 
             for (int i = 0; i < theme.PracticalTrainingTopics.Count + 2; i++)
             {
@@ -302,9 +355,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             return table;
         }
 
-        public static Table CreateEndOfBigTable(DocX document, ThemeViewModel theme, HomeViewModel homeViewModel)
+        public static Table CreateEndOfBigTable(DocX document, ThemeViewModel theme, HomeViewModel homeViewModel,
+            SectionViewModel section)
         {
-            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count;
+            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
             const int columns = 5;
 
             var table = document.AddTable(totalLength + 6, columns);
@@ -315,6 +369,13 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.MergeCellsInColumn(0, 0, totalLength + 2);
             table.MergeCellsInColumn(3, 0, theme.EducationMaterials.Count);
             table.MergeCellsInColumn(4, 0, totalLength + 2);
+
+            if (_sectionName != section.SectionName)
+            {
+                table.Rows[2].MergeCells(0, 2);
+                table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {_sectionNumber} {section.SectionName}");                
+            }
+            
 
             for (int i = 0; i < theme.PracticalTrainingTopics.Count + 2; i++)
             {

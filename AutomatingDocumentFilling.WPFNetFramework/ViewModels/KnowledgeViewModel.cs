@@ -29,7 +29,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
                 OnPropertyChanged(nameof(SelectedText));
             }
         }
-        
+
         private string _appraisal;
 
         public string Appraisal
@@ -60,7 +60,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public KnowledgeViewModel(HomeViewModel homeViewModel)
         {
-            DeleteCommand = new DeleteItemCommand<KnowledgeViewModel>(this, homeViewModel);
+            DeleteCommand = new DeleteItemCommand<HomeViewModel, KnowledgeViewModel>(this, homeViewModel);
             GetKnowledgeNamesCommand = new GetArrayFromJsonCommand<KnowledgeViewModel>(nameof(KnowledgeNames), this);
             GetKnowledgeNamesCommand.Execute(null);
         }

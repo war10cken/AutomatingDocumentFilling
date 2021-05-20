@@ -7,15 +7,17 @@ using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 {
-    public class DeleteItemCommand<TViewModel> : ICommand where TViewModel : ViewModelBase
+    public class DeleteItemCommand<TMainViewModel, TViewModel> : ICommand
+        where TViewModel : ViewModelBase
+        where TMainViewModel : ViewModelBase
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly TMainViewModel _mainViewModel;
         private readonly TViewModel _viewModel;
 
-        public DeleteItemCommand(TViewModel viewModel, HomeViewModel homeViewModel)
+        public DeleteItemCommand(TViewModel viewModel, TMainViewModel mainViewModel)
         {
             _viewModel = viewModel;
-            _homeViewModel = homeViewModel;
+            _mainViewModel = mainViewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -26,15 +28,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
         public void Execute(object parameter)
         {
             string collectionName = _viewModel.GetType().Name.Replace("ViewModel", "") + "s";
-            var collection = _homeViewModel.GetType().GetProperty(collectionName);
+            var collection = _mainViewModel.GetType().GetProperty(collectionName);
 
-            if (collection?.GetValue(_homeViewModel) is List<TViewModel> newList)
+            if (collection?.GetValue(_mainViewModel) is List<TViewModel> newList)
             {
                 newList.Remove(_viewModel);
-                
-                collection.SetValue(_homeViewModel, null);
-                
-                collection.SetValue(_homeViewModel, newList);                
+
+                collection.SetValue(_mainViewModel, null);
+
+                collection.SetValue(_mainViewModel, newList);
             }
         }
 

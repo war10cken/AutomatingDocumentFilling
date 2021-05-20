@@ -42,7 +42,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
                 OnPropertyChanged(nameof(EducationHours));
             }
         }
-        
+
         private List<EducationMaterialViewModel> _educationMaterials;
 
         public List<EducationMaterialViewModel> EducationMaterials
@@ -71,10 +71,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         public ICommand AddNewPracticalTrainingTopicCommand { get; }
 
         public ICommand DeleteCommand { get; }
-        
-        public ThemeViewModel(HomeViewModel homeViewModel)
+
+        public ThemeViewModel(SectionViewModel sectionViewModel)
         {
-            DeleteCommand = new DeleteItemCommand<ThemeViewModel>(this, homeViewModel);
+            DeleteCommand = new DeleteItemCommand<SectionViewModel, ThemeViewModel>(this, sectionViewModel);
             AddNewEducationMaterialCommand =
                 new AddNewItemCommand<ThemeViewModel, EducationMaterialViewModel>(this, nameof(EducationMaterials));
             AddNewEducationMaterialCommand.Execute(null);

@@ -270,17 +270,15 @@
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
     <Compile Include="Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\EducationMaterial.cs" />
     <Compile Include="Models\ListCreator.cs" />
     <Compile Include="Models\ObservableObject.cs" />
-    <Compile Include="Models\PracticalTrainingTopics.cs" />
     <Compile Include="Models\TableCreator.cs" />
-    <Compile Include="Models\Theme.cs" />
     <Compile Include="State\Navigators\INavigator.cs" />
     <Compile Include="State\Navigators\Navigator.cs" />
     <Compile Include="State\Navigators\ViewType.cs" />
     <Compile Include="ViewModels\AcademicSubjectViewModel.cs" />
     <Compile Include="ViewModels\AdditionalResourceViewModel.cs" />
+    <Compile Include="ViewModels\ClassroomEquipmentViewModel.cs" />
     <Compile Include="ViewModels\CourseWorkViewModel.cs" />
     <Compile Include="ViewModels\CreateViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
@@ -291,14 +289,17 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\InternetResourceViewModel.cs" />
     <Compile Include="ViewModels\KnowledgeViewModel.cs" />
+    <Compile Include="ViewModels\LaboratoryEquipmentViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PracticalTrainingTopicsViewModel.cs" />
     <Compile Include="ViewModels\ProfessionalCompetenceViewModel.cs" />
     <Compile Include="ViewModels\MainResourceViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModelBase.cs" />
+    <Compile Include="ViewModels\SectionViewModel.cs" />
     <Compile Include="ViewModels\SkillViewModel.cs" />
     <Compile Include="ViewModels\ThemeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\WorkshopEquipmentViewModel.cs" />
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>

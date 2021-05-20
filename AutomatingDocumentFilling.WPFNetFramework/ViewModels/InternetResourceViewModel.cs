@@ -18,10 +18,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         }
 
         public ICommand DeleteResourceCommand { get; }
-        
+
         public InternetResourceViewModel(HomeViewModel homeViewModel) : base(homeViewModel)
         {
-            DeleteResourceCommand = new DeleteItemCommand<InternetResourceViewModel>(this, homeViewModel);
+            DeleteResourceCommand = new DeleteItemCommand<HomeViewModel, InternetResourceViewModel>(this, homeViewModel);
         }
     }
 }

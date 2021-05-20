@@ -27,7 +27,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
         {
             try
             {
-                await Task.WhenAll(InsertIntoDocument(_documentName, "output.docx"));
+                await InsertIntoDocument(_documentName, "output.docx");
             }
             catch (NullReferenceException e)
             {
@@ -37,15 +37,40 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 MessageBox.Show("Вы забыли заполнить поля!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
-        private async Task InsertIntoDocument(string part, string newNameOfDocument)
+
+        private async ValueTask InsertIntoDocument(string part, string newNameOfDocument)
         {
             using (var document = DocX.Load(part))
             {
                 _homeViewModel.IsSaved = false;
-                
+
                 if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count > 0)
                 {
+                    string classroomEquipments = "";
+                    string workshopEquipments = "";
+                    string laboratoryEquipments = "";
+                    
+                    if (_homeViewModel.ClassroomEquipments is {Count: > 0})
+                    {
+                        classroomEquipments =
+                            NormalizeEquipment("Оборудование учебного кабинета и рабочих мест кабинета:",
+                                               _homeViewModel.ClassroomEquipments);
+                    }
+
+                    if (_homeViewModel.WorkshopEquipments is {Count: > 0})
+                    {
+                        workshopEquipments =
+                            NormalizeEquipment($"Оборудование мастерской и рабочих мест мастерской «{_homeViewModel.WorkshopRoomName}»:",
+                                               _homeViewModel.WorkshopEquipments);
+                    }
+
+                    if (_homeViewModel.LaboratoryEquipments is {Count: > 0})
+                    {
+                        laboratoryEquipments =
+                            NormalizeEquipment($"Оборудование лаборатории и рабочих мест лаборатории «{_homeViewModel.LaboratoryRoomName}»:",
+                                               _homeViewModel.LaboratoryEquipments);
+                    }
+                    
                     string[] skillsHeaders = { "Умение", "Наименование умения" };
 
                     string[] knowledgeHeaders =
@@ -56,15 +81,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     string[] professionalCompetenceHeaders =
                         {"Код", "Наименование видов деятельности и профессиональных компетенций"};
 
-                    string[] heads = {"Результаты обучения (знания, умения)", "Критерии оценки", "Формы и методы оценки"};
-                    string[] d = {"Характеристики демонстрируемых знаний", "Чем и как проверяется"};
+                    string[] heads = { "Результаты обучения (знания, умения)", "Критерии оценки", "Формы и методы оценки" };
+                    string[] d = { "Характеристики демонстрируемых знаний", "Чем и как проверяется" };
 
                     var skillsTableWithKnowledge =
                         TableCreator.CreateTable(document, heads, _homeViewModel.Skills, 'У', d);
 
                     var knowledgeTableWithSkills =
                         TableCreator.CreateLastTable(document, heads, _homeViewModel.Knowledge, 'З');
-                    
+
                     var skillsTable =
                         TableCreator.CreateTable(document, skillsHeaders, _homeViewModel.Skills, 'У');
                     var knowledgeTable =
@@ -78,13 +103,31 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         TableCreator.CreateTable(document, professionalCompetenceHeaders,
                                                  _homeViewModel.ProfessionalCompetences, "ВД", "ПК");
 
-                    List<Table> centerTables = _homeViewModel.Themes
-                                                             .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme))
-                                                             .ToList();
+                    //List<Table> centerTables = _homeViewModel.Themes
+                    //                                         .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme))
+                    //                                         .ToList();
 
-                    Table headOfBigTable = TableCreator.CreateHeadOfBigTable(document, _homeViewModel.Themes.FirstOrDefault());
+                    Table headOfBigTable = TableCreator.CreateHeadOfBigTable(document, _homeViewModel.Sections.FirstOrDefault());
 
-                    Table endOfBigTable = TableCreator.CreateEndOfBigTable(document, _homeViewModel.Themes.LastOrDefault(), _homeViewModel);
+                    List<Table> tablesAfterHead = _homeViewModel.Sections.FirstOrDefault()?.Themes
+                        .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme, _homeViewModel.Sections.FirstOrDefault()))
+                        .ToList();
+
+                    List<Table> tables = new();
+
+                    foreach (var section in _homeViewModel.Sections)
+                    {
+                        foreach (var theme in section.Themes)
+                        {
+                            tables.Add(TableCreator.CreateCenterOfBigTable(document, theme, section));
+                        }
+                    }
+
+                    Table endOfBigTable =
+                        TableCreator.CreateEndOfBigTable(document,
+                                                         _homeViewModel.Sections.LastOrDefault()?.Themes
+                                                                       .LastOrDefault(), _homeViewModel,
+                                                         _homeViewModel.Sections.LastOrDefault());
 
                     var courseWorksList = ListCreator.AddNewList<CourseWorkViewModel>(document,
                                                                          nameof(_homeViewModel.CourseWorks),
@@ -101,20 +144,31 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                                                            nameof(_homeViewModel.InternetResources),
                                                                            _homeViewModel);
 
-                    string nameOfChoice = _homeViewModel.IsLaboratory ? "лаборатория"
-                                          : _homeViewModel.IsEducationRoom ? "учебный кабинет"
-                                          : _homeViewModel.IsWorkshop ? "мастерская" : "";
+                    string name = string.Empty;
 
-                    string choice = _homeViewModel.IsEducationRoom ? _homeViewModel.EducationRoomNumber
-                             : _homeViewModel.IsLaboratory ? _homeViewModel.LaboratoryRoomNumber
-                             : _homeViewModel.WorkshopRoomNumber;
+                    if (_homeViewModel.IsEducationRoom)
+                    {
+                        name = "учебный кабинет " + _homeViewModel.EducationRoomName;
 
-                    await ReplaceTextInDocument(document, nameOfChoice, choice, mainList, additionalList, internetList,
+                        if (_homeViewModel.IsWorkshop)
+                        {
+                            name = name.Insert(name.Length, ", мастерская " + _homeViewModel.WorkshopRoomName);
+
+                            if (_homeViewModel.IsLaboratory)
+                            {
+                                name = name.Insert(name.Length, ", лаборатория " + _homeViewModel.LaboratoryRoomName);
+                            }
+                        }
+                    }
+                    
+
+                    await ReplaceTextInDocument(document, name, mainList, additionalList, internetList,
                                                 endOfBigTable, courseWorksList, skillsTable, knowledgeTable,
                                                 generalCompetenceTable, professionalCompetenceTable, headOfBigTable,
-                                                skillsTableWithKnowledge, knowledgeTableWithSkills, centerTables)
+                                                skillsTableWithKnowledge, knowledgeTableWithSkills, tables, tablesAfterHead,
+                                                classroomEquipments, workshopEquipments, laboratoryEquipments, _homeViewModel.Cycle)
                        .ConfigureAwait(false);
-                    
+
                     _homeViewModel.IsSaved = true;
                     MessageBox.Show("Успешно сохранено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -124,15 +178,47 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             }
         }
 
-        private async Task ReplaceTextInDocument(DocX document, string nameOfChoice, string choice, List mainList,
+        private string NormalizeEquipment<TViewModel>(string startString, List<TViewModel> equipments)
+            where TViewModel : ViewModelBase
+        {
+            string totalString = startString;
+            List<string> names = new List<string>();
+
+            for (int i = 0; i < equipments.Count; i++)
+            {
+                string equipmentName = equipments[i].GetType().GetProperty("Name")?.GetValue(equipments[i]) as string;
+                
+                if (i == 0)
+                {
+                    names.Add($"\n{equipmentName}");
+                    totalString = totalString + names[i];
+                    continue;
+                }
+
+                names.Add($", {equipmentName}");
+
+                totalString = totalString + names[i];
+            }
+
+            totalString = totalString.Replace("\r\n", "");
+
+            return totalString;
+        }
+
+        private async Task ReplaceTextInDocument(DocX document, string choice, List mainList,
                                                  List additionalList, List internetList, Table endOfBigTable,
                                                  List courseWorksList, Table skillsTable, Table knowledgeTable,
                                                  Table generalCompetenceTable, Table professionalCompetenceTable,
                                                  Table headOfBigTable, Table skillsTableWithKnowledge,
-                                                 Table knowledgeTableWithSkills, List<Table> centerTables)
+                                                 Table knowledgeTableWithSkills, List<Table> centerTables,
+                                                 List<Table> tablesAfterHead, string classroomEquipments,
+                                                 string workshopEquipments, string laboratoryEquipments,
+                                                 string cycle)
         {
             await Task.Factory.StartNew(() =>
             {
+                document.ReplaceText("<currentyear>", _homeViewModel.CurrentYear, false,
+                                     RegexOptions.IgnoreCase);
                 document.ReplaceText("<code>", _homeViewModel.CodeOfAcademicDiscipline, false,
                                      RegexOptions.IgnoreCase);
                 document.ReplaceText("<specialty>", _homeViewModel.Specialty, false, RegexOptions.IgnoreCase);
@@ -158,8 +244,34 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 document.ReplaceText("<placeofdisciplineinstructure>",
                                      _homeViewModel.PlaceOfDisciplineInStructure, false,
                                      RegexOptions.IgnoreCase);
-                document.ReplaceText("<thechoice>", $"{nameOfChoice} {choice}", false, RegexOptions.IgnoreCase);
+                document.ReplaceText("<thechoice>", $"{choice}", false, RegexOptions.IgnoreCase);
+                document.ReplaceText("<cycle>", cycle, false, RegexOptions.IgnoreCase);
 
+                if (classroomEquipments != "")
+                {
+                    document.ReplaceText("<classroomequipments>", $"{classroomEquipments}", false,
+                                         RegexOptions.IgnoreCase);
+                }
+
+                if (workshopEquipments != "")
+                {
+                    document.ReplaceText("<workshopequipments>", $"{workshopEquipments}", false,
+                                         RegexOptions.IgnoreCase);
+                }
+
+                if (laboratoryEquipments != "")
+                {
+                    document.ReplaceText("<laboratoryequipments>", $"{laboratoryEquipments}", false,
+                                         RegexOptions.IgnoreCase);
+                }
+                
+                document.ReplaceText("<laboratoryequipments>", "", false,
+                                     RegexOptions.IgnoreCase);
+                document.ReplaceText("<workshopequipments>", "", false,
+                                     RegexOptions.IgnoreCase);
+                document.ReplaceText("<classroomequipments>", "", false,
+                                     RegexOptions.IgnoreCase);
+                
                 if (additionalList != null)
                     InsertListIntoDocument(document, additionalList, "<additionallist>");
                 else
@@ -186,13 +298,17 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 skillsTableWithKnowledge.InsertTableAfterSelf(knowledgeTableWithSkills);
                 headOfBigTable.InsertTableAfterSelf(endOfBigTable);
 
-                centerTables.RemoveAt(0);
-                centerTables.RemoveAt(centerTables.Count - 1);
+                // foreach (var table in tablesAfterHead)
+                // {
+                //     endOfBigTable.InsertTableAfterSelf(table);
+                // }
+
+                // centerTables.RemoveAt(0);
+                // centerTables.RemoveAt(centerTables.Count - 1);
                 foreach (var table in centerTables)
                 {
                     headOfBigTable.InsertTableAfterSelf(table);
                 }
-                
             });
         }
 
@@ -208,7 +324,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 paragraph.Remove(false);
             }
         }
-        
+
         private void InsertListIntoDocument(DocX document, List list, string phrase)
         {
             foreach (var paragraph in document.Paragraphs.Where(paragraph => paragraph.Text.Contains(phrase)))

@@ -14,18 +14,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region BoolProperties
 
-            private bool _isSaved;
+        private bool _isSaved;
 
-            public bool IsSaved
+        public bool IsSaved
+        {
+            get => _isSaved;
+            set
             {
-                get => _isSaved;
-                set
-                {
-                    _isSaved = value;
-                    OnPropertyChanged(nameof(IsSaved));
-                }
+                _isSaved = value;
+                OnPropertyChanged(nameof(IsSaved));
             }
-            
+        }
+
         private bool _isHasConsultation;
 
         public bool IsHasConsultation
@@ -90,6 +90,55 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region ListProperties
 
+
+            private List<string> _cycles;
+
+            public List<string> Cycles
+            {
+                get => _cycles;
+                set
+                {
+                    _cycles = value;
+                    OnPropertyChanged(nameof(Cycles));
+                }
+            }
+
+            private List<LaboratoryEquipmentViewModel> _laboratoryEquipments;
+
+            public List<LaboratoryEquipmentViewModel> LaboratoryEquipments
+            {
+                get => _laboratoryEquipments;
+                set
+                {
+                    _laboratoryEquipments = value;
+                    OnPropertyChanged(nameof(LaboratoryEquipments));
+                }
+            }
+
+            private List<WorkshopEquipmentViewModel> _workshopEquipments;
+
+            public List<WorkshopEquipmentViewModel> WorkshopEquipments
+            {
+                get => _workshopEquipments;
+                set
+                {
+                    _workshopEquipments = value;
+                    OnPropertyChanged(nameof(WorkshopEquipments));
+                }
+            }
+            
+            private List<ClassroomEquipmentViewModel> _classroomEquipments;
+
+            public List<ClassroomEquipmentViewModel> ClassroomEquipments
+            {
+                get => _classroomEquipments;
+                set
+                {
+                    _classroomEquipments = value;
+                    OnPropertyChanged(nameof(ClassroomEquipments));
+                }
+            }
+            
         private string _consultationHours;
 
         public string ConsultationHours
@@ -123,6 +172,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _certificationForms = value;
                 OnPropertyChanged(nameof(CertificationForms));
+            }
+        }
+
+        private List<SectionViewModel> _sections;
+
+        public List<SectionViewModel> Sections
+        {
+            get => _sections;
+            set
+            {
+                _sections = value;
+                OnPropertyChanged(nameof(Sections));
             }
         }
 
@@ -288,6 +349,30 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion CountProperties
 
+            private string _cycle;
+
+            public string Cycle
+            {
+                get => _cycle;
+                set
+                {
+                    _cycle = value;
+                    OnPropertyChanged(nameof(Cycle));
+                }
+            }
+            
+            private string _currentYear;
+
+            public string CurrentYear
+            {
+                get => _currentYear;
+                set
+                {
+                    _currentYear = value;
+                    OnPropertyChanged(nameof(CurrentYear));
+                }
+            }
+            
         private string _courseWorkHours;
 
         public string CourseWorkHours
@@ -300,39 +385,39 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _laboratoryRoomNumber;
+        private string _laboratoryRoomName;
 
-        public string LaboratoryRoomNumber
+        public string LaboratoryRoomName
         {
-            get => _laboratoryRoomNumber;
+            get => _laboratoryRoomName;
             set
             {
-                _laboratoryRoomNumber = value;
-                OnPropertyChanged(nameof(LaboratoryRoomNumber));
+                _laboratoryRoomName = value;
+                OnPropertyChanged(nameof(LaboratoryRoomName));
             }
         }
 
-        private string _workshopRoomNumber;
+        private string _workshopRoomName;
 
-        public string WorkshopRoomNumber
+        public string WorkshopRoomName
         {
-            get => _workshopRoomNumber;
+            get => _workshopRoomName;
             set
             {
-                _workshopRoomNumber = value;
-                OnPropertyChanged(nameof(WorkshopRoomNumber));
+                _workshopRoomName = value;
+                OnPropertyChanged(nameof(WorkshopRoomName));
             }
         }
 
-        private string _educationRoomNumber;
+        private string _educationRoomName;
 
-        public string EducationRoomNumber
+        public string EducationRoomName
         {
-            get => _educationRoomNumber;
+            get => _educationRoomName;
             set
             {
-                _educationRoomNumber = value;
-                OnPropertyChanged(nameof(EducationRoomNumber));
+                _educationRoomName = value;
+                OnPropertyChanged(nameof(EducationRoomName));
             }
         }
 
@@ -544,6 +629,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand GetCertificationFormsCommand { get; }
 
+        public ICommand GetCyclesCommand { get; }
+
         #endregion GetCommands
 
         #region AddCommands
@@ -562,24 +649,35 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand AddNewInternetResource { get; }
 
-        public ICommand AddNewThemeCommand { get; }
-
         public ICommand AddNewCourseWorkCommand { get; }
+
+        public ICommand AddNewSectionCommand { get; }
+
+        public ICommand AddNewClassroomEquipmentCommand { get; }
+
+        public ICommand AddNewWorkshopEquipmentCommand { get; }
+
+        public ICommand AddNewLaboratoryEquipmentCommand { get; }
 
         #endregion AddCommands
 
-            public ICommand SaveCommand { get; }
-            
+        public ICommand SaveCommand { get; }
+        
+
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
-
+            
+            AddNewLaboratoryEquipmentCommand =
+                new AddNewItemCommand<HomeViewModel, LaboratoryEquipmentViewModel>(this, nameof(LaboratoryEquipments));
+            AddNewWorkshopEquipmentCommand =
+                new AddNewItemCommand<HomeViewModel, WorkshopEquipmentViewModel>(this, nameof(WorkshopEquipments));
+            AddNewClassroomEquipmentCommand =
+                new AddNewItemCommand<HomeViewModel, ClassroomEquipmentViewModel>(this, nameof(ClassroomEquipments));
+            AddNewSectionCommand = new AddNewItemCommand<HomeViewModel, SectionViewModel>(this, nameof(Sections));
             SaveCommand = new SaveCommand(this, documentName);
             AddNewCourseWorkCommand = new AddNewItemCommand<HomeViewModel, CourseWorkViewModel>(this, nameof(CourseWorks));
             AddNewCourseWorkCommand.Execute(null);
-            AddNewThemeCommand =
-                new AddNewItemCommand<HomeViewModel, ThemeViewModel>(this, nameof(Themes));
-            AddNewThemeCommand.Execute(null);
             AddNewInternetResource =
                 new AddNewItemCommand<HomeViewModel, InternetResourceViewModel>(this, nameof(InternetResources));
             AddNewInternetResource.Execute(null);
@@ -590,18 +688,14 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             AddNewResource.Execute(null);
             AddNewProfessionalCompetenceCommand =
                 new AddNewItemCommand<HomeViewModel, ProfessionalCompetenceViewModel>(this,
-                                                                                      nameof(ProfessionalCompetences),
-                                                                                      nameof(
-                                                                                          CountOfProfessionalCompetence));
+                                                                                      nameof(ProfessionalCompetences));
             AddNewGeneralCompetenceCommand =
-                new AddNewItemCommand<HomeViewModel, GeneralCompetenceViewModel>(this, nameof(GeneralCompetences),
-                                                                                 nameof(CountOfGeneralCompetences));
+                new AddNewItemCommand<HomeViewModel, GeneralCompetenceViewModel>(this, nameof(GeneralCompetences));
             AddNewKnowledgeCommand =
-                new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledge),
-                                                                         nameof(CountOfKnowledge));
-            AddNewSkillCommand = new AddNewItemCommand<HomeViewModel, SkillViewModel>(this, nameof(Skills),
-                                                                                      nameof(CountOfSkills));
+                new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledge));
+            AddNewSkillCommand = new AddNewItemCommand<HomeViewModel, SkillViewModel>(this, nameof(Skills));
 
+            GetCyclesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Cycles), this);
             GetCertificationFormsCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(CertificationForms), this);
             GetFormsOfEducationCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(FormsOfEducation), this);
             GetSpecialtiesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Specialties), this);
@@ -610,6 +704,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             GetPlacesOfDisciplineInStructureCommand =
                 new GetArrayFromJsonCommand<HomeViewModel>(nameof(PlacesOfDisciplineInStructure), this);
 
+            GetCyclesCommand.Execute(null);
             GetCertificationFormsCommand.Execute(null);
             GetCodesOfAcademicDisciplineCommand.Execute(null);
             GetSpecialtiesCommand.Execute(null);

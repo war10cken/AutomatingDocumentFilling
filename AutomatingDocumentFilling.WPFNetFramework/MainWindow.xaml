@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:AutomatingDocumentFilling.WPFNetFramework"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Автоматизация заполнения документа"
-    Width="1110"
+    Width="1510"
     Height="910"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

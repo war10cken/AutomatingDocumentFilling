@@ -27,7 +27,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public CourseWorkViewModel(HomeViewModel homeViewModel)
         {
-            DeleteCommand = new DeleteItemCommand<CourseWorkViewModel>(this, homeViewModel);
+            DeleteCommand = new DeleteItemCommand<HomeViewModel, CourseWorkViewModel>(this, homeViewModel);
         }
     }
 }

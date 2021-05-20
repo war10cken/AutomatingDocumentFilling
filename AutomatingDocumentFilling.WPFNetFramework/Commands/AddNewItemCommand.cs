@@ -13,13 +13,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
         private readonly TMainViewModel _mainViewModel;
         private readonly List<TViewModel> _list;
         private readonly string _propertyName;
-        private readonly string _propertyNameOfCount;
 
-        public AddNewItemCommand(TMainViewModel mainViewModel, string propertyName, string propertyNameOfCount = null)
+        public AddNewItemCommand(TMainViewModel mainViewModel, string propertyName)
         {
             _mainViewModel = mainViewModel;
             _propertyName = propertyName;
-            _propertyNameOfCount = propertyNameOfCount;
             _list = new List<TViewModel>();
         }
 
@@ -30,42 +28,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
         public void Execute(object parameter)
         {
-            if (_propertyNameOfCount != null)
-            {
-                int count = 0;
-
-                var collectionWithSpecificCount = _mainViewModel.GetType().GetProperty(_propertyName);
-                var homeViewModelCountProperty = _mainViewModel.GetType().GetProperty(_propertyNameOfCount);
-                var constructorInfoWithSpecificCount = typeof(TViewModel).GetConstructor(new[] { typeof(HomeViewModel) });
-
-                collectionWithSpecificCount?.SetValue(_mainViewModel, null);
-                _list.Clear();
-
-                try
-                {
-                    count = int.Parse((string)homeViewModelCountProperty?.GetValue(_mainViewModel) ?? string.Empty);
-                }
-                catch (ArgumentNullException)
-                {
-                    MessageBox.Show("Вы не ввели количество");
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Вы не ввели количество");
-                }
-
-                for (int i = 0; i < count; i++)
-                {
-                    _list.Add(constructorInfoWithSpecificCount != null 
-                                  ? (TViewModel)Activator.CreateInstance(typeof(TViewModel), _mainViewModel)
-                                  : (TViewModel)Activator.CreateInstance(typeof(TViewModel)));
-                }
-
-                collectionWithSpecificCount?.SetValue(_mainViewModel, _list);
-                return;
-            }
-
-            var constructorInfo = typeof(TViewModel).GetConstructor(new[] { typeof(HomeViewModel) });
+            var constructorInfo = typeof(TViewModel).GetConstructor(new[] { typeof(TMainViewModel) });
 
             var collectionWithoutSpecificCount = _mainViewModel.GetType().GetProperty(_propertyName);
 
