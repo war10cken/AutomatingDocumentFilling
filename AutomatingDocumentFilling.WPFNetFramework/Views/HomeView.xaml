@@ -57,6 +57,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -1027,27 +1030,28 @@
                 ItemsSource="{Binding CertificationForms}"
                 SelectedItem="{Binding CertificationForm}"
                 SelectedValue="{Binding CertificationForms[0]}" />
-            <CheckBox
-                x:Name="IsConsultation"
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="10,10,0,0"
-                VerticalContentAlignment="Center"
-                Content="Была ли консультации?"
-                FontSize="16"
-                IsChecked="{Binding IsHasConsultation}" />
+            <!-- <CheckBox -->
+            <!--     x:Name="IsConsultation" -->
+            <!--     Grid.Row="1" -->
+            <!--     Grid.Column="0" -->
+            <!--     Margin="10,10,0,0" -->
+            <!--     VerticalContentAlignment="Center" -->
+            <!--     Content="Была ли консультации?" -->
+            <!--     FontSize="16" -->
+            <!--     IsChecked="{Binding IsHasConsultation}" /> -->
+            <!-- Visibility="{Binding ElementName=IsConsultation, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"  -->
             <TextBlock
                 Grid.Row="1"
-                Grid.Column="1"
-                Text="Введите количество часов: "
-                Visibility="{Binding ElementName=IsConsultation, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                Grid.Column="0"
+                Style="{StaticResource TextBlockWithTrigger}"
+                Text="Введите количество часов: "/>
             <TextBox
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 Width="50"
+                Style="{StaticResource StyleWithTrigger}"
                 Margin="240,10,0,0"
-                Text="{Binding ConsultationHours}"
-                Visibility="{Binding ElementName=IsConsultation, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                Text="{Binding ConsultationHours}"/>
         </Grid>
 
         <Separator Grid.Row="19" Margin="10" />
@@ -1262,31 +1266,49 @@
                                       ItemsSource="{Binding WorkshopEquipments, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="10">
+                                    <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                        
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
+                                        <Grid Margin="10"
+                                              Grid.Row="0"
+                                              Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                        
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
                                         
-                                        <TextBlock Grid.Row="0"
-                                                   FontSize="16"
-                                                   Grid.Column="0"
-                                                   Text="Название оборудования: "/>
-                                        <toolkit:RichTextBox Grid.Row="0"
-                                                             Grid.Column="1"
-                                                             FontSize="16"
-                                                             Width="150"
-                                                             Text="{Binding Name}">
-                                            <toolkit:RichTextBox.TextFormatter>
-                                                <toolkit:PlainTextFormatter/>
-                                            </toolkit:RichTextBox.TextFormatter>
-                                        </toolkit:RichTextBox>
+                                            <TextBlock Grid.Row="0"
+                                                       FontSize="16"
+                                                       Grid.Column="0"
+                                                       Text="Название оборудования: "/>
+                                            <toolkit:RichTextBox Grid.Row="0"
+                                                                 Grid.Column="1"
+                                                                 FontSize="16"
+                                                                 Width="150"
+                                                                 Text="{Binding Name}">
+                                                <toolkit:RichTextBox.TextFormatter>
+                                                    <toolkit:PlainTextFormatter/>
+                                                </toolkit:RichTextBox.TextFormatter>
+                                            </toolkit:RichTextBox>
+                                        </Grid>
+                                        <Button
+                                            Grid.Row="0"
+                                            Margin="10 0 0 0"
+                                            Command="{Binding DeleteCommand}"
+                                            Style="{StaticResource ButtonWithCross}"
+                                            Grid.Column="1"/>
                                     </Grid>
+                                    
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -1336,31 +1358,43 @@
                                       ItemsSource="{Binding LaboratoryEquipments, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                        
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
+                                        <Grid Margin="10"
+                                              Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                        
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
                                         
-                                        <TextBlock Grid.Row="0"
-                                                   FontSize="16"
-                                                   Grid.Column="0"
-                                                   Text="Название оборудования: "/>
-                                        <toolkit:RichTextBox Grid.Row="0"
-                                                             Grid.Column="1"
-                                                             FontSize="16"
-                                                             Width="150"
-                                                             Text="{Binding Name}">
-                                            <toolkit:RichTextBox.TextFormatter>
-                                                <toolkit:PlainTextFormatter/>
-                                            </toolkit:RichTextBox.TextFormatter>
-                                        </toolkit:RichTextBox>
+                                            <TextBlock Grid.Row="0"
+                                                       FontSize="16"
+                                                       Grid.Column="0"
+                                                       Text="Название оборудования: "/>
+                                            <toolkit:RichTextBox Grid.Row="0"
+                                                                 Grid.Column="1"
+                                                                 FontSize="16"
+                                                                 Width="150"
+                                                                 Text="{Binding Name}">
+                                                <toolkit:RichTextBox.TextFormatter>
+                                                    <toolkit:PlainTextFormatter/>
+                                                </toolkit:RichTextBox.TextFormatter>
+                                            </toolkit:RichTextBox>
+                                        </Grid>
+                                        <Button Grid.Column="1"
+                                                Margin="10 0 0 0"
+                                                Style="{StaticResource ButtonWithCross}"
+                                                Command="{Binding DeleteCommand}"/>
                                     </Grid>
+                                    
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -1370,18 +1404,208 @@
         </Grid>
 
         <Separator Grid.Row="23" Margin="10" />
+        <Grid Grid.Row="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Суммарная учебная нагрузка во взаимодействии с преподавателем (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="0"
+                     Grid.Column="1"
+                     Text="{Binding TotalTeachingLoadHours}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Самостоятельная работа (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="1"
+                     Grid.Column="1"
+                     Text="{Binding IndependentWorkHours}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Объем образовательной программы (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="2"
+                     Grid.Column="1"
+                     Width="50"
+                     Text="{Binding VolumeOfEducationalProgramHours}"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Теоретическое обучение (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="3"
+                     Grid.Column="1"
+                     Text="{Binding TheoreticalTeachingHours}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <CheckBox Grid.Row="4"
+                      Grid.Column="0"
+                      Content="Были ли лабораторные работы?"
+                      VerticalContentAlignment="Center"
+                      Margin="15"
+                      Name="IsLab"/>
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
+                       Visibility="{Binding ElementName=IsLab, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       Text="Лабораторные работы (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="5"
+                     Grid.Column="1"
+                     Visibility="{Binding ElementName=IsLab, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Width="50"
+                     Text="{Binding LaboratoryWorksHours}"
+                     VerticalContentAlignment="Center"/>
+            <CheckBox Grid.Row="6"
+                      Grid.Column="0"
+                      Content="Были ли практические занятия?"
+                      VerticalContentAlignment="Center"
+                      Margin="15"
+                      Name="IsPrac"/>
+            <TextBlock Grid.Row="7"
+                       Grid.Column="0"
+                       Visibility="{Binding ElementName=IsPrac, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       Text="Практические занятия (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="7"
+                     Grid.Column="1"
+                     Text="{Binding PracticalLessonsHours}"
+                     Visibility="{Binding ElementName=IsPrac, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <CheckBox Grid.Row="8"
+                      Grid.Column="0"
+                      Content="Была ли курсовая работа?"
+                      VerticalContentAlignment="Center"
+                      Margin="15"
+                      Name="IsCurs"/>
+            <TextBlock Grid.Row="9"
+                       Grid.Column="0"
+                       Visibility="{Binding ElementName=IsCurs, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       Text="Курсовая работа (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="9"
+                     Grid.Column="1"
+                     Text="{Binding CourseWorkHoursWithCondition}"
+                     Visibility="{Binding ElementName=IsCurs, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Row="10"
+                       Grid.Column="0"
+                       Text="Контрольная работа (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="10"
+                     Grid.Column="1"
+                     Width="50"
+                     Text="{Binding TestHours}"
+                     VerticalContentAlignment="Center"/>
+            <TextBlock Grid.Row="11"
+                       Grid.Column="0"
+                       Text="Консультации (объём часов):"
+                       TextWrapping="Wrap"
+                       Width="170"/>
+            <TextBox Grid.Row="11"
+                     Grid.Column="1"
+                     Text="{Binding ConsultingHours}"
+                     Width="50"
+                     VerticalContentAlignment="Center"/>
+            <Button Grid.Row="12"
+                    Grid.Column="0"
+                    Margin="5"
+                    Command="{Binding AddNewIndependentWorkCommand}"
+                    Content="Добавить самостоятельную работу"
+                    VerticalAlignment="Bottom"
+                    Width="160"/>
+            <ItemsControl Grid.Row="12"
+                          Grid.Column="1"
+                          ItemsSource="{Binding IndependentWork}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       Margin="0 0 0 5"
+                                       Grid.Column="0"
+                                       FontSize="16"
+                                       Text="Название самостоятельной работы:"/>
+                            <toolkit:RichTextBox Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 Width="150"
+                                                 FontSize="16"
+                                                 Margin="0 0 0 5"
+                                                 Text="{Binding WorkName}">
+                                <toolkit:RichTextBox.TextFormatter>
+                                    <toolkit:PlainTextFormatter/>
+                                </toolkit:RichTextBox.TextFormatter>
+                            </toolkit:RichTextBox>
+                            <TextBlock Grid.Row="1"
+                                       Margin="0 0 0 5"
+                                       Grid.Column="0"
+                                       FontSize="16"
+                                       Text="Объём часов:"/>
+                            <TextBox Grid.Row="1"
+                                     Margin="0 0 0 5"
+                                     Grid.Column="1"
+                                     FontSize="16"
+                                     Width="40"
+                                     Text="{Binding Hours}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+            
+        </Grid>
+        <Separator Grid.Row="25" Margin="10" />
         <CheckBox
             Name="IsAdditionalResources"
-            Grid.Row="24"
+            Grid.Row="26"
             Margin="15"
             Content="Использовались дополнительные источники?" />
         <CheckBox
             Name="IsInternetResources"
-            Grid.Row="25"
+            Grid.Row="27"
             Margin="15"
             Content="Использовались интернет-источники?" />
 
-        <Grid Grid.Row="26">
+        <Grid Grid.Row="28">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1437,7 +1661,7 @@
                 Content="Добавить новый источник" />
         </Grid>
 
-        <Grid Grid.Row="27" Visibility="{Binding ElementName=IsAdditionalResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="29" Visibility="{Binding ElementName=IsAdditionalResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1493,7 +1717,7 @@
                 Content="Добавить новый источник" />
         </Grid>
 
-        <Grid Grid.Row="28" Visibility="{Binding ElementName=IsInternetResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="30" Visibility="{Binding ElementName=IsInternetResources, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                 <ColumnDefinition Width="auto" />
@@ -1548,14 +1772,14 @@
         </Grid>
 
         <Button
-            Grid.Row="32"
+            Grid.Row="36"
             Margin="0,10,0,0"
             Command="{Binding ShowWindowCommand}"
             Content="Предпросмотр"
             Visibility="{Binding IsSaved, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <Button
-            Grid.Row="33"
+            Grid.Row="37"
             Margin="0,10,0,0"
             Command="{Binding SaveCommand}"
             Content="Сохранить" />

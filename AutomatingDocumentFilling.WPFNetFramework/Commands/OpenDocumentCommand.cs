@@ -21,7 +21,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             _outputName = outputName;
         }
 
-        
         private void OpenDocument()
         {
             if (_outputName.Length > 0)
@@ -30,18 +29,13 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 string newXpsDocumentName = Path.GetFullPath(_outputName ?? string.Empty).Remove(path.Length - 4) + "xps";
 
                 DocumentConverter.ConvertToXps(path, newXpsDocumentName);
-                    
+
                 XpsDocument xpsDocument = new XpsDocument(newXpsDocumentName, FileAccess.Read);
 
                 _viewModel.Document = xpsDocument.GetFixedDocumentSequence();
                 xpsDocument.Close();
             }
         }
-
-        // public override async Task ExecuteAsync(object parameter)
-        // {
-        //     await Task.WhenAll(OpenDocument());
-        // }
 
         public bool CanExecute(object parameter)
         {

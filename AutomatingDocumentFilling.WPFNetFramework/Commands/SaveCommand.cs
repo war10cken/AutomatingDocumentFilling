@@ -46,6 +46,33 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
                 if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count > 0)
                 {
+                    string[] volumeOfDisciplineTableHeaders = {"Вид учебной работы", "Объем часов"};
+                    string[] data =
+                    {
+                        "Суммарная учебная нагрузка во взаимодействии с преподавателем",
+                        "Самостоятельная работа",
+                        "Объем образовательной программы",
+                        "теоретическое обучение",
+                        _homeViewModel.LaboratoryWorksHours == null ? null : "лабораторные работы",
+                        _homeViewModel.PracticalLessonsHours == null ? null : "практические занятия",
+                        _homeViewModel.CourseWorkHoursWithCondition == null ? null : "курсовая работа",
+                        "контрольная работа"
+                    };
+                    string[] hours =
+                    {
+                        _homeViewModel.TotalTeachingLoadHours, _homeViewModel.IndependentWorkHours,
+                        _homeViewModel.VolumeOfEducationalProgramHours, _homeViewModel.TheoreticalTeachingHours,
+                        _homeViewModel.LaboratoryWorksHours,
+                        _homeViewModel.PracticalLessonsHours,
+                        _homeViewModel.CourseWorkHoursWithCondition,
+                        _homeViewModel.TestHours,
+                        _homeViewModel.ConsultingHours
+                    };
+                    Table volumeOfDisciplineTable = TableCreator.CreateTable(document, volumeOfDisciplineTableHeaders,
+                                                                             _homeViewModel.IndependentWork, data,
+                                                                             hours);
+                    
+                    
                     string classroomEquipments = "";
                     string workshopEquipments = "";
                     string laboratoryEquipments = "";
@@ -129,6 +156,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                                                        .LastOrDefault(), _homeViewModel,
                                                          _homeViewModel.Sections.LastOrDefault());
 
+                    
+                    
                     var courseWorksList = ListCreator.AddNewList<CourseWorkViewModel>(document,
                                                                          nameof(_homeViewModel.CourseWorks),
                                                                          _homeViewModel);
@@ -166,7 +195,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                                 endOfBigTable, courseWorksList, skillsTable, knowledgeTable,
                                                 generalCompetenceTable, professionalCompetenceTable, headOfBigTable,
                                                 skillsTableWithKnowledge, knowledgeTableWithSkills, tables, tablesAfterHead,
-                                                classroomEquipments, workshopEquipments, laboratoryEquipments, _homeViewModel.Cycle)
+                                                classroomEquipments, workshopEquipments, laboratoryEquipments, _homeViewModel.Cycle,
+                                                volumeOfDisciplineTable)
                        .ConfigureAwait(false);
 
                     _homeViewModel.IsSaved = true;
@@ -213,7 +243,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                                  Table knowledgeTableWithSkills, List<Table> centerTables,
                                                  List<Table> tablesAfterHead, string classroomEquipments,
                                                  string workshopEquipments, string laboratoryEquipments,
-                                                 string cycle)
+                                                 string cycle, Table volumeOfDisciplineTable)
         {
             await Task.Factory.StartNew(() =>
             {
@@ -286,6 +316,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 InsertListIntoDocument(endOfBigTable, courseWorksList, "<courseworks>");
 
                 document.ReplaceTextWithObject("<skillstable>", skillsTable, false, RegexOptions.IgnoreCase);
+                document.ReplaceTextWithObject("<volumeofdisciplinetable>", volumeOfDisciplineTable, false, RegexOptions.IgnoreCase);
                 document.ReplaceTextWithObject("<knowledgetable>", knowledgeTable, false,
                                                RegexOptions.IgnoreCase);
                 document.ReplaceTextWithObject("<generalcompetencetable>", generalCompetenceTable, false,

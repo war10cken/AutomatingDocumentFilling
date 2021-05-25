@@ -82,7 +82,6 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFrame
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\bin\Debug\System.ValueTuple.xml
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.csprojAssemblyReference.cache
-D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.exe.config
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\MainWindow.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\DocumentView.g.cs
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\HomeView.g.cs

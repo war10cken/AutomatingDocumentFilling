@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
-using AutomatingDocumentFilling.WPFNetFramework.Models;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
@@ -90,55 +88,66 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region ListProperties
 
+        private List<VolumeOfDiscipline> _independentWork;
 
-            private List<string> _cycles;
-
-            public List<string> Cycles
+        public List<VolumeOfDiscipline> IndependentWork
+        {
+            get => _independentWork;
+            set
             {
-                get => _cycles;
-                set
-                {
-                    _cycles = value;
-                    OnPropertyChanged(nameof(Cycles));
-                }
+                _independentWork = value;
+                OnPropertyChanged(nameof(IndependentWork));
             }
+        }
 
-            private List<LaboratoryEquipmentViewModel> _laboratoryEquipments;
+        private List<string> _cycles;
 
-            public List<LaboratoryEquipmentViewModel> LaboratoryEquipments
+        public List<string> Cycles
+        {
+            get => _cycles;
+            set
             {
-                get => _laboratoryEquipments;
-                set
-                {
-                    _laboratoryEquipments = value;
-                    OnPropertyChanged(nameof(LaboratoryEquipments));
-                }
+                _cycles = value;
+                OnPropertyChanged(nameof(Cycles));
             }
+        }
 
-            private List<WorkshopEquipmentViewModel> _workshopEquipments;
+        private List<LaboratoryEquipmentViewModel> _laboratoryEquipments;
 
-            public List<WorkshopEquipmentViewModel> WorkshopEquipments
+        public List<LaboratoryEquipmentViewModel> LaboratoryEquipments
+        {
+            get => _laboratoryEquipments;
+            set
             {
-                get => _workshopEquipments;
-                set
-                {
-                    _workshopEquipments = value;
-                    OnPropertyChanged(nameof(WorkshopEquipments));
-                }
+                _laboratoryEquipments = value;
+                OnPropertyChanged(nameof(LaboratoryEquipments));
             }
-            
-            private List<ClassroomEquipmentViewModel> _classroomEquipments;
+        }
 
-            public List<ClassroomEquipmentViewModel> ClassroomEquipments
+        private List<WorkshopEquipmentViewModel> _workshopEquipments;
+
+        public List<WorkshopEquipmentViewModel> WorkshopEquipments
+        {
+            get => _workshopEquipments;
+            set
             {
-                get => _classroomEquipments;
-                set
-                {
-                    _classroomEquipments = value;
-                    OnPropertyChanged(nameof(ClassroomEquipments));
-                }
+                _workshopEquipments = value;
+                OnPropertyChanged(nameof(WorkshopEquipments));
             }
-            
+        }
+
+        private List<ClassroomEquipmentViewModel> _classroomEquipments;
+
+        public List<ClassroomEquipmentViewModel> ClassroomEquipments
+        {
+            get => _classroomEquipments;
+            set
+            {
+                _classroomEquipments = value;
+                OnPropertyChanged(nameof(ClassroomEquipments));
+            }
+        }
+
         private string _consultationHours;
 
         public string ConsultationHours
@@ -349,30 +358,138 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion CountProperties
 
-            private string _cycle;
+        private string _consultingHours;
 
-            public string Cycle
+        public string ConsultingHours
+        {
+            get => _consultingHours;
+            set
             {
-                get => _cycle;
-                set
-                {
-                    _cycle = value;
-                    OnPropertyChanged(nameof(Cycle));
-                }
+                _consultingHours = value;
+                OnPropertyChanged(nameof(ConsultingHours));
             }
-            
-            private string _currentYear;
+        }
 
-            public string CurrentYear
+        private string _testHours;
+
+        public string TestHours
+        {
+            get => _testHours;
+            set
             {
-                get => _currentYear;
-                set
-                {
-                    _currentYear = value;
-                    OnPropertyChanged(nameof(CurrentYear));
-                }
+                _testHours = value;
+                OnPropertyChanged(nameof(TestHours));
             }
-            
+        }
+
+        private string _courseWorkHoursWithCondition;
+
+        public string CourseWorkHoursWithCondition
+        {
+            get => _courseWorkHours;
+            set
+            {
+                _courseWorkHours = value;
+                OnPropertyChanged(nameof(CourseWorkHours));
+            }
+        }
+
+        private string _practicalLessonsHours;
+
+        public string PracticalLessonsHours
+        {
+            get => _practicalLessonsHours;
+            set
+            {
+                _practicalLessonsHours = value;
+                OnPropertyChanged(nameof(PracticalLessonsHours));
+            }
+        }
+
+        private string _laboratoryWorksHours;
+
+        public string LaboratoryWorksHours
+        {
+            get => _laboratoryWorksHours;
+            set
+            {
+                _laboratoryWorksHours = value;
+                OnPropertyChanged(nameof(LaboratoryWorksHours));
+            }
+        }
+
+        private string _theoreticalTeachingHours;
+
+        public string TheoreticalTeachingHours
+        {
+            get => _theoreticalTeachingHours;
+            set
+            {
+                _theoreticalTeachingHours = value;
+                OnPropertyChanged(nameof(TheoreticalTeachingHours));
+            }
+        }
+
+        private string _volumeOfEducationalProgramHours;
+
+        public string VolumeOfEducationalProgramHours
+        {
+            get => _volumeOfEducationalProgramHours;
+            set
+            {
+                _volumeOfEducationalProgramHours = value;
+                OnPropertyChanged(nameof(VolumeOfEducationalProgramHours));
+            }
+        }
+
+        private string _independentWorkHours;
+
+        public string IndependentWorkHours
+        {
+            get => _independentWorkHours;
+            set
+            {
+                _independentWorkHours = value;
+                OnPropertyChanged(nameof(IndependentWorkHours));
+            }
+        }
+
+        private string _totalTeachingLoadHours;
+
+        public string TotalTeachingLoadHours
+        {
+            get => _totalTeachingLoadHours;
+            set
+            {
+                _totalTeachingLoadHours = value;
+                OnPropertyChanged(nameof(TotalTeachingLoadHours));
+            }
+        }
+
+        private string _cycle;
+
+        public string Cycle
+        {
+            get => _cycle;
+            set
+            {
+                _cycle = value;
+                OnPropertyChanged(nameof(Cycle));
+            }
+        }
+
+        private string _currentYear;
+
+        public string CurrentYear
+        {
+            get => _currentYear;
+            set
+            {
+                _currentYear = value;
+                OnPropertyChanged(nameof(CurrentYear));
+            }
+        }
+
         private string _courseWorkHours;
 
         public string CourseWorkHours
@@ -659,15 +776,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand AddNewLaboratoryEquipmentCommand { get; }
 
+        public ICommand AddNewIndependentWorkCommand { get; }
+
         #endregion AddCommands
 
         public ICommand SaveCommand { get; }
-        
 
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
-            
+
+            AddNewIndependentWorkCommand =
+                new AddNewItemCommand<HomeViewModel, VolumeOfDiscipline>(this, nameof(IndependentWork));
             AddNewLaboratoryEquipmentCommand =
                 new AddNewItemCommand<HomeViewModel, LaboratoryEquipmentViewModel>(this, nameof(LaboratoryEquipments));
             AddNewWorkshopEquipmentCommand =

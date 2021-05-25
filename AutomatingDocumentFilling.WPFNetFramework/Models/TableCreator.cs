@@ -121,6 +121,51 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
             return table;
         }
+        
+        public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
+                                                    string[] symbols, string[] hours) 
+            where TViewModel : ViewModelBase
+        {
+            string[] symbolsWithoutNull = symbols.Where(s => s != null).ToArray();
+            string[] hoursWithoutNull = hours.Where(h => h != null).ToArray();
+            
+            var table = document.AddTable(data.Count + symbolsWithoutNull.Length + 1, headers.Count);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
+            table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
+
+            List<string> text = data.Select(item => item.GetType().GetProperty("Hours")?.GetValue(item)
+                                                        .ToString()).ToList();
+
+            for (int i = 1; i < data.Count + symbolsWithoutNull.Length + 1; i++)
+            {
+                if (i == 4)
+                {
+                    table.Rows[i].MergeCells(0, 1);
+                    table.Rows[i].Cells[0].Paragraphs[0].Append("в том числе:");
+                    continue;
+                }
+
+                if (i < symbolsWithoutNull.Length)
+                {
+                    if (symbolsWithoutNull[i - 1].Contains("лабораторные") ||
+                        symbolsWithoutNull[i - 1].Contains("практические") ||
+                        symbolsWithoutNull[i - 1].Contains("курсовая"))
+                    {
+                        table.Rows[i].Cells[0].Paragraphs[0].Append(text[i - (i - 1) - 1]);
+                        continue;
+                    }
+                    
+                    table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbolsWithoutNull[i - 1]}.{i}");
+                    table.Rows[i].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i - 1]);
+                }
+            }
+
+            return table;
+        }
 
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
                                                     string symbolOne, string symbolTwo) where TViewModel : ViewModelBase

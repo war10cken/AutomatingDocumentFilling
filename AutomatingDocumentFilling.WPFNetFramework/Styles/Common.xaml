@@ -8,6 +8,14 @@
         <Setter Property="Height" Value="25" />
     </Style>
     
+    <Style x:Key="StyleWithTrigger" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding CertificationForm}" Value="Экзамен">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     <!-- ComboBox -->
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="10,0,0,0" />
@@ -21,6 +29,14 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Margin" Value="10,10,10,0" />
+    </Style>
+    
+    <Style x:Key="TextBlockWithTrigger" TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding CertificationForm}" Value="Экзамен">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
     <!-- TextBlockHint -->
