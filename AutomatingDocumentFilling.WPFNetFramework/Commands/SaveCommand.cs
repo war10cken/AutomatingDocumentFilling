@@ -56,7 +56,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         _homeViewModel.LaboratoryWorksHours == null ? null : "лабораторные работы",
                         _homeViewModel.PracticalLessonsHours == null ? null : "практические занятия",
                         _homeViewModel.CourseWorkHoursWithCondition == null ? null : "курсовая работа",
-                        "контрольная работа"
+                        "контрольная работа",
+                        "консультации",
+                        "Самостоятельная работа"
                     };
                     string[] hours =
                     {
@@ -68,11 +70,19 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         _homeViewModel.TestHours,
                         _homeViewModel.ConsultingHours
                     };
+                    string[] lastEducationalWork =
+                    {
+                        _homeViewModel.SecondCertificationForm,
+                        _homeViewModel.SecondConsultationHours == null ? null : "Консультации"
+                    };
+                    string[] lastEducationalWorkHours =
+                    {
+                        _homeViewModel.SecondCertificationFormHours,
+                        _homeViewModel.SecondConsultationHours
+                    };
                     Table volumeOfDisciplineTable = TableCreator.CreateTable(document, volumeOfDisciplineTableHeaders,
                                                                              _homeViewModel.IndependentWork, data,
-                                                                             hours);
-                    
-                    
+                                                                             hours, lastEducationalWork, lastEducationalWorkHours);
                     string classroomEquipments = "";
                     string workshopEquipments = "";
                     string laboratoryEquipments = "";

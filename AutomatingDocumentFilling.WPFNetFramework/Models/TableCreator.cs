@@ -121,15 +121,19 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
             return table;
         }
-        
+
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
-                                                    string[] symbols, string[] hours) 
+                                                    string[] symbols, string[] hours, string[] lastEducationalWork,
+                                                    string[] lastEducationalWorkHours) 
             where TViewModel : ViewModelBase
         {
+            string[] lastEducationalWorkWithoutNull = lastEducationalWork.Where(e => e != null).ToArray();
+            string[] lastEducationalWorkHoursWithoutNull = lastEducationalWorkHours.Where(h => h != null).ToArray();
             string[] symbolsWithoutNull = symbols.Where(s => s != null).ToArray();
+            string[] neededSymbols = symbolsWithoutNull.Take(symbolsWithoutNull.Length - 1).ToArray();
             string[] hoursWithoutNull = hours.Where(h => h != null).ToArray();
             
-            var table = document.AddTable(data.Count + symbolsWithoutNull.Length + 1, headers.Count);
+            var table = document.AddTable(data.Count + neededSymbols.Length + 4, headers.Count);
             table.Alignment = Alignment.center;
             table.Design = TableDesign.TableGrid;
             table.AutoFit = AutoFit.Contents;
@@ -137,34 +141,100 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.Rows[0].Cells[0].Paragraphs[0].Append(headers[0]).Bold().Alignment = Alignment.center;
             table.Rows[0].Cells[1].Paragraphs[0].Append(headers[1]).Bold().Alignment = Alignment.center;
 
-            List<string> text = data.Select(item => item.GetType().GetProperty("Hours")?.GetValue(item)
-                                                        .ToString()).ToList();
+            List<string> independentWorkHours = data.Select(item => item.GetType().GetProperty("Hours")?.GetValue(item)
+                                                                        .ToString()).ToList();
+            List<string> independentWorkNames = data.Select(item => item.GetType().GetProperty("WorkName")?.GetValue(item)
+                                                                        .ToString()).ToList();
 
-            for (int i = 1; i < data.Count + symbolsWithoutNull.Length + 1; i++)
+            float totalIndependentWorkHours = independentWorkHours.Select(Convert.ToSingle).Sum(); 
+            
+            bool isInserted = false;
+            int independentWorkNamesCount = independentWorkNames.Count + 1;
+
+            for (int i = 1, j = 0; i < data.Count + neededSymbols.Length + 2 && j < independentWorkNamesCount; i++)
             {
                 if (i == 4)
                 {
                     table.Rows[i].MergeCells(0, 1);
                     table.Rows[i].Cells[0].Paragraphs[0].Append("в том числе:");
+                    table.Rows[i + 1].Cells[0].Paragraphs[0].Append(neededSymbols[i - 1]);
+                    table.Rows[i + 1].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i - 1]);
                     continue;
                 }
 
-                if (i < symbolsWithoutNull.Length)
+                if (i <= neededSymbols.Length && i >= 5)
                 {
-                    if (symbolsWithoutNull[i - 1].Contains("лабораторные") ||
-                        symbolsWithoutNull[i - 1].Contains("практические") ||
-                        symbolsWithoutNull[i - 1].Contains("курсовая"))
+                    InsertIntoCell(table, i + 1, i - 1, neededSymbols, hoursWithoutNull);
+                }
+
+                if (i <= neededSymbols.Length && i < 5)
+                {
+                    InsertIntoCell(table, i, i - 1, neededSymbols, hoursWithoutNull);
+                }
+
+                if (i >= neededSymbols.Length + 1)
+                {
+                    if (independentWorkNamesCount-- > 0)
                     {
-                        table.Rows[i].Cells[0].Paragraphs[0].Append(text[i - (i - 1) - 1]);
-                        continue;
+                        if (!isInserted)
+                        {
+                            table.Rows[i + 1].Cells[0].Paragraphs[0].Append($"{symbolsWithoutNull.LastOrDefault()}");
+                            table.Rows[i + 1].Cells[1].Paragraphs[0].Append($"{totalIndependentWorkHours}");
+                            table.Rows[i + 2].Cells[0].Paragraphs[0].Append("в том числе:");
+                            isInserted = true;
+                        }
+
+                        table.Rows[i + 3].Cells[0].Paragraphs[0].Append(independentWorkNames[j]);
+                        table.Rows[i + 3].Cells[1].Paragraphs[0].Append(independentWorkHours[j]);
+                        j++;
                     }
-                    
-                    table.Rows[i].Cells[0].Paragraphs[0].Append($"{symbolsWithoutNull[i - 1]}.{i}");
-                    table.Rows[i].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i - 1]);
                 }
             }
 
+            for (int i = 0; i < lastEducationalWorkWithoutNull.Length; i++)
+            {
+                table.Rows[table.RowCount - 1].Cells[0].Paragraphs[i].Append(lastEducationalWorkWithoutNull[i]);
+                table.Rows[table.RowCount - 1].Cells[1].Paragraphs[i].Append(lastEducationalWorkHoursWithoutNull[i]);
+
+                if (i + 1 == lastEducationalWorkWithoutNull.Length)
+                {
+                    break;
+                }
+                
+                table.Rows[table.RowCount - 1].Cells[0].InsertParagraph();
+                table.Rows[table.RowCount - 1].Cells[1].InsertParagraph();
+            }
+            
             return table;
+        }
+
+        private static void InsertIntoCell(Table table, int position, int i , string[] neededSymbols, string[] hoursWithoutNull)
+        {
+            if (neededSymbols[i].Contains("лабораторные"))
+            {
+                table.Rows[position].Cells[0].Paragraphs[0].Append(neededSymbols[i]);
+                table.Rows[position].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i]);
+                return;
+            }
+
+            if (neededSymbols[i].Contains("практические"))
+            {
+                table.Rows[position].Cells[0].Paragraphs[0].Append(neededSymbols[i]);
+                table.Rows[position].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i]);
+                return;
+            }
+
+            if (neededSymbols[i].Contains("курсовая"))
+            {
+                table.Rows[position].Cells[0].Paragraphs[0].Append(neededSymbols[i]);
+                table.Rows[position].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i]);
+                return;
+            }
+                    
+            // text[i - (i - 1) - 1]
+                    
+            table.Rows[position].Cells[0].Paragraphs[0].Append($"{neededSymbols[i]}");
+            table.Rows[position].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i]);
         }
 
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,

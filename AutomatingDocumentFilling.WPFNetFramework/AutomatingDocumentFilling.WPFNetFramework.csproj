@@ -259,9 +259,11 @@
     <Compile Include="Commands\ShowWindowCommand.cs" />
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
     <Compile Include="Converters\TextToVisibilityConverter.cs" />
+    <Compile Include="Models\CodeOfAcademicDiscipline.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\ListCreator.cs" />
     <Compile Include="Models\ObservableObject.cs" />
+    <Compile Include="Models\Specialty.cs" />
     <Compile Include="Models\TableCreator.cs" />
     <Compile Include="State\Navigators\INavigator.cs" />
     <Compile Include="State\Navigators\Navigator.cs" />
@@ -281,7 +283,7 @@
     <Compile Include="ViewModels\KnowledgeViewModel.cs" />
     <Compile Include="ViewModels\LaboratoryEquipmentViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\PracticalTrainingTopicsViewModel.cs" />
+    <Compile Include="ViewModels\PracticalTrainingTopicViewModel.cs" />
     <Compile Include="ViewModels\ProfessionalCompetenceViewModel.cs" />
     <Compile Include="ViewModels\MainResourceViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModelBase.cs" />

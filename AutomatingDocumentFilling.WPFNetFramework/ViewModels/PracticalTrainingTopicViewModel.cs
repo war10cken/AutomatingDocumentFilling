@@ -3,7 +3,7 @@ using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
-    public class EducationMaterialViewModel : ViewModelBase
+    public class PracticalTrainingTopicViewModel : ViewModelBase
     {
         private string _name;
 
@@ -17,23 +17,24 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _educationLevel;
+        private string _hours;
 
-        public string EducationLevel
+        public string Hours
         {
-            get => _educationLevel;
+            get => _hours;
             set
             {
-                _educationLevel = value;
-                OnPropertyChanged(nameof(EducationLevel));
+                _hours = value;
+                OnPropertyChanged(nameof(Hours));
             }
         }
 
         public ICommand DeleteCommand { get; }
 
-        public EducationMaterialViewModel(ThemeViewModel themeViewModel)
+        public PracticalTrainingTopicViewModel(ThemeViewModel themeViewModel)
         {
-            DeleteCommand = new DeleteItemCommand<ThemeViewModel, EducationMaterialViewModel>(this, themeViewModel);
+            DeleteCommand =
+                new DeleteItemCommand<ThemeViewModel, PracticalTrainingTopicViewModel>(this, themeViewModel);
         }
     }
 }

@@ -55,9 +55,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<PracticalTrainingTopicsViewModel> _practicalTrainingTopics;
+        private List<PracticalTrainingTopicViewModel> _practicalTrainingTopics;
 
-        public List<PracticalTrainingTopicsViewModel> PracticalTrainingTopics
+        public List<PracticalTrainingTopicViewModel> PracticalTrainingTopics
         {
             get => _practicalTrainingTopics;
             set
@@ -72,6 +72,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand DeleteCommand { get; }
 
+
         public ThemeViewModel(SectionViewModel sectionViewModel)
         {
             DeleteCommand = new DeleteItemCommand<SectionViewModel, ThemeViewModel>(this, sectionViewModel);
@@ -79,7 +80,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
                 new AddNewItemCommand<ThemeViewModel, EducationMaterialViewModel>(this, nameof(EducationMaterials));
             AddNewEducationMaterialCommand.Execute(null);
             AddNewPracticalTrainingTopicCommand =
-                new AddNewItemCommand<ThemeViewModel, PracticalTrainingTopicsViewModel>(this, nameof(PracticalTrainingTopics));
+                new AddNewItemCommand<ThemeViewModel, PracticalTrainingTopicViewModel>(this, nameof(PracticalTrainingTopics));
             AddNewPracticalTrainingTopicCommand.Execute(null);
         }
     }

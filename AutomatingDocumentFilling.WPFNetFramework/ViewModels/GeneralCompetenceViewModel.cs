@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
@@ -30,16 +31,12 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        public ICommand GetGeneralCompetenceNamesCommand { get; }
-
         public ICommand DeleteCommand { get; }
 
         public GeneralCompetenceViewModel(HomeViewModel homeViewModel)
         {
+            GeneralCompetenceNames = homeViewModel.Specialties.Where(s => s.Name == homeViewModel.Specialty).FirstOrDefault().GeneralCompetenceNames;
             DeleteCommand = new DeleteItemCommand<HomeViewModel, GeneralCompetenceViewModel>(this, homeViewModel);
-            GetGeneralCompetenceNamesCommand =
-                new GetArrayFromJsonCommand<GeneralCompetenceViewModel>(nameof(GeneralCompetenceNames), this);
-            GetGeneralCompetenceNamesCommand.Execute(null);
         }
     }
 }

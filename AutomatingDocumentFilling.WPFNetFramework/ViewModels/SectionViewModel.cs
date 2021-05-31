@@ -37,6 +37,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         public SectionViewModel(HomeViewModel homeViewModel)
         {
             AddNewThemeCommand = new AddNewItemCommand<SectionViewModel, ThemeViewModel>(this, nameof(Themes));
+            AddNewThemeCommand.Execute(null);
             DeleteCommand = new DeleteItemCommand<HomeViewModel, SectionViewModel>(this, homeViewModel);
         }
     }

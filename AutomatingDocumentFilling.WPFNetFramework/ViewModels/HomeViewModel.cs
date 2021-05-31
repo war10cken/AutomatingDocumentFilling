@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
+using AutomatingDocumentFilling.WPFNetFramework.Models;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
@@ -87,6 +89,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         #endregion BoolProperties
 
         #region ListProperties
+
+        private List<string> _codesNameOfAcademicDiscipline;
+
+        public List<string> CodesNameOfAcademicDiscipline
+        {
+            get => _codesNameOfAcademicDiscipline;
+            set
+            {
+                _codesNameOfAcademicDiscipline = value;
+                OnPropertyChanged(nameof(CodesNameOfAcademicDiscipline));
+            }
+        }
 
         private List<VolumeOfDiscipline> _independentWork;
 
@@ -358,6 +372,54 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion CountProperties
 
+        private string _secondCertificationFormHours;
+
+        public string SecondCertificationFormHours
+        {
+            get => _secondCertificationFormHours;
+            set
+            {
+                _secondCertificationFormHours = value;
+                OnPropertyChanged(nameof(SecondCertificationFormHours));
+            }
+        }
+
+        private string _secondConsultationHours;
+
+        public string SecondConsultationHours
+        {
+            get => _secondConsultationHours;
+            set
+            {
+                _secondConsultationHours = value;
+                OnPropertyChanged(nameof(SecondConsultationHours));
+            }
+        }
+
+        private List<string> _secondCertificationForms;
+
+        public List<string> SecondCertificationForms
+        {
+            get => _secondCertificationForms;
+            set
+            {
+                _secondCertificationForms = value;
+                OnPropertyChanged(nameof(SecondCertificationForms));
+            }
+        }
+
+        private string _secondCertificationForm;
+
+        public string SecondCertificationForm
+        {
+            get => _secondCertificationForm;
+            set
+            {
+                _secondCertificationForm = value;
+                OnPropertyChanged(nameof(SecondCertificationForm));
+            }
+        }
+
         private string _consultingHours;
 
         public string ConsultingHours
@@ -386,11 +448,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public string CourseWorkHoursWithCondition
         {
-            get => _courseWorkHours;
+            get => _courseWorkHoursWithCondition;
             set
             {
-                _courseWorkHours = value;
-                OnPropertyChanged(nameof(CourseWorkHours));
+                _courseWorkHoursWithCondition = value;
+                OnPropertyChanged(nameof(CourseWorkHoursWithCondition));
             }
         }
 
@@ -622,15 +684,19 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<string> _codesOfAcademicDiscipline;
+        private List<CodeOfAcademicDiscipline> _codesOfAcademicDiscipline;
 
-        public List<string> CodesOfAcademicDiscipline
+        public List<CodeOfAcademicDiscipline> CodesOfAcademicDiscipline
         {
             get => _codesOfAcademicDiscipline;
             set
             {
                 _codesOfAcademicDiscipline = value;
                 OnPropertyChanged(nameof(CodesOfAcademicDiscipline));
+
+                List<string> names = new();
+                names.AddRange(_codesOfAcademicDiscipline.Select(c => c.Name));
+                CodesNameOfAcademicDiscipline = names;
             }
         }
 
@@ -643,12 +709,31 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _codeOfAcademicDiscipline = value;
                 OnPropertyChanged(nameof(CodeOfAcademicDiscipline));
+
+                List<string> names = new();
+                names.AddRange(CodesOfAcademicDiscipline.Where(c => c.Name == _codeOfAcademicDiscipline)
+                    .FirstOrDefault().Specialties.Select(s => s.Name));
+                SpecialtiesName = names;
+
+                Specialties = CodesOfAcademicDiscipline.Find(c => c.Name == CodeOfAcademicDiscipline).Specialties;
             }
         }
 
-        private List<string> _specialties;
+        private List<string> _specialtiesName;
 
-        public List<string> Specialties
+        public List<string> SpecialtiesName
+        {
+            get => _specialtiesName;
+            set
+            {
+                _specialtiesName = value;
+                OnPropertyChanged(nameof(SpecialtiesName));
+            }
+        }
+
+        private List<Specialty> _specialties;
+
+        public List<Specialty> Specialties
         {
             get => _specialties;
             set
@@ -746,6 +831,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand GetCertificationFormsCommand { get; }
 
+        public ICommand GetSecondCertificationFormsCommand { get; }
+
         public ICommand GetCyclesCommand { get; }
 
         #endregion GetCommands
@@ -795,6 +882,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             AddNewClassroomEquipmentCommand =
                 new AddNewItemCommand<HomeViewModel, ClassroomEquipmentViewModel>(this, nameof(ClassroomEquipments));
             AddNewSectionCommand = new AddNewItemCommand<HomeViewModel, SectionViewModel>(this, nameof(Sections));
+            AddNewSectionCommand.Execute(null);
             SaveCommand = new SaveCommand(this, documentName);
             AddNewCourseWorkCommand = new AddNewItemCommand<HomeViewModel, CourseWorkViewModel>(this, nameof(CourseWorks));
             AddNewCourseWorkCommand.Execute(null);
@@ -815,19 +903,20 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
                 new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledge));
             AddNewSkillCommand = new AddNewItemCommand<HomeViewModel, SkillViewModel>(this, nameof(Skills));
 
-            GetCyclesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Cycles), this);
-            GetCertificationFormsCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(CertificationForms), this);
-            GetFormsOfEducationCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(FormsOfEducation), this);
-            GetSpecialtiesCommand = new GetArrayFromJsonCommand<HomeViewModel>(nameof(Specialties), this);
+            GetSecondCertificationFormsCommand =
+                new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(SecondCertificationForms), this);
+            GetCyclesCommand = new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(Cycles), this);
+            GetCertificationFormsCommand = new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(CertificationForms), this);
+            GetFormsOfEducationCommand = new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(FormsOfEducation), this);
             GetCodesOfAcademicDisciplineCommand =
-                new GetArrayFromJsonCommand<HomeViewModel>(nameof(CodesOfAcademicDiscipline), this);
+                new GetArrayFromJsonCommand<HomeViewModel, List<CodeOfAcademicDiscipline>>(nameof(CodesOfAcademicDiscipline), this);
             GetPlacesOfDisciplineInStructureCommand =
-                new GetArrayFromJsonCommand<HomeViewModel>(nameof(PlacesOfDisciplineInStructure), this);
+                new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(PlacesOfDisciplineInStructure), this);
 
             GetCyclesCommand.Execute(null);
+            GetSecondCertificationFormsCommand.Execute(null);
             GetCertificationFormsCommand.Execute(null);
             GetCodesOfAcademicDisciplineCommand.Execute(null);
-            GetSpecialtiesCommand.Execute(null);
             GetFormsOfEducationCommand.Execute(null);
             GetPlacesOfDisciplineInStructureCommand.Execute(null);
 
