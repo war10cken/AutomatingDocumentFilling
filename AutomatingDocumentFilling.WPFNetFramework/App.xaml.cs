@@ -31,11 +31,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework
                        .ConfigureServices((context, services) =>
                         {
                             string documentName = context.Configuration.GetValue<string>("Document");
-                            string outputName = context.Configuration.GetValue<string>("OutputName"); 
+                            string outputName = context.Configuration.GetValue<string>("OutputName");
 
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
 
-                           
                             services.AddSingleton<CreateViewModel<HomeViewModel>>(service =>
                             {
                                 return () =>

@@ -1,0 +1,9 @@
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\bin\Release\AutomatingDocumentFilling.Converter.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\bin\Release\AutomatingDocumentFilling.Converter.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\bin\Release\Microsoft.Office.Interop.Word.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\bin\Release\ReachFramework.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\bin\Release\stdole.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\obj\Release\AutomatingDocumentFilling.Converter.csproj.CoreCompileInputs.cache
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\obj\Release\AutomatingDocumentFilling.Converter.csproj.CopyComplete
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\obj\Release\AutomatingDocumentFilling.Converter.dll
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.Converter\obj\Release\AutomatingDocumentFilling.Converter.pdb

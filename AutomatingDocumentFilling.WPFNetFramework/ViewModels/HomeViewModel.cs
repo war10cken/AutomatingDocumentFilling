@@ -372,6 +372,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #endregion CountProperties
 
+        private string _certificationFormHours;
+
+        public string CertificationFormHours
+        {
+            get => _certificationFormHours;
+            set
+            {
+                _certificationFormHours = value;
+                OnPropertyChanged(nameof(CertificationFormHours));
+            }
+        }
+
         private string _secondCertificationFormHours;
 
         public string SecondCertificationFormHours
@@ -624,7 +636,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _order = "q";
+        private string _order;
 
         public string Order
         {
@@ -875,6 +887,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
             AddNewIndependentWorkCommand =
                 new AddNewItemCommand<HomeViewModel, VolumeOfDiscipline>(this, nameof(IndependentWork));
+            AddNewIndependentWorkCommand.Execute(null);
             AddNewLaboratoryEquipmentCommand =
                 new AddNewItemCommand<HomeViewModel, LaboratoryEquipmentViewModel>(this, nameof(LaboratoryEquipments));
             AddNewWorkshopEquipmentCommand =

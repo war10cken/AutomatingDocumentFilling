@@ -46,7 +46,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
 
                 if (document.FindUniqueByPattern(@"<[\w \=]{4,}>", RegexOptions.IgnoreCase).Count > 0)
                 {
-                    string[] volumeOfDisciplineTableHeaders = {"Вид учебной работы", "Объем часов"};
+                    string[] volumeOfDisciplineTableHeaders = { "Вид учебной работы", "Объем часов" };
                     string[] data =
                     {
                         "Суммарная учебная нагрузка во взаимодействии с преподавателем",
@@ -86,28 +86,28 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     string classroomEquipments = "";
                     string workshopEquipments = "";
                     string laboratoryEquipments = "";
-                    
-                    if (_homeViewModel.ClassroomEquipments is {Count: > 0})
+
+                    if (_homeViewModel.ClassroomEquipments is { Count: > 0 })
                     {
                         classroomEquipments =
                             NormalizeEquipment("Оборудование учебного кабинета и рабочих мест кабинета:",
                                                _homeViewModel.ClassroomEquipments);
                     }
 
-                    if (_homeViewModel.WorkshopEquipments is {Count: > 0})
+                    if (_homeViewModel.WorkshopEquipments is { Count: > 0 })
                     {
                         workshopEquipments =
                             NormalizeEquipment($"Оборудование мастерской и рабочих мест мастерской «{_homeViewModel.WorkshopRoomName}»:",
                                                _homeViewModel.WorkshopEquipments);
                     }
 
-                    if (_homeViewModel.LaboratoryEquipments is {Count: > 0})
+                    if (_homeViewModel.LaboratoryEquipments is { Count: > 0 })
                     {
                         laboratoryEquipments =
                             NormalizeEquipment($"Оборудование лаборатории и рабочих мест лаборатории «{_homeViewModel.LaboratoryRoomName}»:",
                                                _homeViewModel.LaboratoryEquipments);
                     }
-                    
+
                     string[] skillsHeaders = { "Умение", "Наименование умения" };
 
                     string[] knowledgeHeaders =
@@ -160,14 +160,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         }
                     }
 
+                    tablesAfterHead.Reverse();
+                    tables.Reverse();
+
                     Table endOfBigTable =
                         TableCreator.CreateEndOfBigTable(document,
                                                          _homeViewModel.Sections.LastOrDefault()?.Themes
                                                                        .LastOrDefault(), _homeViewModel,
                                                          _homeViewModel.Sections.LastOrDefault());
 
-                    
-                    
                     var courseWorksList = ListCreator.AddNewList<CourseWorkViewModel>(document,
                                                                          nameof(_homeViewModel.CourseWorks),
                                                                          _homeViewModel);
@@ -199,7 +200,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                             }
                         }
                     }
-                    
 
                     await ReplaceTextInDocument(document, name, mainList, additionalList, internetList,
                                                 endOfBigTable, courseWorksList, skillsTable, knowledgeTable,
@@ -227,7 +227,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
             for (int i = 0; i < equipments.Count; i++)
             {
                 string equipmentName = equipments[i].GetType().GetProperty("Name")?.GetValue(equipments[i]) as string;
-                
+
                 if (i == 0)
                 {
                     names.Add($"\n{equipmentName}");
@@ -304,14 +304,14 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     document.ReplaceText("<laboratoryequipments>", $"{laboratoryEquipments}", false,
                                          RegexOptions.IgnoreCase);
                 }
-                
+
                 document.ReplaceText("<laboratoryequipments>", "", false,
                                      RegexOptions.IgnoreCase);
                 document.ReplaceText("<workshopequipments>", "", false,
                                      RegexOptions.IgnoreCase);
                 document.ReplaceText("<classroomequipments>", "", false,
                                      RegexOptions.IgnoreCase);
-                
+
                 if (additionalList != null)
                     InsertListIntoDocument(document, additionalList, "<additionallist>");
                 else
@@ -344,8 +344,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 //     endOfBigTable.InsertTableAfterSelf(table);
                 // }
 
-                // centerTables.RemoveAt(0);
-                // centerTables.RemoveAt(centerTables.Count - 1);
+                //centerTables.RemoveAt(0);
+                centerTables.RemoveAt(centerTables.Count - 1);
+
                 foreach (var table in centerTables)
                 {
                     headOfBigTable.InsertTableAfterSelf(table);
