@@ -255,14 +255,20 @@
     <Compile Include="Commands\DeleteItemCommand.cs" />
     <Compile Include="Commands\GetArrayFromJsonCommand.cs" />
     <Compile Include="Commands\OpenDocumentCommand.cs" />
+    <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\ShowWindowCommand.cs" />
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
+    <Compile Include="Controls\AutoFilteredComboBox.cs" />
+    <Compile Include="Controls\FilteredComboBox.cs" />
+    <Compile Include="Controls\SecondFilteredComboBox.cs" />
+    <Compile Include="Controls\ThirdFilteredComboBox.cs" />
     <Compile Include="Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Models\CodeOfAcademicDiscipline.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\ListCreator.cs" />
     <Compile Include="Models\ObservableObject.cs" />
+    <Compile Include="Models\Qualification.cs" />
     <Compile Include="Models\Specialty.cs" />
     <Compile Include="Models\TableCreator.cs" />
     <Compile Include="State\Navigators\INavigator.cs" />
@@ -291,7 +297,7 @@
     <Compile Include="ViewModels\SkillViewModel.cs" />
     <Compile Include="ViewModels\ThemeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\VolumeOfDiscipline.cs" />
+    <Compile Include="ViewModels\IndependentWorkViewModel.cs" />
     <Compile Include="ViewModels\WorkshopEquipmentViewModel.cs" />
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
@@ -340,7 +346,9 @@
       <Name>AutomatingDocumentFilling.Converter</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

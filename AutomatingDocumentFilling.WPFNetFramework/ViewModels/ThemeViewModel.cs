@@ -43,6 +43,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
+        private string _independentWorkHours;
+
+        public string IndependentWorkHours
+        {
+            get => _independentWorkHours;
+            set
+            {
+                _independentWorkHours = value;
+                OnPropertyChanged(nameof(IndependentWorkHours));
+            }
+        }
+
         private List<EducationMaterialViewModel> _educationMaterials;
 
         public List<EducationMaterialViewModel> EducationMaterials
@@ -71,7 +83,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         public ICommand AddNewPracticalTrainingTopicCommand { get; }
 
         public ICommand DeleteCommand { get; }
-
 
         public ThemeViewModel(SectionViewModel sectionViewModel)
         {

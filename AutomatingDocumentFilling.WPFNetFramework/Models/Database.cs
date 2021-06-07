@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Diagnostics;
+using AutomatingDocumentFilling.WPFNetFramework.ViewModels;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.Models
 {
@@ -25,6 +26,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
 
         [JsonProperty("Cycles")]
         public List<string> Cycles { get; set; }
+
+        [JsonProperty("Qualifications")]
+        public List<Qualification> Qualifications { get; set; }
 
         public async ValueTask<T> GetValue<T>(string propertyName)
             where T : class

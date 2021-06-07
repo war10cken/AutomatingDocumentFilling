@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
+using Xceed.Document.NET;
 
 namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
@@ -27,6 +28,30 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _themes = value;
                 OnPropertyChanged(nameof(Themes));
+            }
+        }
+
+        private float _totalHours;
+
+        public float TotalHours
+        {
+            get => _totalHours;
+            set
+            {
+                _totalHours = value;
+                OnPropertyChanged(nameof(TotalHours));
+            }
+        }
+
+        private List<Table> _tables;
+
+        public List<Table> Tables
+        {
+            get => _tables;
+            set
+            {
+                _tables = value;
+                OnPropertyChanged(nameof(Tables));
             }
         }
 

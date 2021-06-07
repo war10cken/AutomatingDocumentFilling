@@ -81,7 +81,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         _homeViewModel.SecondConsultationHours
                     };
                     Table volumeOfDisciplineTable = TableCreator.CreateTable(document, volumeOfDisciplineTableHeaders,
-                                                                             _homeViewModel.IndependentWork, data,
+                                                                             _homeViewModel.IndependentWorks, data,
                                                                              hours, lastEducationalWork, lastEducationalWorkHours);
                     string classroomEquipments = "";
                     string workshopEquipments = "";
@@ -111,7 +111,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     string[] skillsHeaders = { "Умение", "Наименование умения" };
 
                     string[] knowledgeHeaders =
-                        {"Знание", "Наименование занания"};
+                        {"Знание", "Наименование знания"};
 
                     string[] generalCompetenceHeaders = { "Код", "Наименование общих компетенций" };
 
@@ -125,13 +125,13 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         TableCreator.CreateTable(document, heads, _homeViewModel.Skills, 'У', d);
 
                     var knowledgeTableWithSkills =
-                        TableCreator.CreateLastTable(document, heads, _homeViewModel.Knowledge, 'З');
+                        TableCreator.CreateLastTable(document, heads, _homeViewModel.Knowledges, 'З');
 
                     var skillsTable =
                         TableCreator.CreateTable(document, skillsHeaders, _homeViewModel.Skills, 'У');
                     var knowledgeTable =
                         TableCreator.CreateTable(document, knowledgeHeaders,
-                                                                     _homeViewModel.Knowledge, 'З');
+                                                                     _homeViewModel.Knowledges, 'З');
 
                     var generalCompetenceTable =
                         TableCreator.CreateTable(document, generalCompetenceHeaders,
@@ -140,34 +140,22 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                         TableCreator.CreateTable(document, professionalCompetenceHeaders,
                                                  _homeViewModel.ProfessionalCompetences, "ВД", "ПК");
 
-                    //List<Table> centerTables = _homeViewModel.Themes
-                    //                                         .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme))
-                    //                                         .ToList();
+                    foreach (var section in _homeViewModel.Sections)
+                    {
+                        section.Tables = section.Themes
+                            .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme, section))
+                            .ToList();
+                    }
 
                     Table headOfBigTable = TableCreator.CreateHeadOfBigTable(document, _homeViewModel.Sections.FirstOrDefault());
 
-                    List<Table> tablesAfterHead = _homeViewModel.Sections.FirstOrDefault()?.Themes
-                        .Select(theme => TableCreator.CreateCenterOfBigTable(document, theme, _homeViewModel.Sections.FirstOrDefault()))
-                        .ToList();
-
-                    List<Table> tables = new();
-
-                    foreach (var section in _homeViewModel.Sections)
-                    {
-                        foreach (var theme in section.Themes)
-                        {
-                            tables.Add(TableCreator.CreateCenterOfBigTable(document, theme, section));
-                        }
-                    }
-
-                    tablesAfterHead.Reverse();
-                    tables.Reverse();
+                    List<Table> sectionTables =
+                        _homeViewModel.Sections.Select(s => TableCreator.CreateSectionTable(document, s)).ToList();
 
                     Table endOfBigTable =
                         TableCreator.CreateEndOfBigTable(document,
                                                          _homeViewModel.Sections.LastOrDefault()?.Themes
-                                                                       .LastOrDefault(), _homeViewModel,
-                                                         _homeViewModel.Sections.LastOrDefault());
+                                                                       .LastOrDefault(), _homeViewModel, _homeViewModel.Sections.LastOrDefault());
 
                     var courseWorksList = ListCreator.AddNewList<CourseWorkViewModel>(document,
                                                                          nameof(_homeViewModel.CourseWorks),
@@ -204,9 +192,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                     await ReplaceTextInDocument(document, name, mainList, additionalList, internetList,
                                                 endOfBigTable, courseWorksList, skillsTable, knowledgeTable,
                                                 generalCompetenceTable, professionalCompetenceTable, headOfBigTable,
-                                                skillsTableWithKnowledge, knowledgeTableWithSkills, tables, tablesAfterHead,
+                                                skillsTableWithKnowledge, knowledgeTableWithSkills,
                                                 classroomEquipments, workshopEquipments, laboratoryEquipments, _homeViewModel.Cycle,
-                                                volumeOfDisciplineTable)
+                                                volumeOfDisciplineTable, sectionTables, _homeViewModel.Sections)
                        .ConfigureAwait(false);
 
                     _homeViewModel.IsSaved = true;
@@ -250,13 +238,19 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                                  List courseWorksList, Table skillsTable, Table knowledgeTable,
                                                  Table generalCompetenceTable, Table professionalCompetenceTable,
                                                  Table headOfBigTable, Table skillsTableWithKnowledge,
-                                                 Table knowledgeTableWithSkills, List<Table> centerTables,
-                                                 List<Table> tablesAfterHead, string classroomEquipments,
+                                                 Table knowledgeTableWithSkills, string classroomEquipments,
                                                  string workshopEquipments, string laboratoryEquipments,
-                                                 string cycle, Table volumeOfDisciplineTable)
+                                                 string cycle, Table volumeOfDisciplineTable, List<Table> sectionTables,
+                                                 List<SectionViewModel> sections)
         {
             await Task.Factory.StartNew(() =>
             {
+                if (_homeViewModel.IsTopFifty)
+                {
+                    document.ReplaceText("<top50>", "ТОП-50", false, RegexOptions.IgnoreCase);
+                }
+
+                document.ReplaceText("<top50>", " ", false, RegexOptions.IgnoreCase);
                 document.ReplaceText("<currentyear>", _homeViewModel.CurrentYear, false,
                                      RegexOptions.IgnoreCase);
                 document.ReplaceText("<code>", _homeViewModel.CodeOfAcademicDiscipline, false,
@@ -275,17 +269,31 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                                      false, RegexOptions.IgnoreCase);
                 document.ReplaceText("<completedby>", _homeViewModel.CompletedBy, false,
                                      RegexOptions.IgnoreCase);
-                document.ReplaceText("<techfio>", _homeViewModel.TechExpertFio, false, RegexOptions.IgnoreCase);
-                document.ReplaceText("<contentfio>", _homeViewModel.ContentExpertFio, false,
-                                     RegexOptions.IgnoreCase);
-                document.ReplaceText("<outsidefio>", _homeViewModel.OutsideExpertFio, false,
-                                     RegexOptions.IgnoreCase);
+                string techExpertFio = _homeViewModel.TechExpertFio is "" or null ? string.Empty : _homeViewModel.TechExpertFio;
+                string techExpert = $"1. Внутренняя экспертиза:\r\n1.1.Техническая экспертиза: {techExpertFio}";
+                string contentExpertFio = _homeViewModel.ContentExpertFio is "" or null ? string.Empty : _homeViewModel.ContentExpertFio;
+                string contentExpert = $"1.2.Содержательная экспертиза: {contentExpertFio}";
+                string outsideExpertFio = _homeViewModel.OutsideExpertFio is "" or null ? string.Empty : _homeViewModel.OutsideExpertFio;
+                string outsideExpert = $"2. Внешняя экспертиза\r\n2.1.Содержательная экспертиза: {outsideExpertFio}";
+
+                document.ReplaceText("<experts>", techExpertFio is not "" or null ? "Эксперты:\r\n" : string.Empty,
+                    false, RegexOptions.IgnoreCase);
+
+                document.ReplaceText("<techfio>", techExpertFio is "" ? string.Empty : techExpert, false, RegexOptions.IgnoreCase);
+                document.ReplaceText("<contentfio>", contentExpertFio is "" ? string.Empty : contentExpert, false, RegexOptions.IgnoreCase);
+                document.ReplaceText("<outsidefio>", outsideExpertFio is "" ? string.Empty : outsideExpert, false, RegexOptions.IgnoreCase);
                 document.ReplaceText("<order>", _homeViewModel.Order, false, RegexOptions.IgnoreCase);
                 document.ReplaceText("<placeofdisciplineinstructure>",
                                      _homeViewModel.PlaceOfDisciplineInStructure, false,
                                      RegexOptions.IgnoreCase);
                 document.ReplaceText("<thechoice>", $"{choice}", false, RegexOptions.IgnoreCase);
                 document.ReplaceText("<cycle>", cycle, false, RegexOptions.IgnoreCase);
+
+                string qualDiscription = _homeViewModel.Qualifications.Where(q => q.Name == _homeViewModel.QualificationName)
+                                                                      .FirstOrDefault().Discription;
+
+                document.ReplaceText("<qualificationname>", _homeViewModel.QualificationName, false, RegexOptions.IgnoreCase);
+                document.ReplaceText("<qualificationdiscription>", qualDiscription, false, RegexOptions.IgnoreCase);
 
                 if (classroomEquipments != "")
                 {
@@ -339,17 +347,22 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Commands
                 skillsTableWithKnowledge.InsertTableAfterSelf(knowledgeTableWithSkills);
                 headOfBigTable.InsertTableAfterSelf(endOfBigTable);
 
-                // foreach (var table in tablesAfterHead)
-                // {
-                //     endOfBigTable.InsertTableAfterSelf(table);
-                // }
+                int sectionTableIndex = 1;
 
-                //centerTables.RemoveAt(0);
-                centerTables.RemoveAt(centerTables.Count - 1);
+                sections.LastOrDefault().Tables.RemoveAt(sections.LastOrDefault().Tables.Count - 1);
 
-                foreach (var table in centerTables)
+                foreach (var section in sections)
                 {
-                    headOfBigTable.InsertTableAfterSelf(table);
+                    foreach (var table in section.Tables)
+                    {
+                        endOfBigTable.InsertTableBeforeSelf(table);
+                    }
+
+                    if (sectionTableIndex < sectionTables.Count)
+                    {
+                        endOfBigTable.InsertTableBeforeSelf(sectionTables[sectionTableIndex]);
+                        sectionTableIndex++;
+                    }
                 }
             });
         }

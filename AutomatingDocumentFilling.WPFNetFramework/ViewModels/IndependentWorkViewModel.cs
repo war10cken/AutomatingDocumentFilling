@@ -1,6 +1,9 @@
-﻿namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
+﻿using AutomatingDocumentFilling.WPFNetFramework.Commands;
+using System.Windows.Input;
+
+namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 {
-    public class VolumeOfDiscipline : ViewModelBase 
+    public class IndependentWorkViewModel : ViewModelBase
     {
         private string _workName;
 
@@ -24,6 +27,13 @@
                 _hours = value;
                 OnPropertyChanged(nameof(Hours));
             }
+        }
+
+        public ICommand DeleteCommand { get; }
+
+        public IndependentWorkViewModel(HomeViewModel homeViewModel)
+        {
+            DeleteCommand = new DeleteItemCommand<HomeViewModel, IndependentWorkViewModel>(this, homeViewModel);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework
                             string outputName = context.Configuration.GetValue<string>("OutputName");
 
                             services.AddSingleton<IAutomatingDocumentFillingViewModelFactory, AutomatingDocumentFillingViewModelFactory>();
+                            services.AddSingleton(new DocumentViewModel(outputName));
 
                             services.AddSingleton<CreateViewModel<HomeViewModel>>(service =>
                             {
@@ -45,7 +46,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework
                             services.AddSingleton(service => new ResourceViewModelBase(service.GetRequiredService<HomeViewModel>()));
                             services.AddSingleton<INavigator, Navigator>();
                             services.AddSingleton<MainViewModel>();
-                            services.AddSingleton<DocumentViewModel>();
 
                             services.AddScoped(service =>
                                                    new DocumentView(service.GetRequiredService<DocumentViewModel>()));

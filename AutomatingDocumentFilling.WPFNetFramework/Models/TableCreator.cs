@@ -11,7 +11,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
     public static class TableCreator
     {
         private const string _textPropertyName = "SelectedText";
-        private static float _totalHours;
 
         public static Table CreateTable<TViewModel>(DocX document, IReadOnlyList<string> headers, List<TViewModel> data,
                                          char symbol) where TViewModel : ViewModelBase
@@ -241,8 +240,6 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
                 return;
             }
 
-            // text[i - (i - 1) - 1]
-
             table.Rows[position].Cells[0].Paragraphs[0].Append($"{neededSymbols[i]}");
             table.Rows[position].Cells[1].Paragraphs[0].Append(hoursWithoutNull[i]);
         }
@@ -280,92 +277,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
         }
 
         private static float _sectionNumber = 1.0f;
-        private static string _sectionName;
-
-        public static Table CreateHeadOfBigTable(DocX document, ThemeViewModel theme, SectionViewModel section)
-        {
-            _sectionName = section.SectionName;
-            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
-            const int columns = 5;
-
-            var table = document.AddTable(totalLength + 5, columns);
-            table.Alignment = Alignment.center;
-            table.Design = TableDesign.TableGrid;
-            table.AutoFit = AutoFit.Contents;
-
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Наименование разделов и тем").Bold().Italic();
-            table.Rows[0].Cells[1].Paragraphs[0]
-                 .Append("Содержание учебного материала и формы организации деятельности обучающихся").Bold()
-                 .Italic();
-            table.Rows[0].Cells[3].Paragraphs[0].Append("Объем часов").Bold().Italic();
-            table.Rows[0].Cells[4].Width = 143;
-            table.Rows[0].Cells[4].Paragraphs[0]
-                 .Append("Коды компетенций, формированию которых способствует элемент программы, знания, умения")
-                 .Bold().Italic();
-
-            table.Rows[2].Cells[0].Paragraphs[0].Append(theme.Name.Trim());
-            table.Rows[2].Cells[1].Paragraphs[0].Append("Содержание учебного плана").Bold().Italic();
-            table.Rows[2].Cells[2].Paragraphs[0].Append("Уровень освоения").Bold().Italic();
-            table.Rows[theme.EducationMaterials.Count + 3].Cells[1].Paragraphs[0]
-                 .Append("Тематика практических занятий и лабароторных работ").Bold().Italic();
-
-            table.Rows[1].MergeCells(1, 2);
-            table.Rows[1].Cells[0].Paragraphs[0].Append("1");
-            table.Rows[1].Cells[2].Paragraphs[0].Append("3");
-            table.Rows[1].Cells[3].Paragraphs[0].Append("4");
-            table.Rows[1].Cells[1].Paragraphs[0].Append("2");
-
-            int practicalCount = theme.PracticalTrainingTopics.Count;
-            int educationCount = theme.EducationMaterials.Count;
-            int totalCount = educationCount + practicalCount;
-
-            table.MergeCellsInColumn(0, 2, totalCount + 4);
-            table.MergeCellsInColumn(3, 2, educationCount + 2);
-            table.MergeCellsInColumn(4, 2, totalCount + 4);
-
-            for (int i = 0; i < practicalCount + 1; i++)
-            {
-                table.Rows[i + educationCount + 3].MergeCells(1, 2);
-            }
-
-            float totalEducationMaterialsHours = Convert.ToSingle(theme.EducationHours);
-
-            //theme.EducationMaterials.ForEach(e => totalEducationMaterialsHours =
-            //                                          totalEducationMaterialsHours + (float) theme.);
-
-            table.Rows[2].Cells[4].Paragraphs[0].Append(theme.Codes);
-
-            //foreach (string text in theme.Codes.Skip(1))
-            //{
-            //    table.Rows[2].Cells[4].InsertParagraph(text);
-            //}
-
-            for (int i = 0; i < theme.EducationMaterials.Count; i++)
-            {
-                table.Rows[i + 3].Cells[1].Paragraphs[0].Append(theme.EducationMaterials[i].Name.Trim());
-                table.Rows[i + 3].Cells[2].Paragraphs[0].Append(theme.EducationMaterials[i].EducationLevel.Trim());
-            }
-
-            table.Rows[2].Cells[3].Paragraphs[0].Append(totalEducationMaterialsHours.ToString());
-
-            for (int i = 0; i < theme.PracticalTrainingTopics.Count; i++)
-            {
-                table.Rows[educationCount + 4 + i].Cells[1].Paragraphs[0]
-                     .Append(theme.PracticalTrainingTopics[i].Name.Trim());
-                table.Rows[educationCount + 4 + i].Cells[2].Paragraphs[0]
-                     .Append(theme.PracticalTrainingTopics[i].Hours.Trim());
-
-                _totalHours = _totalHours + Convert.ToSingle(theme.PracticalTrainingTopics[i].Hours.Trim());
-            }
-
-            table.Rows[table.RowCount - 1].MergeCells(1, 2);
-            table.Rows[table.RowCount - 1].Cells[1].Paragraphs[0].Append("Самостоятельная работа обучающися").Bold()
-                 .Italic();
-
-            _totalHours = _totalHours + Convert.ToSingle(theme.EducationHours.Trim());
-
-            return table;
-        }
+        private static float _totalHours = 0;
 
         public static Table CreateHeadOfBigTable(DocX document, SectionViewModel section)
         {
@@ -394,23 +306,16 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.Rows[1].Cells[1].Paragraphs[0].Append("2");
 
             table.Rows[2].MergeCells(0, 2);
-            table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {_sectionNumber} {section.SectionName}");
-            _sectionNumber += 0.1f;
-            _sectionName = section.SectionName;
+            string sectionNumber = _sectionNumber == 1 ? "1.0" : _sectionNumber.ToString();
+            table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {sectionNumber} {section.SectionName.Trim()}");
+            table.Rows[2].Cells[1].Paragraphs[0].Append(section.TotalHours.ToString());
 
             return table;
         }
 
         public static Table CreateCenterOfBigTable(DocX document, ThemeViewModel theme, SectionViewModel section)
         {
-            int totalLengthPlusOne = 0;
-            int totalLength = 0;
-
-            if (_sectionName != section.SectionName)
-            {
-                totalLengthPlusOne = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
-            }
-
+            int totalLength;
             totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count;
 
             const int columns = 5;
@@ -418,24 +323,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             int practicalCount = theme.PracticalTrainingTopics.Count;
             int educationCount = theme.EducationMaterials.Count;
 
-            Table table = totalLengthPlusOne != 0 ? document.AddTable(totalLengthPlusOne + 2, columns) :
-               document.AddTable(totalLength + 3, columns);
+            Table table = document.AddTable(totalLength + 3, columns);
 
             table.Alignment = Alignment.center;
             table.Design = TableDesign.TableGrid;
             table.AutoFit = AutoFit.Contents;
 
-            table.MergeCellsInColumn(0, 0, totalLengthPlusOne != 0 ? totalLengthPlusOne + 1 : totalLength + 2);
+            table.MergeCellsInColumn(0, 0, totalLength + 2);
             table.MergeCellsInColumn(3, 0, theme.EducationMaterials.Count);
-            table.MergeCellsInColumn(4, 0, totalLengthPlusOne != 0 ? totalLengthPlusOne + 1 : totalLength + 2);
-
-            if (_sectionName != section.SectionName)
-            {
-                table.Rows[2].MergeCells(0, 2);
-                table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {_sectionNumber} {section.SectionName}");
-                _sectionNumber += 0.1f;
-                _sectionName = section.SectionName;
-            }
+            table.MergeCellsInColumn(4, 0, totalLength + 2);
 
             for (int i = 0; i < theme.PracticalTrainingTopics.Count + 2; i++)
             {
@@ -443,15 +339,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             }
 
             float totalEducationMaterialsHours = Convert.ToSingle(theme.EducationHours);
-            //theme.EducationMaterials.ForEach(e => totalEducationMaterialsHours =
-            //                                          totalEducationMaterialsHours + e.Hours);
 
             table.Rows[0].Cells[4].Paragraphs[0].Append(theme.Codes);
-
-            //foreach (string text in theme.Codes.Skip(1))
-            //{
-            //    table.Rows[0].Cells[4].InsertParagraph(text);
-            //}
 
             for (int i = 0; i < educationCount; i++)
             {
@@ -468,7 +357,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
                 table.Rows[practicalCount + 2 + i].Cells[2].Paragraphs[0]
                     .Append(theme.PracticalTrainingTopics[i].Hours.Trim());
 
-                _totalHours = _totalHours + Convert.ToSingle(theme.PracticalTrainingTopics[i].Hours.Trim());
+                section.TotalHours += Convert.ToSingle(theme.PracticalTrainingTopics[i].Hours.Trim());
             }
 
             table.Rows[0].Cells[0].Paragraphs[0].Append(theme.Name).Bold().Italic();
@@ -476,13 +365,43 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.Rows[0].Cells[2].Paragraphs[0].Append("Уровень освоения").Bold().Italic();
 
             table.Rows[theme.EducationMaterials.Count + 1].Cells[1].Paragraphs[0]
-                 .Append("Тематика практических занятий и лабароторных работ").Bold().Italic();
+                 .Append("Тематика практических занятий и лабораторных работ").Bold().Italic();
 
-            table.Rows[totalLengthPlusOne != 0 ? totalLengthPlusOne + 1 : totalLength + 2].Cells[1].Paragraphs[0]
-                 .Append("Самостоятельная работа обучающися").Bold().Italic();
+            table.Rows[totalLength + 2].Cells[1].Paragraphs[0]
+                 .Append("Самостоятельная работа обучающихся").Bold().Italic();
+            table.Rows[totalLength + 2].Cells[2].Paragraphs[0].Append(theme.IndependentWorkHours.Trim());
 
-            _totalHours = _totalHours + Convert.ToSingle(theme.EducationHours.Trim());
-            _sectionName = section.SectionName;
+            section.TotalHours += totalEducationMaterialsHours;
+
+            if (theme.IndependentWorkHours is null or "")
+                throw new Exception();
+
+            section.TotalHours += Convert.ToSingle(theme.IndependentWorkHours.Trim());
+
+            _totalHours += section.TotalHours;
+
+            return table;
+        }
+
+        public static Table CreateSectionTable(DocX document, SectionViewModel section)
+        {
+            int totalLength = 1;
+            const int columns = 5;
+            string sectionNumber = _sectionNumber == 1 ? "1.0" : _sectionNumber.ToString();
+            _sectionNumber += 0.1f;
+
+            if (sectionNumber.Contains(","))
+                sectionNumber = sectionNumber.Replace(",", ".");
+
+            var table = document.AddTable(totalLength, columns);
+            table.Alignment = Alignment.center;
+            table.Design = TableDesign.TableGrid;
+            table.AutoFit = AutoFit.Contents;
+
+            table.Rows[0].MergeCells(0, 2);
+            table.Rows[0].Cells[0].Paragraphs[0].Append($"Раздел {sectionNumber} {section.SectionName.Trim()}");
+
+            table.Rows[0].Cells[1].Paragraphs[0].Append(section.TotalHours.ToString());
 
             return table;
         }
@@ -490,7 +409,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
         public static Table CreateEndOfBigTable(DocX document, ThemeViewModel theme, HomeViewModel homeViewModel,
             SectionViewModel section)
         {
-            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count + 1;
+            int totalLength = theme.EducationMaterials.Count + theme.PracticalTrainingTopics.Count;
             const int columns = 5;
 
             var table = document.AddTable(totalLength + 6, columns);
@@ -502,13 +421,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.MergeCellsInColumn(3, 0, theme.EducationMaterials.Count);
             table.MergeCellsInColumn(4, 0, totalLength + 2);
 
-            if (_sectionName != section.SectionName)
-            {
-                table.Rows[2].MergeCells(0, 2);
-                table.Rows[2].Cells[0].Paragraphs[0].Append($"Раздел {_sectionNumber} {section.SectionName}");
-            }
-
-            for (int i = 0; i < theme.PracticalTrainingTopics.Count + 2; i++)
+            for (int i = 0; i < theme.PracticalTrainingTopics.Count + 1; i++)
             {
                 table.Rows[theme.EducationMaterials.Count + i + 1].MergeCells(1, 2);
             }
@@ -526,10 +439,13 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
             table.Rows[table.RowCount - 1].Cells[0].Paragraphs[0].Append("Всего:").Bold().Italic();
 
             table.Rows[theme.EducationMaterials.Count + 1].Cells[1].Paragraphs[0]
-                 .Append("Тематика практических занятий и лабароторных работ").Bold().Italic();
+                 .Append("Тематика практических занятий и лабораторных работ").Bold().Italic();
 
+            table.Rows[totalLength + 2].MergeCells(1, 2);
             table.Rows[totalLength + 2].Cells[1].Paragraphs[0]
                  .Append("Самостоятельная работа обучающися").Bold().Italic();
+            table.Rows[totalLength + 2].Cells[2].Paragraphs[0]
+                 .Append(theme.IndependentWorkHours.Trim());
 
             float totalEducationMaterialsHours = Convert.ToSingle(theme.EducationHours);
 
@@ -548,25 +464,33 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Models
                 table.Rows[practicalCount + 2 + i].Cells[2].Paragraphs[0]
                     .Append(theme.PracticalTrainingTopics[i].Hours.Trim());
 
-                _totalHours = _totalHours + Convert.ToSingle(theme.PracticalTrainingTopics[i].Hours.Trim());
+                section.TotalHours += Convert.ToSingle(theme.PracticalTrainingTopics[i].Hours.Trim());
             }
 
-            _totalHours = _totalHours + Convert.ToSingle(theme.EducationHours.Trim());
+            section.TotalHours += totalEducationMaterialsHours;
 
             table.Rows[table.RowCount - 3].MergeCells(0, 2);
             table.Rows[table.RowCount - 2].MergeCells(0, 2);
 
             table.Rows[table.RowCount - 3].Cells[0].Paragraphs[0].Append("<courseworks>");
             table.Rows[table.RowCount - 3].Cells[1].Paragraphs[0].Append(homeViewModel.CourseWorkHours);
+            section.TotalHours += Convert.ToSingle(homeViewModel.CourseWorkHours.Trim());
 
             table.Rows[table.RowCount - 2].Cells[0].Paragraphs[0].Append(homeViewModel.CertificationForm);
+            table.Rows[table.RowCount - 2].Cells[1].Paragraphs[0].Append(homeViewModel.CertificationFormHours);
 
-            if (homeViewModel.IsHasConsultation)
+            section.TotalHours += Convert.ToSingle(homeViewModel.CertificationFormHours);
+
+            if (homeViewModel.ConsultationHours is not "" or null)
             {
                 table.Rows[table.RowCount - 2].Cells[0].Paragraphs[0].InsertParagraphAfterSelf("Консультации");
-                table.Rows[table.RowCount - 2].Cells[1].Paragraphs[0].Append(homeViewModel.ConsultationHours);
-                _totalHours = _totalHours + Convert.ToSingle(homeViewModel.ConsultationHours);
+                table.Rows[table.RowCount - 2].Cells[1].InsertParagraph();
+                table.Rows[table.RowCount - 2].Cells[1].Paragraphs[1].Append(homeViewModel.ConsultationHours);
+
+                section.TotalHours += Convert.ToSingle(homeViewModel.ConsultationHours.Trim());
             }
+
+            _totalHours += section.TotalHours;
 
             table.Rows[table.RowCount - 1].Cells[1].Paragraphs[0].Append(_totalHours.ToString()).Bold().Italic();
 

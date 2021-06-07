@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
 using AutomatingDocumentFilling.WPFNetFramework.Models;
@@ -13,6 +14,18 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         #region Properties
 
         #region BoolProperties
+
+        private bool _isTopFifty;
+
+        public bool IsTopFifty
+        {
+            get => _isTopFifty;
+            set
+            {
+                _isTopFifty = value;
+                OnPropertyChanged(nameof(IsTopFifty));
+            }
+        }
 
         private bool _isSaved;
 
@@ -90,6 +103,44 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         #region ListProperties
 
+        private List<string> _qualificationNames;
+
+        public List<string> QualificationNames
+        {
+            get => _qualificationNames;
+            set
+            {
+                _qualificationNames = value;
+                OnPropertyChanged(nameof(QualificationNames));
+            }
+        }
+
+        private string _qualificationName;
+
+        public string QualificationName
+        {
+            get => _qualificationName;
+            set
+            {
+                _qualificationName = value;
+                OnPropertyChanged(nameof(QualificationName));
+            }
+        }
+
+        private List<Qualification> _qualifications;
+
+        public List<Qualification> Qualifications
+        {
+            get => _qualifications;
+            set
+            {
+                _qualifications = value;
+                OnPropertyChanged(nameof(Qualifications));
+
+                QualificationNames = _qualifications.Select(q => q.Name).ToList();
+            }
+        }
+
         private List<string> _codesNameOfAcademicDiscipline;
 
         public List<string> CodesNameOfAcademicDiscipline
@@ -102,15 +153,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<VolumeOfDiscipline> _independentWork;
+        private List<IndependentWorkViewModel> _independentWorks;
 
-        public List<VolumeOfDiscipline> IndependentWork
+        public List<IndependentWorkViewModel> IndependentWorks
         {
-            get => _independentWork;
+            get => _independentWorks;
             set
             {
-                _independentWork = value;
-                OnPropertyChanged(nameof(IndependentWork));
+                _independentWorks = value;
+                OnPropertyChanged(nameof(IndependentWorks));
             }
         }
 
@@ -306,15 +357,15 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private List<KnowledgeViewModel> _knowledge;
+        private List<KnowledgeViewModel> _knowledges;
 
-        public List<KnowledgeViewModel> Knowledge
+        public List<KnowledgeViewModel> Knowledges
         {
-            get => _knowledge;
+            get => _knowledges;
             set
             {
-                _knowledge = value;
-                OnPropertyChanged(nameof(Knowledge));
+                _knowledges = value;
+                OnPropertyChanged(nameof(Knowledges));
             }
         }
 
@@ -648,7 +699,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _outsideExpertFio = "q";
+        private string _outsideExpertFio;
 
         public string OutsideExpertFio
         {
@@ -660,7 +711,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _contentExpertFio = "q";
+        private string _contentExpertFio;
 
         public string ContentExpertFio
         {
@@ -672,7 +723,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             }
         }
 
-        private string _techExpertFio = "q";
+        private string _techExpertFio;
 
         public string TechExpertFio
         {
@@ -740,6 +791,10 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _specialtiesName = value;
                 OnPropertyChanged(nameof(SpecialtiesName));
+                _searchText = _specialtiesName[0];
+
+                SpecialtiesView = (CollectionView)new CollectionViewSource { Source = _specialtiesName }.View;
+                SpecialtiesView.Filter = DropDownFilter;
             }
         }
 
@@ -847,6 +902,8 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand GetCyclesCommand { get; }
 
+        public ICommand GetQualificationsCommand { get; }
+
         #endregion GetCommands
 
         #region AddCommands
@@ -881,12 +938,48 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
 
         public ICommand SaveCommand { get; }
 
+        private CollectionView _specialtiesView;
+
+        public CollectionView SpecialtiesView
+        {
+            get => _specialtiesView;
+            set
+            {
+                _specialtiesView = value;
+                OnPropertyChanged(nameof(SpecialtiesView));
+            }
+        }
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                if (_searchText != Specialty) SpecialtiesView.Refresh();
+            }
+        }
+
+        private bool DropDownFilter(object item)
+        {
+            string specialtyName = item as string;
+            if (specialtyName == null) return false;
+
+            // No filter
+            if (string.IsNullOrEmpty(SearchText)) return true;
+            // Filtered prop here is Name != DisplayMemberPath ComboText
+            return specialtyName.ToLower().Contains(SearchText.ToLower());
+        }
+
         public HomeViewModel(DocumentViewModel documentViewModel, string documentName, string outputName)
         {
             _documentName = documentName;
 
             AddNewIndependentWorkCommand =
-                new AddNewItemCommand<HomeViewModel, VolumeOfDiscipline>(this, nameof(IndependentWork));
+                new AddNewItemCommand<HomeViewModel, IndependentWorkViewModel>(this, nameof(IndependentWorks));
             AddNewIndependentWorkCommand.Execute(null);
             AddNewLaboratoryEquipmentCommand =
                 new AddNewItemCommand<HomeViewModel, LaboratoryEquipmentViewModel>(this, nameof(LaboratoryEquipments));
@@ -913,9 +1006,11 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             AddNewGeneralCompetenceCommand =
                 new AddNewItemCommand<HomeViewModel, GeneralCompetenceViewModel>(this, nameof(GeneralCompetences));
             AddNewKnowledgeCommand =
-                new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledge));
+                new AddNewItemCommand<HomeViewModel, KnowledgeViewModel>(this, nameof(Knowledges));
             AddNewSkillCommand = new AddNewItemCommand<HomeViewModel, SkillViewModel>(this, nameof(Skills));
 
+            GetQualificationsCommand =
+                new GetArrayFromJsonCommand<HomeViewModel, List<Qualification>>(nameof(Qualifications), this);
             GetSecondCertificationFormsCommand =
                 new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(SecondCertificationForms), this);
             GetCyclesCommand = new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(Cycles), this);
@@ -926,6 +1021,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             GetPlacesOfDisciplineInStructureCommand =
                 new GetArrayFromJsonCommand<HomeViewModel, List<string>>(nameof(PlacesOfDisciplineInStructure), this);
 
+            GetQualificationsCommand.Execute(null);
             GetCyclesCommand.Execute(null);
             GetSecondCertificationFormsCommand.Execute(null);
             GetCertificationFormsCommand.Execute(null);

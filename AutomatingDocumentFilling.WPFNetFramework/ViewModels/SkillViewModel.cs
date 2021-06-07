@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
@@ -16,6 +17,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _skillNames = value;
                 OnPropertyChanged(nameof(SkillNames));
+
+                Skills = (CollectionView)new CollectionViewSource { Source = _skillNames }.View;
+                Skills.Filter = DropDownFilter;
             }
         }
 
@@ -56,6 +60,32 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         }
 
         public ICommand DeleteCommand { get; }
+
+        public CollectionView Skills { get; private set; }
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                if (_searchText != SelectedText) Skills.Refresh();
+            }
+        }
+
+        private bool DropDownFilter(object item)
+        {
+            string skillName = item as string;
+            if (skillName == null) return false;
+
+            // No filter
+            if (string.IsNullOrEmpty(SearchText)) return true;
+            // Filtered prop here is Name != DisplayMemberPath ComboText
+            return skillName.ToLower().Contains(SearchText.ToLower());
+        }
 
         public SkillViewModel(HomeViewModel homeViewModel)
         {

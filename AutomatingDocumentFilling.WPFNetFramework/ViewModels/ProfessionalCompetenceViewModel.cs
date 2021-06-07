@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 using AutomatingDocumentFilling.WPFNetFramework.Commands;
 
@@ -16,6 +17,9 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
             {
                 _professionalCompetenceNames = value;
                 OnPropertyChanged(nameof(ProfessionalCompetenceNames));
+
+                ProfessionalCompetences = (CollectionView)new CollectionViewSource { Source = _professionalCompetenceNames }.View;
+                ProfessionalCompetences.Filter = DropDownFilter;
             }
         }
 
@@ -32,6 +36,32 @@ namespace AutomatingDocumentFilling.WPFNetFramework.ViewModels
         }
 
         public ICommand DeleteCommand { get; }
+
+        public CollectionView ProfessionalCompetences { get; private set; }
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                if (_searchText != SelectedText) ProfessionalCompetences.Refresh();
+            }
+        }
+
+        private bool DropDownFilter(object item)
+        {
+            string professionalCompetenceName = item as string;
+            if (professionalCompetenceName == null) return false;
+
+            // No filter
+            if (string.IsNullOrEmpty(SearchText)) return true;
+            // Filtered prop here is Name != DisplayMemberPath ComboText
+            return professionalCompetenceName.ToLower().Contains(SearchText.ToLower());
+        }
 
         public ProfessionalCompetenceViewModel(HomeViewModel homeViewModel)
         {
