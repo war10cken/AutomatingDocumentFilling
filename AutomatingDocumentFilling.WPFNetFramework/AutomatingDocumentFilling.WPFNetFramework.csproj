@@ -251,6 +251,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddItemToJsonFileCommand.cs" />
     <Compile Include="Commands\AddNewItemCommand.cs" />
     <Compile Include="Commands\DeleteItemCommand.cs" />
     <Compile Include="Commands\GetArrayFromJsonCommand.cs" />
@@ -259,10 +260,6 @@
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\ShowWindowCommand.cs" />
     <Compile Include="Commands\UpdateCurrentViewModelCommand.cs" />
-    <Compile Include="Controls\AutoFilteredComboBox.cs" />
-    <Compile Include="Controls\FilteredComboBox.cs" />
-    <Compile Include="Controls\SecondFilteredComboBox.cs" />
-    <Compile Include="Controls\ThirdFilteredComboBox.cs" />
     <Compile Include="Converters\TextToVisibilityConverter.cs" />
     <Compile Include="Models\CodeOfAcademicDiscipline.cs" />
     <Compile Include="Models\Database.cs" />
@@ -276,6 +273,7 @@
     <Compile Include="State\Navigators\ViewType.cs" />
     <Compile Include="ViewModels\AcademicSubjectViewModel.cs" />
     <Compile Include="ViewModels\AdditionalResourceViewModel.cs" />
+    <Compile Include="ViewModels\AdminPanelViewModel.cs" />
     <Compile Include="ViewModels\ClassroomEquipmentViewModel.cs" />
     <Compile Include="ViewModels\CourseWorkViewModel.cs" />
     <Compile Include="ViewModels\CreateViewModel.cs" />
@@ -299,6 +297,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\IndependentWorkViewModel.cs" />
     <Compile Include="ViewModels\WorkshopEquipmentViewModel.cs" />
+    <Compile Include="Views\AdminPanel.xaml.cs">
+      <DependentUpon>AdminPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>
@@ -319,6 +320,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\Common.xaml" />
+    <Page Include="Views\AdminPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DocumentView.xaml" />
     <Page Include="Views\HomeView.xaml" />
   </ItemGroup>

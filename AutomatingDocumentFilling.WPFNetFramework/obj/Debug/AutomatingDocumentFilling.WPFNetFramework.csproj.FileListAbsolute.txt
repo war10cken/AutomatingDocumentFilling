@@ -118,3 +118,5 @@ D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFrame
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.csproj.CopyComplete
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.exe
 D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\AutomatingDocumentFilling.WPFNetFramework.pdb
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\AdminPanel.g.cs
+D:\RiderProjects\AutomatingDocumentFilling\AutomatingDocumentFilling.WPFNetFramework\obj\Debug\Views\AdminPanel.baml

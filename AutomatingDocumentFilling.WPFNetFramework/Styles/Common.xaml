@@ -1,96 +1,113 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:models="clr-namespace:AutomatingDocumentFilling.WPFNetFramework.Models">
-    <!-- TextBox -->
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="clr-namespace:AutomatingDocumentFilling.WPFNetFramework.Models">
+    <!--  TextBox  -->
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="10,0,0,0" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Height" Value="25" />
     </Style>
-    
-    <Style x:Key="StyleWithTrigger" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+
+    <Style
+        x:Key="StyleWithTrigger"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="TextBox">
         <Style.Triggers>
             <DataTrigger Binding="{Binding CertificationForm}" Value="Экзамен">
-                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Visibility" Value="Collapsed" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <Style x:Key="SecondStyleWithTrigger" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+
+    <Style
+        x:Key="SecondStyleWithTrigger"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="TextBox">
         <Style.Triggers>
             <DataTrigger Binding="{Binding SecondCertificationForm}" Value="Экзамен">
-                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Visibility" Value="Collapsed" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <!-- ComboBox -->
+
+    <!--  ComboBox  -->
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="10,0,0,0" />
         <Setter Property="Height" Value="25" />
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="14" />
     </Style>
-    
-    <!-- TextBlock -->
+
+    <!--  TextBlock  -->
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Margin" Value="10,10,10,0" />
     </Style>
-    
-    <Style x:Key="TextBlockWithTrigger" TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+
+    <Style
+        x:Key="TextBlockWithTrigger"
+        BasedOn="{StaticResource TextBlockStyle}"
+        TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding CertificationForm}" Value="Экзамен">
-                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Visibility" Value="Collapsed" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <Style x:Key="SecondTextBlockWithTrigger" TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+
+    <Style
+        x:Key="SecondTextBlockWithTrigger"
+        BasedOn="{StaticResource TextBlockStyle}"
+        TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding SecondCertificationForm}" Value="Экзамен">
-                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Visibility" Value="Collapsed" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <!-- TextBlockHint -->
-    <Style x:Key="HintTextBlock" TargetType="TextBlock" BasedOn="{StaticResource TextBlockStyle}">
+
+    <!--  TextBlockHint  -->
+    <Style
+        x:Key="HintTextBlock"
+        BasedOn="{StaticResource TextBlockStyle}"
+        TargetType="TextBlock">
         <Setter Property="FontSize" Value="14" />
     </Style>
-    
-    <!-- Buttons -->
+
+    <!--  Buttons  -->
     <Style TargetType="Button">
-        <Setter Property="Background" Value="Gainsboro"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Padding" Value="10"/> 
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Gainsboro" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="3"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
-                            Margin="{TemplateBinding Margin}">
-                        <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap"/>
-                       
+                    <Border
+                        Margin="{TemplateBinding Margin}"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="3">
+                        <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap" />
+
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Bisque"/>
+                <Setter Property="Background" Value="Bisque" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.5"/>
+                <Setter Property="Opacity" Value="0.5" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="ButtonWithCross" TargetType="{x:Type Button}">
         <Style.Resources>
             <SolidColorBrush x:Key="NormalBackgroundBrush" Color="#00000000" />
@@ -104,12 +121,12 @@
             <SolidColorBrush x:Key="PressedBorderBrush" Color="#FF110033" />
             <SolidColorBrush x:Key="PressedForegroundBrush" Color="#FFf9ebeb" />
         </Style.Resources>
-        
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="Height" Value="25"/>
-        <Setter Property="Focusable" Value="False"/>
-        
+
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="Focusable" Value="False" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -117,23 +134,24 @@
 
                         <Ellipse x:Name="backgroundEllipse" />
 
-                        <Path x:Name="ButtonPath"
-                              Margin="3"
-                              Stroke="{StaticResource NormalForegroundBrush}"
-                              StrokeThickness="1.5"
-                              StrokeStartLineCap="Square"
-                              StrokeEndLineCap="Square"
-                              Stretch="Uniform"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center">
+                        <Path
+                            x:Name="ButtonPath"
+                            Margin="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="Uniform"
+                            Stroke="{StaticResource NormalForegroundBrush}"
+                            StrokeEndLineCap="Square"
+                            StrokeStartLineCap="Square"
+                            StrokeThickness="1.5">
                             <Path.Data>
                                 <PathGeometry>
                                     <PathGeometry.Figures>
                                         <PathFigure StartPoint="0,0">
-                                            <LineSegment Point="25,25"/>
+                                            <LineSegment Point="25,25" />
                                         </PathFigure>
                                         <PathFigure StartPoint="0,25">
-                                            <LineSegment Point="25,0"/>
+                                            <LineSegment Point="25,0" />
                                         </PathFigure>
                                     </PathGeometry.Figures>
                                 </PathGeometry>
@@ -142,26 +160,21 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="backgroundEllipse" Property="Fill"
-                                    Value="{StaticResource HoverBackgroundBrush}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" 
-                                    Value="{StaticResource HoverForegroundBrush}"/>
-                        </Trigger> 
+                            <Setter TargetName="backgroundEllipse" Property="Fill" Value="{StaticResource HoverBackgroundBrush}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{StaticResource HoverForegroundBrush}" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="backgroundEllipse" Property="Fill"
-                                    Value="{StaticResource PressedBackgroundBrush}" />
-                            <Setter TargetName="backgroundEllipse" Property="Stroke"
-                                    Value="{StaticResource PressedBorderBrush}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" 
-                                    Value="{StaticResource PressedForegroundBrush}"/>
+                            <Setter TargetName="backgroundEllipse" Property="Fill" Value="{StaticResource PressedBackgroundBrush}" />
+                            <Setter TargetName="backgroundEllipse" Property="Stroke" Value="{StaticResource PressedBorderBrush}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{StaticResource PressedForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
     </Style>
 </ResourceDictionary>

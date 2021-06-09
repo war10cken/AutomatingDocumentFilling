@@ -11,6 +11,7 @@ namespace AutomatingDocumentFilling.WPFNetFramework.Views
         public HomeView()
         {
             InitializeComponent();
+            var s = new AdminPanelViewModel("valuescopy.json");
         }
 
         private void NumberValidation(object sender, TextCompositionEventArgs e)
